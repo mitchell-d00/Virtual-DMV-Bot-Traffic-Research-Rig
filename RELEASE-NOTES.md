@@ -1,3 +1,10 @@
+# Virtual DMV / Bot Traffic — bug-hunt v0.7 (2026-10-20)
+
+- **RED:** An external test drill found 12 defects. The existing evidence banks missed all of them. The 20 new `tests/test_bughunt_v07.py` methods produced 23 failures and 7 errors against v0.6; the log is archived in `evaluation/BUGHUNT-RED-V07.txt`.
+- **FIXED:** Game oracle guard can no longer be skipped by clicking again. Host policies are shape-validated and divergence from the release is reported on import. Audit replay enforces the same chronology as event creation (predecessor validity, v2 intent and acceptance times). `anonymous` is reserved as a plate ID. `bridge()` always returns JSON. Poisoned pending entries are pruned. `request()` no longer leaks a challenge on an unknown owner. Renew/transfer `ttl` is forwarded, and a simulated clock is available in the UI. Duplicate owner keys are rejected. CLI `--at 0` and clean errors work for every entry point. Challenge comparison is strict on types. Evidence timestamps honor `SOURCE_DATE_EPOCH`.
+- **TEST:** 115/115 local Python unit tests, 22/22 Python probes, 60/60 Bot Traffic cases, 168/168 policy-matrix checks and 50/50 ingress cases (415 recorded passes; five external calculator checks pending). Stub-interpreter UI smoke passes at 390px and 1280px. A second browser repro forwarded every call to the real Python engine.
+- **BOUNDARY:** Policies remain unsigned local data. Matrix receipt hashes stay run-specific because challenge nonces are random by design. Live Pyodide/iPad startup is still unverified. See `evaluation/BUGHUNT-V07.md`.
+
 # Virtual DMV / Bot Traffic — ingress/signed-timeline v0.6 (2026-10-20)
 
 - **RED:** Nine targeted regression methods against v0.5 produced 13 failed assertions and two errors, archived in `evaluation/INPUT-BOUNDARIES-RED-V06.txt`.

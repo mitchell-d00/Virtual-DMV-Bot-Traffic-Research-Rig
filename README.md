@@ -78,6 +78,16 @@ await window.VirtualDMV.command('bench');
 
 This JavaScript object calls the **same Python engine** through Pyodide. It is page-local and is not a remote HTTP endpoint. Scripts running in the page have access to the demo workspace; only use trusted scripts.
 
+## v0.7 bug-hunt fixes (2026-10-20)
+
+**415 recorded local passes:** 115 Python unit tests (20 new in `tests/test_bughunt_v07.py`), 22 probes, 60 game cases, 168 matrix cases and 50 ingress cases, with five calculator checks still pending.
+
+This release fixes 12 defects found by an external test drill. Among them: a game oracle guard that a second click could skip; unvalidated host policies that could break page startup; audit replay that was looser than event creation; a reserved `anonymous` plate ID; non-JSON bridge failures; and ttl and clock handling in the browser.
+
+Every finding was reproduced red before it was fixed. See `evaluation/BUGHUNT-V07.md` and `evaluation/BUGHUNT-RED-V07.txt`. The registry form now has **Simulated time** and **Plate lifetime** fields.
+
+Current regenerated counts: [docs/CURRENT-TEST-RESULTS.md](docs/CURRENT-TEST-RESULTS.md).
+
 ## v0.6 verified security/traffic iteration (2026-10-20)
 
 **395 recorded local passes / 400 unique evidence entries:** 95 Python unit tests, 22 Python probes, 60 isolated Bot Traffic decisions, 168 policy/receipt matrix cases, 50 unique ingress cases and five still-pending external Mitchell Tech calculator checks. Some behaviors overlap across banks; counts are not independent experiments. Browser UI wiring is tested with a stub interpreter, not a live Safari/Pyodide proof.

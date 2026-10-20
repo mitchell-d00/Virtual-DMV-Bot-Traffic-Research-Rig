@@ -4,6 +4,7 @@ This cannot establish that real Pyodide or the cryptographic engine executed.
 Run separately: python tests/browser_ui_smoke.py
 Requires Playwright and local Chromium. Uses page.set_content and a preloaded mock. No network.
 """
+import os
 import pathlib
 import json
 import sys
@@ -23,14 +24,24 @@ MOCK=r'''
 })();
 '''
 with sync_playwright() as p:
-    browser=p.chromium.launch(headless=True,executable_path='/usr/bin/chromium',args=['--no-sandbox'])
+    browser=p.chromium.launch(headless=True,executable_path=os.environ.get('CHROMIUM_PATH'),args=['--no-sandbox'])
+    guard = browser.new_page()
+    guard.evaluate(MOCK.replace('__GAME_CASEBOOK_JSON__', json.dumps(traffic_cases())).replace('scenario_matches_expectation:true', 'scenario_matches_expectation:false'))
+    guard.set_content((ROOT/'index.html').read_text(), wait_until='domcontentloaded')
+    guard.wait_for_selector('#runtimeStatus.ready')
+    for _ in range(2):
+        guard.locator('#chooseAllow').click()
+        assert 'ORACLE MISMATCH' in guard.locator('#gameLast').inner_text()
+        assert guard.locator('#score').inner_text() == '0'
+        assert guard.locator('#nextCase').is_disabled()
+    guard.close()
     for width in [390,1280]:
         page=browser.new_page(viewport={'width':width,'height':900})
         page.evaluate(MOCK.replace("__GAME_CASEBOOK_JSON__",json.dumps(traffic_cases())))
         page.set_content((ROOT/"index.html").read_text(encoding="utf8"),wait_until="domcontentloaded")
         page.wait_for_selector('#runtimeStatus.ready')
-        if width==1280:page.screenshot(path='/tmp/vdmv_desktop_mock.png',full_page=True)
-        if width==390:page.screenshot(path='/tmp/vdmv_mobile_mock.png',full_page=True)
+
+
         assert 'Known researcher' in page.locator('#trafficLabel').inner_text()
         page.locator('#chooseAllow').click()
         assert 'Correct' in page.locator('#gameFeedback').inner_text()

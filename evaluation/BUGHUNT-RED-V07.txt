@@ -1,0 +1,362 @@
+# v0.7 bug-hunt RED run: tests/test_bughunt_v07.py against unmodified v0.6 (2026-10-20)
+# Command: PYTHONPATH=src python3 -m unittest tests.test_bughunt_v07
+# Note: in this run Finding01 failed on inspect() before reaching choose(); its regex could not have matched choose(allow) (test bug, fixed after this run). The corrected check was rerun against the old client.js: both inspect() and choose() match the bug pattern.
+
+FFFFFFFEEFFFF.FFFFEEFEEFF.FFFEFF
+======================================================================
+ERROR: test_audit_reports_policy_divergence_from_release_defaults (tests.test_bughunt_v07.Finding02PolicyIntegrity.test_audit_reports_policy_divergence_from_release_defaults)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/tests/test_bughunt_v07.py", line 59, in test_audit_reports_policy_divergence_from_release_defaults
+    self.assertTrue(E.audit_all(s)['policies_match_release'])
+                    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'policies_match_release'
+
+======================================================================
+ERROR: test_malformed_policy_still_yields_signed_denial (tests.test_bughunt_v07.Finding02PolicyIntegrity.test_malformed_policy_still_yields_signed_denial)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/tests/test_bughunt_v07.py", line 70, in test_malformed_policy_still_yields_signed_denial
+    r = E.decide(s, ch, '', now=NOW)
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/src/virtual_dmv/engine.py", line 365, in decide
+    d=policy_decision(state,resource,action,anonymous=True)
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/src/virtual_dmv/engine.py", line 249, in policy_decision
+    allowed=action in p["anonymous"] if anonymous else role in p["allows"].get(action,[])
+                      ~^^^^^^^^^^^^^
+KeyError: 'anonymous'
+
+======================================================================
+ERROR: test_bridge_never_raises (tests.test_bughunt_v07.Finding05BridgeTotality.test_bridge_never_raises) (payload={'op': 'roster', 'state': [1]})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/tests/test_bughunt_v07.py", line 129, in test_bridge_never_raises
+    self.assert_json_error(json.dumps(payload))
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/tests/test_bughunt_v07.py", line 120, in assert_json_error
+    out = json.loads(E.bridge(raw))
+                     ~~~~~~~~^^^^^
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/src/virtual_dmv/engine.py", line 747, in bridge
+    output=dispatch(json.loads(json_input))
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/src/virtual_dmv/engine.py", line 666, in dispatch
+    elif op=="roster":outcome=roster(state)
+                              ~~~~~~^^^^^^^
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/src/virtual_dmv/engine.py", line 422, in roster
+    known=audit(state)
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/src/virtual_dmv/engine.py", line 107, in audit
+    _need(state.get("schema")==SCHEMA,"invalid registry schema")
+          ^^^^^^^^^
+AttributeError: 'list' object has no attribute 'get'
+
+======================================================================
+ERROR: test_bridge_never_raises (tests.test_bughunt_v07.Finding05BridgeTotality.test_bridge_never_raises) (payload={'op': 'roster', 'state': 'x'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/tests/test_bughunt_v07.py", line 129, in test_bridge_never_raises
+    self.assert_json_error(json.dumps(payload))
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/tests/test_bughunt_v07.py", line 120, in assert_json_error
+    out = json.loads(E.bridge(raw))
+                     ~~~~~~~~^^^^^
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/src/virtual_dmv/engine.py", line 747, in bridge
+    output=dispatch(json.loads(json_input))
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/src/virtual_dmv/engine.py", line 666, in dispatch
+    elif op=="roster":outcome=roster(state)
+                              ~~~~~~^^^^^^^
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/src/virtual_dmv/engine.py", line 422, in roster
+    known=audit(state)
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/src/virtual_dmv/engine.py", line 107, in audit
+    _need(state.get("schema")==SCHEMA,"invalid registry schema")
+          ^^^^^^^^^
+AttributeError: 'str' object has no attribute 'get'
+
+======================================================================
+ERROR: test_bridge_never_raises (tests.test_bughunt_v07.Finding05BridgeTotality.test_bridge_never_raises)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/tests/test_bughunt_v07.py", line 130, in test_bridge_never_raises
+    self.assert_json_error('[' * 100000 + ']' * 100000)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/tests/test_bughunt_v07.py", line 120, in assert_json_error
+    out = json.loads(E.bridge(raw))
+                     ~~~~~~~~^^^^^
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/src/virtual_dmv/engine.py", line 747, in bridge
+    output=dispatch(json.loads(json_input))
+                    ~~~~~~~~~~^^^^^^^^^^^^
+  File "/usr/lib/python3.13/json/__init__.py", line 352, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "/usr/lib/python3.13/json/decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/json/decoder.py", line 361, in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ~~~~~~~~~~~~~~^^^^^^^^
+RecursionError: maximum recursion depth exceeded while decoding a JSON array from a unicode string
+
+======================================================================
+ERROR: test_malformed_pending_entries_are_pruned (tests.test_bughunt_v07.Finding06PoisonedQueue.test_malformed_pending_entries_are_pruned)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/tests/test_bughunt_v07.py", line 139, in test_malformed_pending_entries_are_pruned
+    ch = E.challenge(s, PLATE, 'research-library', 'crawl', now=NOW)
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/src/virtual_dmv/engine.py", line 266, in challenge
+    _need(len(state["challenges"]) < MAX_PENDING_CHALLENGES, "pending challenge limit reached")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/src/virtual_dmv/engine.py", line 38, in _need
+    raise ProtocolError(message)
+virtual_dmv.engine.ProtocolError: pending challenge limit reached
+
+======================================================================
+ERROR: test_protocol_errors_exit_cleanly_from_main (tests.test_bughunt_v07.Finding10Cli.test_protocol_errors_exit_cleanly_from_main)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/tests/test_bughunt_v07.py", line 205, in test_protocol_errors_exit_cleanly_from_main
+    code, err = self.call('request', '--state', str(path), '--owner', 'nobody')
+                ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/tests/test_bughunt_v07.py", line 190, in call
+    code = cli.main(list(argv))
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/src/virtual_dmv/cli.py", line 39, in main
+    output=dispatch({"op":ops[args.operation],"state":state,"args":options})
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/src/virtual_dmv/engine.py", line 673, in dispatch
+    elif op=="request":outcome=request(state,args["plate_id"],args["resource"],args["action"],owner=args.get("owner"),now=args.get("now",state["created_at"]))
+                               ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/src/virtual_dmv/engine.py", line 396, in request
+    proof=proof_override if proof_override is not None else ("" if owner is None else holder_proof(state,owner,c))
+                                                                                      ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/src/virtual_dmv/engine.py", line 283, in holder_proof
+    _need(owner in state["owners"],"unknown owner")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/src/virtual_dmv/engine.py", line 38, in _need
+    raise ProtocolError(message)
+virtual_dmv.engine.ProtocolError: unknown owner
+
+======================================================================
+FAIL: test_verdict_is_assigned_only_after_oracle_check (tests.test_bughunt_v07.Finding01BrowserOracleGuard.test_verdict_is_assigned_only_after_oracle_check)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/tests/test_bughunt_v07.py", line 227, in test_verdict_is_assigned_only_after_oracle_check
+    self.assertNotRegex(body, r'verdict=replay\.decision;\s*if\(replay\.scenario_matches_expectation',
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        fn + '() assigns verdict before the oracle guard')
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Regex matched: 'verdict=replay.decision;\n    if(replay.scenario_matches_expectation' matches 'verdict=replay\\.decision;\\s*if\\(replay\\.scenario_matches_expectation' in "\n  if(inspected||gameResolved)return;\n  try{\n    const replay=await command('game_try',{index:caseIndex});\n    verdict=replay.decision;\n    if(replay.scenario_matches_expectation===false)throw Error('SCENARIO ORACLE MISMATCH: game fixture disagrees with its expected result');\n    inspected=true;gameScore-=2;updateSummary();\n    $('gameLast').textContent=pretty(verdict);\n    $('gameFeedback').textContent='Gate: '+verdict.reason+' — '+(verdict.allow?'eligible':'ineligible')+'. This audit inspection cost 2 points.';\n    $('inspect').disabled=true;\n  }catch(e){report($('gameLast'),e)}" : inspect() assigns verdict before the oracle guard
+
+======================================================================
+FAIL: test_audit_rejects_malformed_policy_shapes (tests.test_bughunt_v07.Finding02PolicyIntegrity.test_audit_rejects_malformed_policy_shapes) (shape={'description': 'x', 'anonymous': 'crawl', 'allows': {}, 'attribution': []})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/tests/test_bughunt_v07.py", line 54, in test_audit_rejects_malformed_policy_shapes
+    with self.assertRaises(E.ProtocolError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: ProtocolError not raised
+
+======================================================================
+FAIL: test_audit_rejects_malformed_policy_shapes (tests.test_bughunt_v07.Finding02PolicyIntegrity.test_audit_rejects_malformed_policy_shapes) (shape={'description': 'x', 'anonymous': [], 'allows': {'crawl': 'research'}, 'attribution': []})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/tests/test_bughunt_v07.py", line 54, in test_audit_rejects_malformed_policy_shapes
+    with self.assertRaises(E.ProtocolError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: ProtocolError not raised
+
+======================================================================
+FAIL: test_audit_rejects_malformed_policy_shapes (tests.test_bughunt_v07.Finding02PolicyIntegrity.test_audit_rejects_malformed_policy_shapes) (shape={'description': 'x', 'anonymous': ['teleport'], 'allows': {}, 'attribution': []})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/tests/test_bughunt_v07.py", line 54, in test_audit_rejects_malformed_policy_shapes
+    with self.assertRaises(E.ProtocolError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: ProtocolError not raised
+
+======================================================================
+FAIL: test_audit_rejects_malformed_policy_shapes (tests.test_bughunt_v07.Finding02PolicyIntegrity.test_audit_rejects_malformed_policy_shapes) (shape={'description': 'x', 'anonymous': [], 'allows': {'crawl': ['wizard']}, 'attribution': []})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/tests/test_bughunt_v07.py", line 54, in test_audit_rejects_malformed_policy_shapes
+    with self.assertRaises(E.ProtocolError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: ProtocolError not raised
+
+======================================================================
+FAIL: test_audit_rejects_malformed_policy_shapes (tests.test_bughunt_v07.Finding02PolicyIntegrity.test_audit_rejects_malformed_policy_shapes) (shape={'description': 'x', 'allows': {}, 'attribution': []})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/tests/test_bughunt_v07.py", line 54, in test_audit_rejects_malformed_policy_shapes
+    with self.assertRaises(E.ProtocolError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: ProtocolError not raised
+
+======================================================================
+FAIL: test_audit_rejects_malformed_policy_shapes (tests.test_bughunt_v07.Finding02PolicyIntegrity.test_audit_rejects_malformed_policy_shapes) (shape={'description': 7, 'anonymous': [], 'allows': {}, 'attribution': []})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/tests/test_bughunt_v07.py", line 54, in test_audit_rejects_malformed_policy_shapes
+    with self.assertRaises(E.ProtocolError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: ProtocolError not raised
+
+======================================================================
+FAIL: test_audit_binds_v2_intent_time_to_successor (tests.test_bughunt_v07.Finding03AuditChronology.test_audit_binds_v2_intent_time_to_successor) (requested_at='whenever')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/tests/test_bughunt_v07.py", line 89, in test_audit_binds_v2_intent_time_to_successor
+    with self.assertRaises(E.ProtocolError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: ProtocolError not raised
+
+======================================================================
+FAIL: test_audit_binds_v2_intent_time_to_successor (tests.test_bughunt_v07.Finding03AuditChronology.test_audit_binds_v2_intent_time_to_successor) (requested_at=1893456999)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/tests/test_bughunt_v07.py", line 89, in test_audit_binds_v2_intent_time_to_successor
+    with self.assertRaises(E.ProtocolError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: ProtocolError not raised
+
+======================================================================
+FAIL: test_audit_binds_v2_intent_time_to_successor (tests.test_bughunt_v07.Finding03AuditChronology.test_audit_binds_v2_intent_time_to_successor) (requested_at=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/tests/test_bughunt_v07.py", line 89, in test_audit_binds_v2_intent_time_to_successor
+    with self.assertRaises(E.ProtocolError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: ProtocolError not raised
+
+======================================================================
+FAIL: test_audit_rejects_transition_after_predecessor_expired (tests.test_bughunt_v07.Finding03AuditChronology.test_audit_rejects_transition_after_predecessor_expired)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/tests/test_bughunt_v07.py", line 81, in test_audit_rejects_transition_after_predecessor_expired
+    with self.assertRaises(E.ProtocolError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: ProtocolError not raised
+
+======================================================================
+FAIL: test_anonymous_is_not_an_issuable_plate_id (tests.test_bughunt_v07.Finding04ReservedAnonymous.test_anonymous_is_not_an_issuable_plate_id) (label='anonymous')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/tests/test_bughunt_v07.py", line 104, in test_anonymous_is_not_an_issuable_plate_id
+    with self.assertRaises(E.ProtocolError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: ProtocolError not raised
+
+======================================================================
+FAIL: test_anonymous_is_not_an_issuable_plate_id (tests.test_bughunt_v07.Finding04ReservedAnonymous.test_anonymous_is_not_an_issuable_plate_id) (label='Anonymous')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/tests/test_bughunt_v07.py", line 104, in test_anonymous_is_not_an_issuable_plate_id
+    with self.assertRaises(E.ProtocolError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: ProtocolError not raised
+
+======================================================================
+FAIL: test_anonymous_is_not_an_issuable_plate_id (tests.test_bughunt_v07.Finding04ReservedAnonymous.test_anonymous_is_not_an_issuable_plate_id) (label='ANONYMOUS')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/tests/test_bughunt_v07.py", line 104, in test_anonymous_is_not_an_issuable_plate_id
+    with self.assertRaises(E.ProtocolError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: ProtocolError not raised
+
+======================================================================
+FAIL: test_audit_rejects_imported_anonymous_plate (tests.test_bughunt_v07.Finding04ReservedAnonymous.test_audit_rejects_imported_anonymous_plate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/tests/test_bughunt_v07.py", line 114, in test_audit_rejects_imported_anonymous_plate
+    with self.assertRaises(E.ProtocolError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: ProtocolError not raised
+
+======================================================================
+FAIL: test_bridge_never_raises (tests.test_bughunt_v07.Finding05BridgeTotality.test_bridge_never_raises) (payload={'op': 'roster', 'args': 'x'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/tests/test_bughunt_v07.py", line 129, in test_bridge_never_raises
+    self.assert_json_error(json.dumps(payload))
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/tests/test_bughunt_v07.py", line 121, in assert_json_error
+    self.assertFalse(out['ok'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_unknown_owner_fails_before_challenge_allocation (tests.test_bughunt_v07.Finding07NoLeakOnUnknownOwner.test_unknown_owner_fails_before_challenge_allocation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/tests/test_bughunt_v07.py", line 148, in test_unknown_owner_fails_before_challenge_allocation
+    self.assertEqual((len(s['challenges']), s['sequence_nonce']), (0, 0))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Tuples differ: (1, 1) != (0, 0)
+
+First differing element 0:
+1
+0
+
+- (1, 1)
++ (0, 0)
+
+======================================================================
+FAIL: test_renew_and_transfer_forward_ttl (tests.test_bughunt_v07.Finding08DispatchClockAndTtl.test_renew_and_transfer_forward_ttl)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/tests/test_bughunt_v07.py", line 159, in test_renew_and_transfer_forward_ttl
+    self.assertEqual(p['expires_at'] - p['issued_at'], 999)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 86400 != 999
+
+======================================================================
+FAIL: test_audit_rejects_imported_duplicate_owner_key (tests.test_bughunt_v07.Finding09DistinctOwnerKeys.test_audit_rejects_imported_duplicate_owner_key)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/tests/test_bughunt_v07.py", line 181, in test_audit_rejects_imported_duplicate_owner_key
+    with self.assertRaises(E.ProtocolError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: ProtocolError not raised
+
+======================================================================
+FAIL: test_owner_seed_reuse_is_rejected (tests.test_bughunt_v07.Finding09DistinctOwnerKeys.test_owner_seed_reuse_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/tests/test_bughunt_v07.py", line 174, in test_owner_seed_reuse_is_rejected
+    with self.assertRaises(E.ProtocolError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: ProtocolError not raised
+
+======================================================================
+FAIL: test_at_zero_is_honored (tests.test_bughunt_v07.Finding10Cli.test_at_zero_is_honored)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/tests/test_bughunt_v07.py", line 199, in test_at_zero_is_honored
+    self.assertEqual(json.loads(path.read_text())['created_at'], 0)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1893456000 != 0
+
+======================================================================
+FAIL: test_numerically_equal_but_retyped_challenge_is_rejected (tests.test_bughunt_v07.Finding11StrictChallengeBytes.test_numerically_equal_but_retyped_challenge_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/tests/test_bughunt_v07.py", line 219, in test_numerically_equal_but_retyped_challenge_is_rejected
+    self.assertEqual((r['allow'], r['reason']), (False, 'INVALID_OR_REPLAYED_CHALLENGE'))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Tuples differ: (True, 'POLICY_ALLOW') != (False, 'INVALID_OR_REPLAYED_CHALLENGE')
+
+First differing element 0:
+True
+False
+
+- (True, 'POLICY_ALLOW')
++ (False, 'INVALID_OR_REPLAYED_CHALLENGE')
+
+======================================================================
+FAIL: test_scenario_runner_honors_source_date_epoch (tests.test_bughunt_v07.Finding12ReproducibleEvidence.test_scenario_runner_honors_source_date_epoch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/claude/mitchell-d00/virtual-dmv-bot-traffic-research-rig/tests/test_bughunt_v07.py", line 234, in test_scenario_runner_honors_source_date_epoch
+    self.assertIn('SOURCE_DATE_EPOCH', src)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'SOURCE_DATE_EPOCH' not found in '"""Run unique, inspectable test scenarios; write a documented release snapshot.\n\nFull unit suite runs on desktop Python. The public Pyodide lab replays the 12\nPython browser probes and 10 game fixtures; desktop-only tests remain archived\nas a versioned evidence snapshot, never implied to have run in the browser.\n"""\nfrom __future__ import annotations\nimport hashlib\nimport json\nimport os\nfrom pathlib import Path\nimport sys\nimport time\nimport unittest\nfrom datetime import datetime, timezone\n\nROOT=Path(__file__).resolve().parents[1]\nsys.path.insert(0,str(ROOT/\'src\'))\nfrom virtual_dmv import engine as E\nfrom run_security_matrix import check_matrix\nfrom run_ingress_matrix import check_matrix as check_ingress_matrix\n\nclass EvidenceResult(unittest.TestResult):\n    def __init__(self):\n        super().__init__()\n        self.outcomes={}\n    def addSuccess(self,test):\n        super().addSuccess(test)\n        self.outcomes[test.id()]=(\'passed\',\'All assertions passed\')\n    def addFailure(self,test,err):\n        super().addFailure(test,err)\n        self.outcomes[test.id()]=(\'failed\',self._exc_info_to_string(err,test)[-1100:])\n    def addError(self,test,err):\n        super().addError(test,err)\n        self.outcomes[test.id()]=(\'error\',self._exc_info_to_string(err,test)[-1100:])\n    def addSkip(self,test,reason):\n        super().addSkip(test,reason)\n        self.outcomes[test.id()]=(\'skipped\',reason)\n\ndef hash_files(paths):\n    digest=hashlib.sha256()\n    for item in paths:\n        digest.update(str(item).encode()+b\'\\0\'+(ROOT/item).read_bytes()+b\'\\0\')\n    return digest.hexdigest()\n\ndef checked():\n    suite=unittest.defaultTestLoader.discover(str(ROOT/\'tests\'),pattern=\'test_*.py\',top_level_dir=str(ROOT/\'tests\'))\n    def flatten(suite):\n        for item in suite:\n            if isinstance(item,unittest.TestSuite):yield from flatten(item)\n            else:yield item\n    tests=list(flatten(suite))\n    result=EvidenceResult()\n    for t in tests:t.run(result)\n    if len(result.outcomes)!=len(tests):raise RuntimeError(\'Some unit tests lack results\')\n    units=[]\n    for i,t in enumerate(tests,1):\n        key=t.id()\n        status,detail=result.outcomes[key]\n        name=t._testMethodName.removeprefix(\'test_\').replace(\'_\',\' \')\n        units.append({\'id\':f\'UNIT-{i:03d}\',\'kind\':\'python_unittest\',\'title\':name,\n          \'intent\':name.capitalize(),\'input\':key,\'expected\':\'The named assertions in \'+key+\' all pass\',\n          \'observed\':detail,\'status\':status,\'source\':\'tests/\'+key.split(\'.\')[0]+\'.py\',\n          \'execution\':\'recorded-local-python\',\'overlap_note\':\'May test the same rule as a browser probe or game case\'})\n    bench=E.run_bench()\n    probes=[{\'id\':p[\'id\'],\'kind\':\'browser_python_probe\',\'title\':p[\'name\'],\n       \'intent\':\'Adversarial Python gate probe: \'+p[\'name\'],\n       \'input\':p[\'name\'],\'expected\':p[\'expected\'],\'observed\':p[\'observed\'],\n       \'status\':\'passed\' if p[\'pass\'] else \'failed\',\'source\':\'src/virtual_dmv/engine.py#run_bench\',\n       \'execution\':\'run-locally-and-rerunnable-in-browser\'} for p in bench[\'cases\']]\n    game=[]\n    for i,c in enumerate(E.traffic_cases()):\n        a=E.dispatch({\'op\':\'game_try\',\'state\':E.bootstrap(seed=\'archive\',now=1893456000),\'args\':{\'index\':i}})[\'result\']\n        d=a[\'decision\']\n        good=a[\'scenario_matches_expectation\']\n        game.append({\'id\':c[\'id\'],\'kind\':\'playable_game\',\'title\':c[\'label\'],\n          \'intent\':c[\'truth\'],\'input\':f"{c[\'scenario\']} / {c[\'plate\']} / {c[\'owner\']} / {c[\'resource\']} / {c[\'action\']}",\n          \'expected\':c[\'expected\']+\' / \'+c[\'expected_reason\']+\' / attribution=\'+str(c[\'expected_attribution\']),\n          \'observed\':(\'ADMIT\' if d[\'allow\'] else \'DENY\')+\' / \'+d[\'reason\']+\' / attribution=\'+str(d[\'attribution_required\']),\n          \'status\':\'passed\' if good else \'failed\',\n          \'source\':\'src/virtual_dmv/engine.py#traffic_cases\',\n          \'execution\':\'run-locally-and-rerunnable-in-browser\'})\n    security=check_matrix()\n    ingress=check_ingress_matrix()\n    all_cases=units+probes+game+security+ingress\n    ids=[p[\'id\'] for p in all_cases]\n    if len(ids)!=len(set(ids)):raise RuntimeError(\'Duplicated public scenario ID\')\n    names=[(p[\'kind\'],p[\'title\'].casefold().strip()) for p in all_cases]\n    if len(names)!=len(set(names)):raise RuntimeError(\'Duplicated public scenario title in one bank\')\n    # Make every numerical question distinct; calculator checks are NOT recorded as tested.\n    formulas=[]\n    for adoption in [0,.25,.5,.75,1]:\n        r=E.economics_simulation(E.bootstrap(seed=\'calc\',now=1893456000),rounds=200,seed=7,adoption=adoption)\n        expr=f"{r[\'accepted\']}*5-{r[\'registration_cost\']}"\n        formulas.append({\'id\':f\'CALC-{len(formulas)+1:03d}\',\'kind\':\'mitchell_tech_manual\',\n            \'title\':f"Economics net utility at {int(adoption*100)}% adoption",\'input\':expr,\n            \'expected\':str(r[\'net_model_utility\']),\'observed\':\'not run in Mitchell Tech browser\',\n            \'status\':\'pending\',\'source\':\'evaluation/CALCULATOR-CROSSCHECK.md\',\n            \'execution\':\'requires-console-in-Mitchell-Tech\'})\n    if len({x[\'input\'] for x in formulas})!=len(formulas):raise RuntimeError(\'Calculator expressions are repeated\')\n    timestamp=datetime.now(timezone.utc).isoformat(timespec=\'seconds\')\n    artifact={\'schema\':\'vdmv.scenarios.v1\',\'generated_at_utc\':timestamp,\n        \'source_sha256\':hash_files([Path(\'src/virtual_dmv/engine.py\'),Path(\'src/virtual_dmv/portable.py\'),Path(\'tests/test_engine.py\'),Path(\'tests/test_bundle.py\'),Path(\'tests/test_traffic_v03.py\'),Path(\'tests/test_traffic_v04.py\'),Path(\'tests/test_crypto_v05.py\'),Path(\'tests/test_pending_integrity_v05.py\'),Path(\'tests/test_identifier_v05.py\'),Path(\'tests/test_security_matrix_v05.py\'),Path(\'tests/test_input_boundaries_v06.py\'),Path(\'tests/test_ingress_matrix_v06.py\'),Path(\'tools/run_ingress_matrix.py\'),Path(\'tools/run_security_matrix.py\'),Path(\'tools/run_scenarios.py\')]),\n        \'summary\':{\'unit\':len(units),\'probe\':len(probes),\'game\':len(game),\'security_matrix\':len(security),\'ingress_matrix\':len(ingress),\'calculator_pending\':len(formulas),\n                   \'recorded_passed\':sum(c[\'status\']==\'passed\' for c in all_cases),\n                   \'recorded_failed\':sum(c[\'status\'] in (\'failed\',\'error\') for c in all_cases),\n                   \'unique_executed_scenario_ids\':len(all_cases),\n                   \'notice\':\'Counts are distinct documented scenario IDs, NOT independent experimental findings. Cross-bank behavior overlaps.\'},\n        \'scenarios\':all_cases+formulas,\n        \'limits\':{\'unit\':\'Recorded on local Python at source_sha256; not executed in each visitor browser.\',\n                  \'probe\':\'Browser reruns real Python using the embedded engine; results may differ if code changes.\',\n                  \'game\':\'Synthetic isolated deterministic state; gameplay is not a field trial.\',\n                  \'security_matrix\':\'168 explicit policy tuples with signed local receipts; not a cryptographic audit or field observation.\',\n                  \'ingress_matrix\':\'Deterministic malformed-input and unknown-plate protocol checks, not remote HTTP testing.\',\n                  \'calculator\':\'Requires external Mitchell Tech app and a separate user-triggered manual console check. Pending does not count as a pass.\'}}\n    out=ROOT/\'evaluation\'/\'SCENARIO-RESULTS.json\'\n    out.write_text(json.dumps(artifact,separators=(\',\',\':\'),ensure_ascii=False)+\'\\n\',encoding=\'utf-8\')\n    print(f"Evidence: {len(units)} local unit, {len(probes)} Python browser, {len(game)} game, {len(security)} security matrix, {len(ingress)} ingress matrix, {len(formulas)} pending external calculator")\n    print(f"Recorded passed: {artifact[\'summary\'][\'recorded_passed\']}, failures: {artifact[\'summary\'][\'recorded_failed\']}")\n    return not(result.wasSuccessful() and not artifact[\'summary\'][\'recorded_failed\'])\n\nif __name__==\'__main__\':sys.exit(checked())\n'
+
+----------------------------------------------------------------------
+Ran 20 tests in 2.412s
+
+FAILED (failures=23, errors=7)

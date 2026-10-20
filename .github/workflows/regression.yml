@@ -1,0 +1,21 @@
+name: Regression
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: PYTHONPATH=src python -m unittest discover -s tests -v
+      - run: python tools/build_browser.py && git diff --exit-code -- index.html docs/ENGINE-SOURCE-PINS.json
+      - run: python -m pip install playwright==1.56.0
+      - run: python -m playwright install --with-deps chromium
+      - run: python tests/browser_ui_smoke.py
+      - run: python tests/browser_live_smoke.py

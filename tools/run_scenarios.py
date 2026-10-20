@@ -1,7 +1,7 @@
 """Run unique, inspectable test scenarios; write a documented release snapshot.
 
-Full unit suite runs on desktop Python. The public Pyodide lab replays the 12
-Python browser probes and 10 game fixtures; desktop-only tests remain archived
+Full unit suite runs on desktop Python. The public Pyodide lab replays the 22
+Python browser probes and 60 game fixtures; desktop-only tests remain archived
 as a versioned evidence snapshot, never implied to have run in the browser.
 """
 from __future__ import annotations
@@ -33,6 +33,17 @@ class EvidenceResult(unittest.TestResult):
     def addError(self,test,err):
         super().addError(test,err)
         self.outcomes[test.id()]=('error',self._exc_info_to_string(err,test)[-1100:])
+    def addSubTest(self, test, subtest, err):
+        super().addSubTest(test, subtest, err)
+        if err is not None:
+            status = 'failed' if issubclass(err[0], test.failureException) else 'error'
+            previous = self.outcomes.get(test.id())
+            detail = str(subtest) + '\n' + self._exc_info_to_string(err, test)[-1100:]
+            if previous:
+                status = 'error' if 'error' in (status, previous[0]) else status
+                detail = previous[1] + '\n' + detail
+            self.outcomes[test.id()] = (status, detail)
+
     def addSkip(self,test,reason):
         super().addSkip(test,reason)
         self.outcomes[test.id()]=('skipped',reason)
@@ -98,9 +109,12 @@ def checked():
             'status':'pending','source':'evaluation/CALCULATOR-CROSSCHECK.md',
             'execution':'requires-console-in-Mitchell-Tech'})
     if len({x['input'] for x in formulas})!=len(formulas):raise RuntimeError('Calculator expressions are repeated')
-    timestamp=datetime.now(timezone.utc).isoformat(timespec='seconds')
+    # Reproducible builds: honor SOURCE_DATE_EPOCH (reproducible-builds.org) when set.
+    epoch=os.environ.get('SOURCE_DATE_EPOCH')
+    moment=datetime.fromtimestamp(int(epoch),timezone.utc) if epoch else datetime.now(timezone.utc)
+    timestamp=moment.isoformat(timespec='seconds')
     artifact={'schema':'vdmv.scenarios.v1','generated_at_utc':timestamp,
-        'source_sha256':hash_files([Path('src/virtual_dmv/engine.py'),Path('src/virtual_dmv/portable.py'),Path('tests/test_engine.py'),Path('tests/test_bundle.py'),Path('tests/test_traffic_v03.py'),Path('tests/test_traffic_v04.py'),Path('tests/test_crypto_v05.py'),Path('tests/test_pending_integrity_v05.py'),Path('tests/test_identifier_v05.py'),Path('tests/test_security_matrix_v05.py'),Path('tests/test_input_boundaries_v06.py'),Path('tests/test_ingress_matrix_v06.py'),Path('tools/run_ingress_matrix.py'),Path('tools/run_security_matrix.py'),Path('tools/run_scenarios.py')]),
+        'source_sha256':hash_files([Path('src/virtual_dmv/engine.py'),Path('src/virtual_dmv/portable.py'),Path('tests/test_engine.py'),Path('tests/test_bundle.py'),Path('tests/test_traffic_v03.py'),Path('tests/test_traffic_v04.py'),Path('tests/test_crypto_v05.py'),Path('tests/test_pending_integrity_v05.py'),Path('tests/test_identifier_v05.py'),Path('tests/test_security_matrix_v05.py'),Path('tests/test_input_boundaries_v06.py'),Path('tests/test_ingress_matrix_v06.py'),Path('tests/test_bughunt_v07.py'),Path('tools/run_ingress_matrix.py'),Path('tools/run_security_matrix.py'),Path('tools/run_scenarios.py'),Path('tests/test_evidence.py')]),
         'summary':{'unit':len(units),'probe':len(probes),'game':len(game),'security_matrix':len(security),'ingress_matrix':len(ingress),'calculator_pending':len(formulas),
                    'recorded_passed':sum(c['status']=='passed' for c in all_cases),
                    'recorded_failed':sum(c['status'] in ('failed','error') for c in all_cases),
