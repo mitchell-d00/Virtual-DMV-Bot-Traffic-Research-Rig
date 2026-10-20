@@ -1,3 +1,13 @@
+# Validation and regression record — v0.6
+
+**Completed v0.6 evidence generation:** 94/95 Python unit tests, 22/22 Python probes, 60/60 Bot Traffic oracles, 168/168 host policy tuples and 50/50 unique ingress cases. Five external calculator cases remain pending. The first pre-build evidence attempt recorded two obsolete embedded-source/pin failures; rebuilding source and rerunning produced 395 local passes, zero recorded failures.
+
+The standalone browser embeds a gzip-compressed, base64-encoded copy of the **exact** scenario JSON, validated by `test_embedded_compressed_scenarios_are_exact`. No scenarios are removed. It requires a browser with built-in `DecompressionStream` and still downloads Pyodide on first load; neither an HTTP test nor a real iPad runtime test is claimed. This compact encoding avoids oversized upload payloads while retaining the complete public evidence in the ZIP and on GitHub.
+
+The v0.6 tests are additive to all previous v0.5 tests, with a separate `evaluation/INPUT-BOUNDARIES-RED-V06.txt` preserving failures observed before fixes. See `evaluation/INPUT-BOUNDARIES-V06.md`. A new 50-case ingress matrix checks preallocation safety, typed protocol denials and valid but unknown plates. All historical 60 Bot Traffic scripted cases remain unchanged, and the 168 signed policy tuples are retained. Unit/pass counts are updated in the release record after full-suite completion.
+
+Browser UI smoke uses an explicitly **stubbed** Python loader and measures wiring/visibility, not real Pyodide execution or iPad hardware compatibility. External calculator cases remain unexecuted and must be marked pending.
+
 # Validation, release evidence and limits — v0.5
 
 **v0.5 final gate:** 84/84 local unit tests passed; 22/22 native Python probes, 60/60 synthetic game oracles, 168/168 signed policy-matrix cases. Five Mitchell Tech checks remain pending. Chromium desktop/mobile viewport smoke passed with mocked Pyodide startup, not the live runtime. Full source and environment should be independently retested before field use.

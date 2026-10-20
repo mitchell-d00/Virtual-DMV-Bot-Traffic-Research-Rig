@@ -1,3 +1,12 @@
+# Virtual DMV / Bot Traffic — ingress/signed-timeline v0.6 (2026-10-20)
+
+- **RED:** Nine targeted regression methods against v0.5 produced 13 failed assertions and two errors, archived in `evaluation/INPUT-BOUNDARIES-RED-V06.txt`.
+- **FIXED:** Validate plate identifier and resource shape *before* challenge allocation. Refuse oversized or malformed plate identifiers without consuming a nonce, but preserve signed denials for valid-shaped unknown plates. Reject retroactive issuer revocation events on creation and on signed-chain replay. Require exact integer types for credential revision and timestamps.
+- **TEST:** 95/95 local Python unit tests, 22/22 Python probes, 60/60 Bot Traffic cases, 168/168 signed policy/role/action checks, and 50/50 unique hostile-ingress cases (395 passes; five external calculator cases pending).
+- **RELEASE PROCESS:** First ledger run found two expected packaging-test failures because `index.html` and source pins still described the old engine. Regenerated browser sources, reran the complete ledger (395/395 recorded local passes), then rebuilt the final HTML from the green ledger. This mismatch was packaging-order, not an admission bypass.
+- **BUILD:** Full 399-entry evidence record retained in `evaluation/SCENARIO-RESULTS.json`; compact single-file HTML embeds a lossless gzip/Base64 copy. The browser requires `DecompressionStream` and separately loads Pyodide. Source-mismatch packaging checks ran RED before regeneration; final builds were checked for equivalent decoded records.
+- **BOUNDARY:** Neither this release nor any local test proves secure real-world registration, legal permission enforcement, actual bot use, or live Safari/Pyodide execution. The issuer keys and private seeds remain demo-local and copyable.
+
 # Virtual DMV / Bot Traffic — crypto/safety v0.5 (2026-10-20)
 
 - **RED:** 14 targeted security tests initially produced 24 failures and three errors (one differential crypto control already passed). The red test file had intentionally generated multiple noncanonical signatures, an owner-intent successor mismatch and unsafe malformed traffic; see `evaluation/CRYPTO-RED-V05.txt` for the original run.

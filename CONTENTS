@@ -56,3 +56,11 @@ No real identity credentials or legal permissions are issued here.
 
   evaluation/TRAFFIC-RED-V04.txt     (actual v0.4 pre-fix regression failures)
   tests/test_traffic_v04.py         (six saturation and envelope regression tests)
+
+V0.6 testing and authenticity notes:
+  evaluation/INPUT-BOUNDARIES-RED-V06.txt (pre-fix red)
+  evaluation/INPUT-BOUNDARIES-V06.md (why/how fixed)
+  evaluation/INGRESS-MATRIX-V06.json (50 unique hostile-input scenarios)
+  tests/test_input_boundaries_v06.py
+  tests/test_ingress_matrix_v06.py
+  tools/run_ingress_matrix.py

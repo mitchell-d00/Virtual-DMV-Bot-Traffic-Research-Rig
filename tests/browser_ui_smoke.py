@@ -7,6 +7,7 @@ Requires Playwright and local Chromium. Uses page.set_content and a preloaded mo
 import pathlib
 import json
 import sys
+import base64, gzip
 ROOT=pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/"src"))
 from virtual_dmv.engine import traffic_cases
@@ -48,6 +49,8 @@ with sync_playwright() as p:
         page.locator('#scenarioFilter').select_option('security_policy_matrix')
         assert page.locator('#scenarioRows .scenario-card').count()==168
         assert 'research-library' in page.locator('#scenarioRows').inner_text()
+        page.locator('#scenarioFilter').select_option('traffic_ingress_matrix')
+        assert page.locator('#scenarioRows .scenario-card').count()==50
         page.locator('#scenarioFilter').select_option('all')
         page.locator('#scenarioFilter').select_option('playable_game')
         assert page.locator('#scenarioRows .scenario-card').count()==60
@@ -67,7 +70,9 @@ with sync_playwright() as p:
         page.locator('[data-tab="scenarioLog"]').click()
         # Manual calculator evidence import: distinct records, not a browser-origin claim.
         import json, re
-        data=json.loads(re.search(r'<script type="application/json" id="scenarioManifest">(.*?)</script>',(ROOT/'index.html').read_text(),re.S).group(1))
+        packed=json.loads(re.search(r'<script type="application/json" id="scenarioManifest">(.*?)</script>',(ROOT/'index.html').read_text(),re.S).group(1))
+        assert packed['compression']=='gzip-base64-v1'
+        data=json.loads(gzip.decompress(base64.b64decode(packed['data'])))
         calcs=[x for x in data['scenarios'] if x['kind']=='mitchell_tech_manual']
         sample={'schema':'vdmv.mitchelltech.v1','source':'window.MitchellTech.calculate',
           'cases':[{'id':x['id'],'expression':x['input'],'result':{'ok':True,'value':int(x['expected'])}} for x in calcs]}

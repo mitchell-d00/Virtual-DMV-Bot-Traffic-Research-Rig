@@ -30,7 +30,8 @@ class ScenarioPublication(unittest.TestCase):
         self.assertIn('scenarioManifest',html)
         self.assertIn('CASE ',html)
         self.assertIn('copyCalculator',html)
-        self.assertIn('GAME-001',html)
+        self.assertIn('gzip-base64-v1',html)
+        self.assertIn('GAME-001',{x['id'] for x in self.rows})
         self.assertNotIn('__SCENARIO_REPORT__',html)
 
 if __name__=='__main__':unittest.main()

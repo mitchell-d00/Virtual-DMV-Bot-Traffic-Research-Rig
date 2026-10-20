@@ -1,4 +1,4 @@
-# Scope and threat model (v0.5)
+# Scope and threat model (v0.6)
 
 ## In-scope tests
 
@@ -36,3 +36,11 @@ Issuer signs plate + transition events. Owner signs challenge and ownership inte
 - Canonical JSON here is the Python implementation's internal `json.dumps(sort_keys=True,ensure_ascii=True)` format, **not** an interoperability-standard canonical JSON protocol. Implementations in other languages must agree on exact bytes; further cross-platform tests are mandatory.
 - Pyodide loads from an external jsDelivr URL without a cryptographic SRI pin; packaging the source in HTML does **not** guarantee runtime supply-chain integrity. Real CDN/iPad startup and reload tests are required.
 - Signed receipts do not prove an action was actually prevented or that downstream use respected conditions. Missing tail, key theft, issuer collusion, and selective denial of service remain out of scope.
+
+## v0.6 ingress and audit chronology
+
+- Bound challenge plate IDs and reject non-JSON identifier types **before pending-state allocation**. A well-formed unregistered plate may receive a challenge, but cannot gain admission simply by naming one.
+- Reject malformed resource types with a protocol error, not a raw hashability exception. This is an API validation boundary, **not** a hosted-service request firewall.
+- Enforce chronology for issuer revocations both when appended and during signed event-chain replay. A cryptographically valid event can still be semantically invalid.
+- Exact integer metadata rejects Boolean/integer confusion in signed credential fields.
+- The 50-case ingress matrix is synthetic and distinct by structured input. Real HTTP ingress limits, key secrecy, race conditions and actual Safari/Pyodide startup are **not** tested.

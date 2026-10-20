@@ -1,8 +1,8 @@
 {
-  "schema": "virtual-dmv-release-pins-v5",
-  "version": "0.5.0",
+  "schema": "virtual-dmv-release-pins-v6",
+  "version": "0.6.0",
   "release_date": "2026-10-20",
-  "file_count_excluding_manifest": 60,
+  "file_count_excluding_manifest": 66,
   "files": {
     ".gitignore": {
       "sha256": "629163744fa07bf4419b4094fda8446ecaba9a24f94fe9f577a9bd9d66e34e5f",
@@ -13,8 +13,8 @@
       "bytes": 332
     },
     "CONTENTS": {
-      "sha256": "21bee1d31a657bb86cc548bccddd2dcd2ed17122a6351341a47b25005b06fa63",
-      "bytes": 2122
+      "sha256": "3573a6eb6a6b4fb3ea904d8e492aae4167172873fa7cf51e71068ef9d6d94d51",
+      "bytes": 2444
     },
     "CORPUS/01-Foundations/Admissibility.md": {
       "sha256": "fb9e8f331529e6bffc7c79e16dfbfae34ec6e9500a26074fd5c3203a9ef51604",
@@ -65,12 +65,12 @@
       "bytes": 933
     },
     "README.md": {
-      "sha256": "0af5ad250256eb3489c287001971a70af7cc141f26f02f10343dff37351c0942",
-      "bytes": 15951
+      "sha256": "19be5b99b64c5ce2c65be24563fd547fa2521483b46639e20de5447a5fa04006",
+      "bytes": 17316
     },
     "RELEASE-NOTES.md": {
-      "sha256": "c0e89fcd645bdc2a6073b674b9c6c282a3f6f92b9c6bc04f2b5f4568624f03a1",
-      "bytes": 7090
+      "sha256": "eedf7abd9da96dcebc63a751b1c2a6d43964abf98476c3509bc0bf4c2c4d5334",
+      "bytes": 8863
     },
     "SPECS/.well-known-bot-participation.example.json": {
       "sha256": "9680b4890e770328f7e998bd6f771cf0ed74fc4905f42b63e9457e65d023bb04",
@@ -85,23 +85,23 @@
       "bytes": 284
     },
     "browser/client.js": {
-      "sha256": "71d701a87380b78c94c0a488a43212189629cc66f99f606f54969d2bcaa59945",
-      "bytes": 21885
+      "sha256": "4d7691c6e4819c6e776e272cc9cc3675cee30a6a8e3ccbcb7d58f49cff9600c4",
+      "bytes": 22652
     },
     "browser/style.css": {
       "sha256": "023f149a8feb77b84098ddca9e5eba39e067c682bae8d2847dbddd72e56c4e71",
       "bytes": 6661
     },
     "browser/template.html": {
-      "sha256": "b6816ee41ce34f3cf0d8117f54a6e9c50f4e277dec5fdfbd13c7101acc24e888",
-      "bytes": 13315
+      "sha256": "488d9d3463118a9e0a3b2b3575bce6b609e1d4a25c657addc9b914e760e8e9be",
+      "bytes": 13386
     },
     "docs/BROWSER-AND-AGENT-API.md": {
       "sha256": "b817587889b780300f47b3f72954b44ecdb8d43979e57ed73af758c8af10e634",
       "bytes": 2089
     },
     "docs/ENGINE-SOURCE-PINS.json": {
-      "sha256": "c9fa5c38c49a309019e6f43d872b078db15e48c7a606edd2abeb6678afa23ee5",
+      "sha256": "2483457800eabe404756ac30fd1079bc96c9a43c7e4478ca1f91bf596135fe41",
       "bytes": 469
     },
     "docs/HTML-PARALLEL-DECLARATIONS.md": {
@@ -109,12 +109,12 @@
       "bytes": 1735
     },
     "docs/TESTING.md": {
-      "sha256": "6777d28cef8e3bfe828f5dac9218f2e1ed7fe0aa62ea537ffc91c3726e0c2e7d",
-      "bytes": 9386
+      "sha256": "0618116ecd304a3b835142e3991acfe82e1e6084486b42f2f1deaaa77efdbd1f",
+      "bytes": 11028
     },
     "docs/THREAT-MODEL.md": {
-      "sha256": "fd3edcc556ba9a054b15f1b5db6127d2896ee983352666751e03b70dfc394b31",
-      "bytes": 4050
+      "sha256": "77768c5e98a5ebf254bc2deaf8e4343c3be4e8ea2e029566595dd126cec077db",
+      "bytes": 4907
     },
     "evaluation/CALCULATOR-CROSSCHECK.md": {
       "sha256": "7552d6e13219ed1647f7e97d9d2db7f102c661b03d4025dad41a62fcee321743",
@@ -132,6 +132,18 @@
       "sha256": "6b0870e534d91af67f0ea05fa4c42614e04dc2185e2ee5b4f134e7aa15d62ac2",
       "bytes": 1692
     },
+    "evaluation/INGRESS-MATRIX-V06.json": {
+      "sha256": "d3ff48e5921835eecfa0ddb61a0ae6401f3e350506c88957bcb2fcae78ae7d1e",
+      "bytes": 39368
+    },
+    "evaluation/INPUT-BOUNDARIES-RED-V06.txt": {
+      "sha256": "67fc075556cb91aff7cc95e63c2eb1af149d86f380707b66212b21e9cbd7ee8e",
+      "bytes": 14310
+    },
+    "evaluation/INPUT-BOUNDARIES-V06.md": {
+      "sha256": "0d1973b7090cc0c65c01d2f8bd93a98e327e577eb935e502bfe3199f33f37496",
+      "bytes": 3085
+    },
     "evaluation/PENDING-RED-V05.txt": {
       "sha256": "3fafb3e3542e7285f69ff690de52cf44f515834393c5fc48d58ef7108ce0bb87",
       "bytes": 1476
@@ -145,8 +157,8 @@
       "bytes": 2571
     },
     "evaluation/SCENARIO-RESULTS.json": {
-      "sha256": "000a1b92248fcd2d481a5c6d449edab1222bcf4394ddd74378d1d1674d49ecaf",
-      "bytes": 256546
+      "sha256": "74be2dcfc76a1bb38157f63c0ccb4ec468eba52ec8a0b20d0f842919ba8b55c0",
+      "bytes": 241595
     },
     "evaluation/TRAFFIC-RED-V03.txt": {
       "sha256": "c4b8f74851bcc9b14a8bc0c0bc8b03c52c3b3579c97da442c1da8b3566dae786",
@@ -165,11 +177,11 @@
       "bytes": 1083
     },
     "index.html": {
-      "sha256": "58b6a777bd2319c4ccc0229ef15f810e2ba8a4d49c63cd408f145e4b7fbe80af",
-      "bytes": 317034
+      "sha256": "00a3158b6bba0449f150056957c82fc1e8f010b5c5076ddf13c7a77c177cf32f",
+      "bytes": 132094
     },
     "pyproject.toml": {
-      "sha256": "ed9b905a175e395306b19a98884fadb62c694cd9ed96edc0e6e248d5c1e27b46",
+      "sha256": "9145f841056fd2011bd2d7a64ec67dc41956899fe8e4839c07eb247504c98361",
       "bytes": 546
     },
     "src/virtual_dmv/__init__.py": {
@@ -185,20 +197,20 @@
       "bytes": 3328
     },
     "src/virtual_dmv/engine.py": {
-      "sha256": "7b5e74509984363e48f0153c80650e6b51354785f846635c26da88379a6590fc",
-      "bytes": 51884
+      "sha256": "6f8c17df1c558882f8c8af1297b3418608f86a2fbf330eb48409a3e7ce9074a0",
+      "bytes": 52389
     },
     "src/virtual_dmv/portable.py": {
       "sha256": "4e1f2b3156375ee81fa045815db9b951a6560fd3b1ae06bf4ab7c3474b670ccf",
       "bytes": 4773
     },
     "tests/browser_ui_smoke.py": {
-      "sha256": "adfb4bb3e6d0a1d1e9b972764610444a1925db283201313bf26094c5477c15ba",
-      "bytes": 6230
+      "sha256": "04d67139f28084860b3af965cf5a97ded3cb4dcc8599f06d813d74d3de1dfdbd",
+      "bytes": 6534
     },
     "tests/test_bundle.py": {
-      "sha256": "ce7e8f72d84189380b2e2f3156f6313ae1ce312a9fd559a903e7b5405f18fc1b",
-      "bytes": 3431
+      "sha256": "91d1497347cc7dcd8fb4677bb8d3336028d1ce9401a1571d3c6f905139791045",
+      "bytes": 3991
     },
     "tests/test_crypto_v05.py": {
       "sha256": "e091c5c5d396c092afe48a27343a2ca2e2d6574ce49fd3af947914d48d08ddd8",
@@ -212,13 +224,21 @@
       "sha256": "fb9bb8a1a305e454872d944c9cb79b33fe33f61edfb463aa2f1b110d6b7ba252",
       "bytes": 850
     },
+    "tests/test_ingress_matrix_v06.py": {
+      "sha256": "70a520150d92a9719ae5298d66c4a3521c6abfc619d84dd299fb4cd634359ce8",
+      "bytes": 636
+    },
+    "tests/test_input_boundaries_v06.py": {
+      "sha256": "591470448619600eb286e638349708c30275dde1b6f0e6339e763fbb6f9f85af",
+      "bytes": 4237
+    },
     "tests/test_pending_integrity_v05.py": {
       "sha256": "36339d2782fea07802ab864c721a17e2d9b437c05acfb12a178f0dcb811bd434",
       "bytes": 1270
     },
     "tests/test_scenarios.py": {
-      "sha256": "4b6c21f1742aacd02431d678e85d98e20b8b1ec381a7fda48e86e47dbcb26949",
-      "bytes": 1887
+      "sha256": "e6bc80ed608bb94efb19042585b65ae2964012de09335a9d8ed717f18a0fec2f",
+      "bytes": 1956
     },
     "tests/test_security_matrix_v05.py": {
       "sha256": "e18f1fb56010c6316d249d14b492c1db420a9c13d23d6750fe59265c54dfdb69",
@@ -233,17 +253,21 @@
       "bytes": 4083
     },
     "tools/build_browser.py": {
-      "sha256": "0d3ef2bced6659a188ce19d3691a95cdf1d007e6ad487fc97e17cc3473b8f832",
-      "bytes": 1766
+      "sha256": "167995c7a814afa211fd807779eaf9f5737aa068dcb3b24d2eebbb09dc196914",
+      "bytes": 1935
+    },
+    "tools/run_ingress_matrix.py": {
+      "sha256": "912459cc841d2bfff1596d275de0d438215e8054808452054f3607f1fa3d154b",
+      "bytes": 3811
     },
     "tools/run_scenarios.py": {
-      "sha256": "940b264a73afc1ee7ca199a6b599acb38ffe637ac8e9d259aa9aa947375ed778",
-      "bytes": 7441
+      "sha256": "a7c18b97a49aba6cdcd868d17604f679df24a378522a8ed4410bb5532115c352",
+      "bytes": 7873
     },
     "tools/run_security_matrix.py": {
       "sha256": "aa38087feada01c788d718ca42cd78c19c7296c8aff3d6ca7f3a2342e544ca3f",
       "bytes": 3119
     }
   },
-  "notice": "Verified local reference release. Hashes show packaged-byte consistency, not production security, legal authority or browser deployment."
+  "notice": "Local synthetic tests; not a live browser, security or legal authorization certification."
 }

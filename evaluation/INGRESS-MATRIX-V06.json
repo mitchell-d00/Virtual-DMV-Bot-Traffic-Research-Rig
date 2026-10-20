@@ -1,0 +1,1018 @@
+{
+  "schema": "vdmv.ingress.v1",
+  "scenarios": [
+    {
+      "id": "INGRESS-001",
+      "kind": "traffic_ingress_matrix",
+      "title": "bad plate null",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": null,
+        "resource": "research-library",
+        "action": "crawl"
+      },
+      "expected": "reject",
+      "observed": {
+        "exception": "ProtocolError",
+        "message": "invalid challenge plate identifier"
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-002",
+      "kind": "traffic_ingress_matrix",
+      "title": "bad plate list",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": [],
+        "resource": "research-library",
+        "action": "crawl"
+      },
+      "expected": "reject",
+      "observed": {
+        "exception": "ProtocolError",
+        "message": "invalid challenge plate identifier"
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-003",
+      "kind": "traffic_ingress_matrix",
+      "title": "bad plate dict",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": {},
+        "resource": "research-library",
+        "action": "crawl"
+      },
+      "expected": "reject",
+      "observed": {
+        "exception": "ProtocolError",
+        "message": "invalid challenge plate identifier"
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-004",
+      "kind": "traffic_ingress_matrix",
+      "title": "bad plate zero",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": 0,
+        "resource": "research-library",
+        "action": "crawl"
+      },
+      "expected": "reject",
+      "observed": {
+        "exception": "ProtocolError",
+        "message": "invalid challenge plate identifier"
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-005",
+      "kind": "traffic_ingress_matrix",
+      "title": "bad plate bool",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": true,
+        "resource": "research-library",
+        "action": "crawl"
+      },
+      "expected": "reject",
+      "observed": {
+        "exception": "ProtocolError",
+        "message": "invalid challenge plate identifier"
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-006",
+      "kind": "traffic_ingress_matrix",
+      "title": "bad plate empty",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "",
+        "resource": "research-library",
+        "action": "crawl"
+      },
+      "expected": "reject",
+      "observed": {
+        "exception": "ProtocolError",
+        "message": "invalid challenge plate identifier"
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-007",
+      "kind": "traffic_ingress_matrix",
+      "title": "bad plate nul",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "VDMV\u0000INJECT",
+        "resource": "research-library",
+        "action": "crawl"
+      },
+      "expected": "reject",
+      "observed": {
+        "exception": "ProtocolError",
+        "message": "invalid challenge plate identifier"
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-008",
+      "kind": "traffic_ingress_matrix",
+      "title": "bad plate whitespace",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "VDMV INJECT",
+        "resource": "research-library",
+        "action": "crawl"
+      },
+      "expected": "reject",
+      "observed": {
+        "exception": "ProtocolError",
+        "message": "invalid challenge plate identifier"
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-009",
+      "kind": "traffic_ingress_matrix",
+      "title": "bad plate newline",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "VDMV\nINJECT",
+        "resource": "research-library",
+        "action": "crawl"
+      },
+      "expected": "reject",
+      "observed": {
+        "exception": "ProtocolError",
+        "message": "invalid challenge plate identifier"
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-010",
+      "kind": "traffic_ingress_matrix",
+      "title": "bad plate cyrillic",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "VDMV-аBC",
+        "resource": "research-library",
+        "action": "crawl"
+      },
+      "expected": "reject",
+      "observed": {
+        "exception": "ProtocolError",
+        "message": "invalid challenge plate identifier"
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-011",
+      "kind": "traffic_ingress_matrix",
+      "title": "bad plate accent",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "VDMV-é",
+        "resource": "research-library",
+        "action": "crawl"
+      },
+      "expected": "reject",
+      "observed": {
+        "exception": "ProtocolError",
+        "message": "invalid challenge plate identifier"
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-012",
+      "kind": "traffic_ingress_matrix",
+      "title": "bad plate zero-width",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "VDMV-​LAB",
+        "resource": "research-library",
+        "action": "crawl"
+      },
+      "expected": "reject",
+      "observed": {
+        "exception": "ProtocolError",
+        "message": "invalid challenge plate identifier"
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-013",
+      "kind": "traffic_ingress_matrix",
+      "title": "oversized plate 73",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+        "resource": "research-library",
+        "action": "crawl"
+      },
+      "expected": "reject",
+      "observed": {
+        "exception": "ProtocolError",
+        "message": "invalid challenge plate identifier"
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-014",
+      "kind": "traffic_ingress_matrix",
+      "title": "oversized plate 74",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+        "resource": "research-library",
+        "action": "crawl"
+      },
+      "expected": "reject",
+      "observed": {
+        "exception": "ProtocolError",
+        "message": "invalid challenge plate identifier"
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-015",
+      "kind": "traffic_ingress_matrix",
+      "title": "oversized plate 75",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+        "resource": "research-library",
+        "action": "crawl"
+      },
+      "expected": "reject",
+      "observed": {
+        "exception": "ProtocolError",
+        "message": "invalid challenge plate identifier"
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-016",
+      "kind": "traffic_ingress_matrix",
+      "title": "oversized plate 76",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+        "resource": "research-library",
+        "action": "crawl"
+      },
+      "expected": "reject",
+      "observed": {
+        "exception": "ProtocolError",
+        "message": "invalid challenge plate identifier"
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-017",
+      "kind": "traffic_ingress_matrix",
+      "title": "oversized plate 77",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+        "resource": "research-library",
+        "action": "crawl"
+      },
+      "expected": "reject",
+      "observed": {
+        "exception": "ProtocolError",
+        "message": "invalid challenge plate identifier"
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-018",
+      "kind": "traffic_ingress_matrix",
+      "title": "oversized plate 78",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+        "resource": "research-library",
+        "action": "crawl"
+      },
+      "expected": "reject",
+      "observed": {
+        "exception": "ProtocolError",
+        "message": "invalid challenge plate identifier"
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-019",
+      "kind": "traffic_ingress_matrix",
+      "title": "oversized plate 79",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+        "resource": "research-library",
+        "action": "crawl"
+      },
+      "expected": "reject",
+      "observed": {
+        "exception": "ProtocolError",
+        "message": "invalid challenge plate identifier"
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-020",
+      "kind": "traffic_ingress_matrix",
+      "title": "oversized plate 80",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+        "resource": "research-library",
+        "action": "crawl"
+      },
+      "expected": "reject",
+      "observed": {
+        "exception": "ProtocolError",
+        "message": "invalid challenge plate identifier"
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-021",
+      "kind": "traffic_ingress_matrix",
+      "title": "oversized plate 81",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+        "resource": "research-library",
+        "action": "crawl"
+      },
+      "expected": "reject",
+      "observed": {
+        "exception": "ProtocolError",
+        "message": "invalid challenge plate identifier"
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-022",
+      "kind": "traffic_ingress_matrix",
+      "title": "oversized plate 82",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+        "resource": "research-library",
+        "action": "crawl"
+      },
+      "expected": "reject",
+      "observed": {
+        "exception": "ProtocolError",
+        "message": "invalid challenge plate identifier"
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-023",
+      "kind": "traffic_ingress_matrix",
+      "title": "oversized plate 83",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+        "resource": "research-library",
+        "action": "crawl"
+      },
+      "expected": "reject",
+      "observed": {
+        "exception": "ProtocolError",
+        "message": "invalid challenge plate identifier"
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-024",
+      "kind": "traffic_ingress_matrix",
+      "title": "oversized plate 84",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+        "resource": "research-library",
+        "action": "crawl"
+      },
+      "expected": "reject",
+      "observed": {
+        "exception": "ProtocolError",
+        "message": "invalid challenge plate identifier"
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-025",
+      "kind": "traffic_ingress_matrix",
+      "title": "oversized plate 85",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+        "resource": "research-library",
+        "action": "crawl"
+      },
+      "expected": "reject",
+      "observed": {
+        "exception": "ProtocolError",
+        "message": "invalid challenge plate identifier"
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-026",
+      "kind": "traffic_ingress_matrix",
+      "title": "bad resource list",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "VDMV-RESEARCH-01",
+        "resource": [],
+        "action": "crawl"
+      },
+      "expected": "reject",
+      "observed": {
+        "exception": "ProtocolError",
+        "message": "unknown resource"
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-027",
+      "kind": "traffic_ingress_matrix",
+      "title": "bad resource dict",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "VDMV-RESEARCH-01",
+        "resource": {},
+        "action": "crawl"
+      },
+      "expected": "reject",
+      "observed": {
+        "exception": "ProtocolError",
+        "message": "unknown resource"
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-028",
+      "kind": "traffic_ingress_matrix",
+      "title": "bad resource null",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "VDMV-RESEARCH-01",
+        "resource": null,
+        "action": "crawl"
+      },
+      "expected": "reject",
+      "observed": {
+        "exception": "ProtocolError",
+        "message": "unknown resource"
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-029",
+      "kind": "traffic_ingress_matrix",
+      "title": "bad resource bool",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "VDMV-RESEARCH-01",
+        "resource": true,
+        "action": "crawl"
+      },
+      "expected": "reject",
+      "observed": {
+        "exception": "ProtocolError",
+        "message": "unknown resource"
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-030",
+      "kind": "traffic_ingress_matrix",
+      "title": "bad resource integer",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "VDMV-RESEARCH-01",
+        "resource": 7,
+        "action": "crawl"
+      },
+      "expected": "reject",
+      "observed": {
+        "exception": "ProtocolError",
+        "message": "unknown resource"
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-031",
+      "kind": "traffic_ingress_matrix",
+      "title": "bad resource missing",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "VDMV-RESEARCH-01",
+        "resource": "unregistered-library",
+        "action": "crawl"
+      },
+      "expected": "reject",
+      "observed": {
+        "exception": "ProtocolError",
+        "message": "unknown resource"
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-032",
+      "kind": "traffic_ingress_matrix",
+      "title": "bad action list",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "VDMV-RESEARCH-01",
+        "resource": "research-library",
+        "action": []
+      },
+      "expected": "reject",
+      "observed": {
+        "exception": "ProtocolError",
+        "message": "invalid action"
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-033",
+      "kind": "traffic_ingress_matrix",
+      "title": "bad action dict",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "VDMV-RESEARCH-01",
+        "resource": "research-library",
+        "action": {}
+      },
+      "expected": "reject",
+      "observed": {
+        "exception": "ProtocolError",
+        "message": "invalid action"
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-034",
+      "kind": "traffic_ingress_matrix",
+      "title": "bad action null",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "VDMV-RESEARCH-01",
+        "resource": "research-library",
+        "action": null
+      },
+      "expected": "reject",
+      "observed": {
+        "exception": "ProtocolError",
+        "message": "invalid action"
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-035",
+      "kind": "traffic_ingress_matrix",
+      "title": "bad action bool",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "VDMV-RESEARCH-01",
+        "resource": "research-library",
+        "action": true
+      },
+      "expected": "reject",
+      "observed": {
+        "exception": "ProtocolError",
+        "message": "invalid action"
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-036",
+      "kind": "traffic_ingress_matrix",
+      "title": "bad action integer",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "VDMV-RESEARCH-01",
+        "resource": "research-library",
+        "action": 42
+      },
+      "expected": "reject",
+      "observed": {
+        "exception": "ProtocolError",
+        "message": "invalid action"
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-037",
+      "kind": "traffic_ingress_matrix",
+      "title": "bad action missing",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "VDMV-RESEARCH-01",
+        "resource": "research-library",
+        "action": "exfiltrate"
+      },
+      "expected": "reject",
+      "observed": {
+        "exception": "ProtocolError",
+        "message": "invalid action"
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-038",
+      "kind": "traffic_ingress_matrix",
+      "title": "safe unknown 0",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "VDMV-UNREGISTERED-00",
+        "resource": "research-library",
+        "action": "crawl"
+      },
+      "expected": "unknown",
+      "observed": {
+        "allow": false,
+        "reason": "UNKNOWN_OR_REVOKED",
+        "signed_receipt": true
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-039",
+      "kind": "traffic_ingress_matrix",
+      "title": "safe unknown 1",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "VDMV-UNREGISTERED-01",
+        "resource": "research-library",
+        "action": "crawl"
+      },
+      "expected": "unknown",
+      "observed": {
+        "allow": false,
+        "reason": "UNKNOWN_OR_REVOKED",
+        "signed_receipt": true
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-040",
+      "kind": "traffic_ingress_matrix",
+      "title": "safe unknown 2",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "VDMV-UNREGISTERED-02",
+        "resource": "research-library",
+        "action": "crawl"
+      },
+      "expected": "unknown",
+      "observed": {
+        "allow": false,
+        "reason": "UNKNOWN_OR_REVOKED",
+        "signed_receipt": true
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-041",
+      "kind": "traffic_ingress_matrix",
+      "title": "safe unknown 3",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "VDMV-UNREGISTERED-03",
+        "resource": "research-library",
+        "action": "crawl"
+      },
+      "expected": "unknown",
+      "observed": {
+        "allow": false,
+        "reason": "UNKNOWN_OR_REVOKED",
+        "signed_receipt": true
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-042",
+      "kind": "traffic_ingress_matrix",
+      "title": "safe unknown 4",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "VDMV-UNREGISTERED-04",
+        "resource": "research-library",
+        "action": "crawl"
+      },
+      "expected": "unknown",
+      "observed": {
+        "allow": false,
+        "reason": "UNKNOWN_OR_REVOKED",
+        "signed_receipt": true
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-043",
+      "kind": "traffic_ingress_matrix",
+      "title": "safe unknown 5",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "VDMV-UNREGISTERED-05",
+        "resource": "research-library",
+        "action": "crawl"
+      },
+      "expected": "unknown",
+      "observed": {
+        "allow": false,
+        "reason": "UNKNOWN_OR_REVOKED",
+        "signed_receipt": true
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-044",
+      "kind": "traffic_ingress_matrix",
+      "title": "safe unknown 6",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "VDMV-UNREGISTERED-06",
+        "resource": "research-library",
+        "action": "crawl"
+      },
+      "expected": "unknown",
+      "observed": {
+        "allow": false,
+        "reason": "UNKNOWN_OR_REVOKED",
+        "signed_receipt": true
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-045",
+      "kind": "traffic_ingress_matrix",
+      "title": "safe unknown 7",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "VDMV-UNREGISTERED-07",
+        "resource": "research-library",
+        "action": "crawl"
+      },
+      "expected": "unknown",
+      "observed": {
+        "allow": false,
+        "reason": "UNKNOWN_OR_REVOKED",
+        "signed_receipt": true
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-046",
+      "kind": "traffic_ingress_matrix",
+      "title": "safe unknown 8",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "VDMV-UNREGISTERED-08",
+        "resource": "research-library",
+        "action": "crawl"
+      },
+      "expected": "unknown",
+      "observed": {
+        "allow": false,
+        "reason": "UNKNOWN_OR_REVOKED",
+        "signed_receipt": true
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-047",
+      "kind": "traffic_ingress_matrix",
+      "title": "safe unknown 9",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "VDMV-UNREGISTERED-09",
+        "resource": "research-library",
+        "action": "crawl"
+      },
+      "expected": "unknown",
+      "observed": {
+        "allow": false,
+        "reason": "UNKNOWN_OR_REVOKED",
+        "signed_receipt": true
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-048",
+      "kind": "traffic_ingress_matrix",
+      "title": "safe unknown 10",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "VDMV-UNREGISTERED-10",
+        "resource": "research-library",
+        "action": "crawl"
+      },
+      "expected": "unknown",
+      "observed": {
+        "allow": false,
+        "reason": "UNKNOWN_OR_REVOKED",
+        "signed_receipt": true
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-049",
+      "kind": "traffic_ingress_matrix",
+      "title": "safe unknown 11",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "VDMV-UNREGISTERED-11",
+        "resource": "research-library",
+        "action": "crawl"
+      },
+      "expected": "unknown",
+      "observed": {
+        "allow": false,
+        "reason": "UNKNOWN_OR_REVOKED",
+        "signed_receipt": true
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    },
+    {
+      "id": "INGRESS-050",
+      "kind": "traffic_ingress_matrix",
+      "title": "known research allowed",
+      "intent": "Check preallocation input validity and either deny unknown plate with signed receipt or admit a known plate.",
+      "input": {
+        "plate": "VDMV-RESEARCH-01",
+        "resource": "research-library",
+        "action": "crawl"
+      },
+      "expected": "allow",
+      "observed": {
+        "allow": true,
+        "reason": "POLICY_ALLOW",
+        "signed_receipt": true
+      },
+      "status": "passed",
+      "source": "tools/run_ingress_matrix.py",
+      "execution": "recorded-local-python-security-matrix",
+      "overlap_note": "Each deterministic local input is unique; these are protocol tests, not HTTP field measurements."
+    }
+  ]
+}

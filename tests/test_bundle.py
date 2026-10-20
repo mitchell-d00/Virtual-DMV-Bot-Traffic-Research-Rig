@@ -31,6 +31,16 @@ class Packaging(unittest.TestCase):
         for name,expected in manifest['sha256'].items():
             self.assertEqual(hashlib.sha256((BASE/'src/virtual_dmv'/name).read_bytes()).hexdigest(),expected)
         self.assertEqual(hashlib.sha256((BASE/'index.html').read_bytes()).hexdigest(),manifest['standalone_html_sha256'])
+    def test_embedded_compressed_scenarios_are_exact(self):
+        import base64,gzip
+        html=(BASE/'index.html').read_text()
+        body=re.search(r'<script type="application/json" id="scenarioManifest">(.*?)</script>',html,re.S)
+        self.assertIsNotNone(body)
+        packed=json.loads(body.group(1))
+        self.assertEqual(packed['compression'],'gzip-base64-v1')
+        observed=json.loads(gzip.decompress(base64.b64decode(packed['data'])))
+        self.assertEqual(observed,json.loads((BASE/'evaluation/SCENARIO-RESULTS.json').read_text()))
+
     def test_example_policy_is_canonical(self):
         spec=json.loads((BASE/'SPECS/participation-policy.example.json').read_text())
         self.assertEqual(spec['resources'],POLICIES)

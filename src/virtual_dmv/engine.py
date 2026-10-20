@@ -91,8 +91,8 @@ def _validate_credential(credential, issuer_public, issuer_id):
     p=credential["payload"]
     _need(p.get("schema")=="vdmv.plate.v1" and p.get("issuer")==issuer_id, "invalid plate schema/issuer")
     _need(_named(p.get("plate_id")) and p.get("participation_class") in CLASSES, "invalid plate ID/class")
-    _need(isinstance(p.get("revision"),int) and p["revision"]>=1,"invalid plate revision")
-    _need(isinstance(p.get("issued_at"),int) and isinstance(p.get("expires_at"),int) and p["expires_at"]>p["issued_at"],"invalid plate validity")
+    _need(type(p.get("revision")) is int and p["revision"]>=1,"invalid plate revision")
+    _need(type(p.get("issued_at")) is int and type(p.get("expires_at")) is int and p["expires_at"]>p["issued_at"],"invalid plate validity")
     _need(isinstance(p.get("owner_public_key"),str),"owner key missing")
     _need(verify(issuer_public,p,credential.get("signature")),"bad plate signature")
     return p
@@ -162,6 +162,7 @@ def audit(state):
             ident=data.get("plate_id"); old=known.get(ident)
             _need(old is not None and old["status"]=="active","invalid revocation")
             _need(data.get("from_revision")==old["credential"]["payload"]["revision"],"stale revocation")
+            _need(type(data.get("revoked_at")) is int and data["revoked_at"]>=old["credential"]["payload"]["issued_at"],"retroactive or invalid revocation time")
             known[ident]={**old,"status":"revoked","events":n}
         else:
             raise ProtocolError("unknown signed event type")
@@ -231,12 +232,14 @@ def renew(state, plate_id, owner, *, now=None, ttl=86400):
 def revoke(state, plate_id, *, now=None):
     latest=audit(state).get(plate_id)
     _need(latest is not None and latest["status"]=="active","plate inactive or unknown")
-    _event(state,"revoke",{"plate_id":plate_id,"from_revision":latest["credential"]["payload"]["revision"],"revoked_at":_clock(now)})
+    stamp=_clock(now)
+    _need(stamp>=latest["credential"]["payload"]["issued_at"],"retroactive revocation time")
+    _event(state,"revoke",{"plate_id":plate_id,"from_revision":latest["credential"]["payload"]["revision"],"revoked_at":stamp})
     return {"plate_id":plate_id,"status":"revoked"}
 
 
 def _policy(state, resource):
-    _need(resource in state["policies"],"unknown resource")
+    _need(type(resource) is str and resource in state["policies"],"unknown resource")
     return state["policies"][resource]
 
 
@@ -249,6 +252,9 @@ def policy_decision(state, resource, action, role=None, anonymous=False):
 
 
 def challenge(state, plate_id, resource, action, *, now=None):
+    # Validate ingress before allocating a nonce or writing pending state.
+    # Unknown *well-shaped* identifiers still receive normal signed denials.
+    _need(_named(plate_id),"invalid challenge plate identifier")
     _policy(state,resource)
     _need(action in ACTIONS,"invalid action")
     stamp=_clock(now)

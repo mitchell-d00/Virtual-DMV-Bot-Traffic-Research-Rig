@@ -6,6 +6,8 @@ This is an intentional and documented runtime dependency, not an offline binary.
 from pathlib import Path
 import json
 import hashlib
+import gzip
+import base64
 
 ROOT=Path(__file__).resolve().parents[1]
 files={"portable.py":ROOT/"src/virtual_dmv/portable.py",
@@ -16,7 +18,8 @@ source_json=json.dumps(source,ensure_ascii=True).replace('<','\\u003c').replace(
 base=(ROOT/"browser/template.html").read_text(encoding='utf8')
 html=base.replace('__STYLE__',(ROOT/"browser/style.css").read_text(encoding='utf8'))
 report=json.loads((ROOT/'evaluation/SCENARIO-RESULTS.json').read_text(encoding='utf8'))
-scenario_json=json.dumps(report,ensure_ascii=True).replace('<','\\u003c').replace('>','\\u003e').replace('&','\\u0026')
+scenario_text=json.dumps(report,ensure_ascii=False,separators=(',',':')).encode('utf-8')
+scenario_json=json.dumps({'compression':'gzip-base64-v1','data':base64.b64encode(gzip.compress(scenario_text,compresslevel=9,mtime=0)).decode('ascii')},separators=(',',':'))
 html=html.replace('__SCENARIO_REPORT__',scenario_json)
 html=html.replace('__PYTHON_SOURCES__',source_json)
 html=html.replace('__CLIENT__',(ROOT/"browser/client.js").read_text(encoding='utf8').replace('</script','<\\/script'))

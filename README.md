@@ -78,6 +78,14 @@ await window.VirtualDMV.command('bench');
 
 This JavaScript object calls the **same Python engine** through Pyodide. It is page-local and is not a remote HTTP endpoint. Scripts running in the page have access to the demo workspace; only use trusted scripts.
 
+## v0.6 verified security/traffic iteration (2026-10-20)
+
+**395 recorded local passes / 400 unique evidence entries:** 95 Python unit tests, 22 Python probes, 60 isolated Bot Traffic decisions, 168 policy/receipt matrix cases, 50 unique ingress cases and five still-pending external Mitchell Tech calculator checks. Some behaviors overlap across banks; counts are not independent experiments. Browser UI wiring is tested with a stub interpreter, not a live Safari/Pyodide proof.
+
+**New red→green:** rejected oversized and non-string plate IDs *before* challenge allocation, fail-closed handling of malformed resource types, no backdated issuer revocations or signed audit records, and exact-integer credential metadata (no `True` as revision `1`). See `evaluation/INPUT-BOUNDARIES-RED-V06.txt` (original failed assertions) and `evaluation/INPUT-BOUNDARIES-V06.md` (reproduction and limitations).
+
+A new **50-case unique traffic ingress matrix** separately records invalid plate, resource and action types, 12 distinct unknown registered-shape plates, and an authorized positive control. Each case shows input, expected behavior, observed behavior and local-test provenance. All source papers are kept byte-identical. The local cryptography remains educational, the browser keys exportable, and browser runtime startup not independently checked on iPad hardware.
+
 ## v0.5 verified snapshot (2026-10-20)
 
 **334 recorded local passes / 339 visible scenario entries:** 84 Python unit tests, 22 Python gate probes, 60 isolated Bot Traffic game outcomes, 168 unique signed policy/role/action requests, and five explicitly pending external Mitchell Tech calculator checks. These are overlapping synthetic checks, not 334 independent security experiments. The 390px/1280px Chromium UI smoke exercised controls with a stub interpreter; the live hosted Pyodide runtime and iPad Safari have **not** been verified here.

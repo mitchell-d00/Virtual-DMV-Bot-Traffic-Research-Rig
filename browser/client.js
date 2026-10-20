@@ -6,7 +6,16 @@ const storeKey='virtual-dmv-lab-state-v1';
 const $=id=>document.getElementById(id);
 let py=null, state=null, gameCases=[], caseIndex=0, gameResolved=false, inspected=false, verdict=null;
 let gameScore=0, correct=0, played=0, busy=false;
-const releaseEvidence=JSON.parse(document.getElementById('scenarioManifest').textContent);
+let releaseEvidence=null;
+async function loadReleaseEvidence(){
+  const packed=JSON.parse(document.getElementById('scenarioManifest').textContent);
+  if(packed.compression!=='gzip-base64-v1' || typeof packed.data!=='string')throw Error('Unsupported scenario evidence format');
+  if(typeof DecompressionStream!=='function')throw Error('This browser lacks built-in gzip DecompressionStream support. Use modern Safari, Chrome or Firefox.');
+  const bytes=Uint8Array.from(atob(packed.data),c=>c.charCodeAt(0));
+  const decoded=await new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'))).text();
+  releaseEvidence=JSON.parse(decoded);
+  if(!Array.isArray(releaseEvidence.scenarios))throw Error('Scenario evidence payload invalid');
+}
 const liveEvidence=new Map();
 const gameEvidence=[];
 function formatEvidence(){
@@ -37,7 +46,7 @@ function renderScenarioLedger(){
   }
   $('scenarioCount').textContent=shown.length+'/'+all.length+' cases';
   const passed=all.filter(x=>x.status==='passed').length,pending=all.filter(x=>x.status==='pending').length;
-  $('scenarioSummary').textContent=passed+' recorded PASS, '+pending+' external PENDING; '+shown.length+' shown. '+releaseEvidence.summary.unit+' CLI units, '+releaseEvidence.summary.probe+' browser probes, '+releaseEvidence.summary.game+' game cases, '+(releaseEvidence.summary.security_matrix||0)+' signed policy-matrix cases. Names/IDs are unique; logical coverage can overlap.';
+  $('scenarioSummary').textContent=passed+' recorded PASS, '+pending+' external PENDING; '+shown.length+' shown. '+releaseEvidence.summary.unit+' CLI units, '+releaseEvidence.summary.probe+' browser probes, '+releaseEvidence.summary.game+' game cases, '+(releaseEvidence.summary.security_matrix||0)+' signed policy-matrix cases, '+(releaseEvidence.summary.ingress_matrix||0)+' hostile-input cases. Names/IDs are unique; logical coverage can overlap.';
 }
 
 const pretty=x=>JSON.stringify(x,null,2);
@@ -323,10 +332,10 @@ function wire(){
 }
 const ready=new Promise((resolve,reject)=>{
   window.addEventListener('DOMContentLoaded',async()=>{
-    enableControls(false);wire();
-    try{await initializePython();resolve(true)}catch(e){status('Python failed to load');info('STARTUP FAILURE: '+e.message+' — Internet and a browser supporting WebAssembly are required for this CDN-loaded Python runtime. Refresh when available.');reject(e)}
+    enableControls(false);
+    try{await loadReleaseEvidence();wire();await initializePython();resolve(true)}catch(e){status('Python failed to load');info('STARTUP FAILURE: '+e.message+' — Internet and a browser supporting WebAssembly are required for this CDN-loaded Python runtime. Refresh when available.');reject(e)}
   },{once:true});
 });
-window.VirtualDMV=Object.freeze({version:'0.5.0',ready:()=>ready,command:async(op,args)=>{await ready;return command(op,args)},snapshot:()=>structuredClone(state),help:()=>['roster','audit','owner','issue','renew','transfer','revoke','request','policy','policies','casebook','game_try','economics','bench'],
+window.VirtualDMV=Object.freeze({version:'0.6.0',ready:()=>ready,command:async(op,args)=>{await ready;return command(op,args)},snapshot:()=>structuredClone(state),help:()=>['roster','audit','owner','issue','renew','transfer','revoke','request','policy','policies','casebook','game_try','economics','bench'],
   warning:'This is a page-local test engine. Calling it does not authenticate to remote resource hosts.'});
 })();

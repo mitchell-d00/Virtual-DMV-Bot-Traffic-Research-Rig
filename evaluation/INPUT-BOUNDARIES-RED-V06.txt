@@ -1,0 +1,172 @@
+test_bad_plate_unicode_nul_and_whitespace_rejected (test_input_boundaries_v06.ChallengeIngress.test_bad_plate_unicode_nul_and_whitespace_rejected) ... 
+  test_bad_plate_unicode_nul_and_whitespace_rejected (test_input_boundaries_v06.ChallengeIngress.test_bad_plate_unicode_nul_and_whitespace_rejected) (label="'bad\\x00plate'") ... FAIL
+  test_bad_plate_unicode_nul_and_whitespace_rejected (test_input_boundaries_v06.ChallengeIngress.test_bad_plate_unicode_nul_and_whitespace_rejected) (label="'VDMV LAB'") ... FAIL
+  test_bad_plate_unicode_nul_and_whitespace_rejected (test_input_boundaries_v06.ChallengeIngress.test_bad_plate_unicode_nul_and_whitespace_rejected) (label="'VDMV-аBC'") ... FAIL
+  test_bad_plate_unicode_nul_and_whitespace_rejected (test_input_boundaries_v06.ChallengeIngress.test_bad_plate_unicode_nul_and_whitespace_rejected) (label="''") ... FAIL
+test_long_plate_id_cannot_fill_pending_storage (test_input_boundaries_v06.ChallengeIngress.test_long_plate_id_cannot_fill_pending_storage) ... FAIL
+test_nonhashable_resource_is_protocol_error (test_input_boundaries_v06.ChallengeIngress.test_nonhashable_resource_is_protocol_error) ... 
+  test_nonhashable_resource_is_protocol_error (test_input_boundaries_v06.ChallengeIngress.test_nonhashable_resource_is_protocol_error) (resource='[]') ... ERROR
+  test_nonhashable_resource_is_protocol_error (test_input_boundaries_v06.ChallengeIngress.test_nonhashable_resource_is_protocol_error) (resource="{'resource': 'open-index'}") ... ERROR
+test_nonstring_plate_ids_fail_before_challenge_allocation (test_input_boundaries_v06.ChallengeIngress.test_nonstring_plate_ids_fail_before_challenge_allocation) ... 
+  test_nonstring_plate_ids_fail_before_challenge_allocation (test_input_boundaries_v06.ChallengeIngress.test_nonstring_plate_ids_fail_before_challenge_allocation) (label='[]') ... FAIL
+  test_nonstring_plate_ids_fail_before_challenge_allocation (test_input_boundaries_v06.ChallengeIngress.test_nonstring_plate_ids_fail_before_challenge_allocation) (label='{}') ... FAIL
+  test_nonstring_plate_ids_fail_before_challenge_allocation (test_input_boundaries_v06.ChallengeIngress.test_nonstring_plate_ids_fail_before_challenge_allocation) (label='None') ... FAIL
+  test_nonstring_plate_ids_fail_before_challenge_allocation (test_input_boundaries_v06.ChallengeIngress.test_nonstring_plate_ids_fail_before_challenge_allocation) (label='0') ... FAIL
+  test_nonstring_plate_ids_fail_before_challenge_allocation (test_input_boundaries_v06.ChallengeIngress.test_nonstring_plate_ids_fail_before_challenge_allocation) (label='True') ... FAIL
+test_unknown_but_syntactically_safe_plate_still_denied_by_gate (test_input_boundaries_v06.ChallengeIngress.test_unknown_but_syntactically_safe_plate_still_denied_by_gate) ... ok
+test_normal_revocation_and_replay_safety_preserved (test_input_boundaries_v06.SignedTimeSemantics.test_normal_revocation_and_replay_safety_preserved) ... ok
+test_retroactive_revocation_fails_without_event_append (test_input_boundaries_v06.SignedTimeSemantics.test_retroactive_revocation_fails_without_event_append) ... FAIL
+test_retroactive_signed_revoke_event_fails_full_audit (test_input_boundaries_v06.SignedTimeSemantics.test_retroactive_signed_revoke_event_fails_full_audit) ... FAIL
+test_unsigned_type_confusion_bool_revision_rejected_even_when_signed (test_input_boundaries_v06.SignedTimeSemantics.test_unsigned_type_confusion_bool_revision_rejected_even_when_signed) ... FAIL
+
+======================================================================
+ERROR: test_nonhashable_resource_is_protocol_error (test_input_boundaries_v06.ChallengeIngress.test_nonhashable_resource_is_protocol_error) (resource='[]')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v06_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.6/tests/test_input_boundaries_v06.py", line 34, in test_nonhashable_resource_is_protocol_error
+    E.challenge(self.state,PLATE,resource,'crawl',now=FIXED)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/vdmv_v06_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.6/src/virtual_dmv/engine.py", line 252, in challenge
+    _policy(state,resource)
+    ~~~~~~~^^^^^^^^^^^^^^^^
+  File "/mnt/data/vdmv_v06_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.6/src/virtual_dmv/engine.py", line 239, in _policy
+    _need(resource in state["policies"],"unknown resource")
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: unhashable type: 'list'
+
+======================================================================
+ERROR: test_nonhashable_resource_is_protocol_error (test_input_boundaries_v06.ChallengeIngress.test_nonhashable_resource_is_protocol_error) (resource="{'resource': 'open-index'}")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v06_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.6/tests/test_input_boundaries_v06.py", line 34, in test_nonhashable_resource_is_protocol_error
+    E.challenge(self.state,PLATE,resource,'crawl',now=FIXED)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/vdmv_v06_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.6/src/virtual_dmv/engine.py", line 252, in challenge
+    _policy(state,resource)
+    ~~~~~~~^^^^^^^^^^^^^^^^
+  File "/mnt/data/vdmv_v06_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.6/src/virtual_dmv/engine.py", line 239, in _policy
+    _need(resource in state["policies"],"unknown resource")
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: unhashable type: 'dict'
+
+======================================================================
+FAIL: test_bad_plate_unicode_nul_and_whitespace_rejected (test_input_boundaries_v06.ChallengeIngress.test_bad_plate_unicode_nul_and_whitespace_rejected) (label="'bad\\x00plate'")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v06_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.6/tests/test_input_boundaries_v06.py", line 44, in test_bad_plate_unicode_nul_and_whitespace_rejected
+    with self.assertRaises(E.ProtocolError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: ProtocolError not raised
+
+======================================================================
+FAIL: test_bad_plate_unicode_nul_and_whitespace_rejected (test_input_boundaries_v06.ChallengeIngress.test_bad_plate_unicode_nul_and_whitespace_rejected) (label="'VDMV LAB'")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v06_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.6/tests/test_input_boundaries_v06.py", line 44, in test_bad_plate_unicode_nul_and_whitespace_rejected
+    with self.assertRaises(E.ProtocolError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: ProtocolError not raised
+
+======================================================================
+FAIL: test_bad_plate_unicode_nul_and_whitespace_rejected (test_input_boundaries_v06.ChallengeIngress.test_bad_plate_unicode_nul_and_whitespace_rejected) (label="'VDMV-аBC'")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v06_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.6/tests/test_input_boundaries_v06.py", line 44, in test_bad_plate_unicode_nul_and_whitespace_rejected
+    with self.assertRaises(E.ProtocolError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: ProtocolError not raised
+
+======================================================================
+FAIL: test_bad_plate_unicode_nul_and_whitespace_rejected (test_input_boundaries_v06.ChallengeIngress.test_bad_plate_unicode_nul_and_whitespace_rejected) (label="''")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v06_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.6/tests/test_input_boundaries_v06.py", line 44, in test_bad_plate_unicode_nul_and_whitespace_rejected
+    with self.assertRaises(E.ProtocolError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: ProtocolError not raised
+
+======================================================================
+FAIL: test_long_plate_id_cannot_fill_pending_storage (test_input_boundaries_v06.ChallengeIngress.test_long_plate_id_cannot_fill_pending_storage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v06_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.6/tests/test_input_boundaries_v06.py", line 20, in test_long_plate_id_cannot_fill_pending_storage
+    with self.assertRaises(E.ProtocolError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: ProtocolError not raised
+
+======================================================================
+FAIL: test_nonstring_plate_ids_fail_before_challenge_allocation (test_input_boundaries_v06.ChallengeIngress.test_nonstring_plate_ids_fail_before_challenge_allocation) (label='[]')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v06_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.6/tests/test_input_boundaries_v06.py", line 27, in test_nonstring_plate_ids_fail_before_challenge_allocation
+    with self.assertRaises(E.ProtocolError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: ProtocolError not raised
+
+======================================================================
+FAIL: test_nonstring_plate_ids_fail_before_challenge_allocation (test_input_boundaries_v06.ChallengeIngress.test_nonstring_plate_ids_fail_before_challenge_allocation) (label='{}')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v06_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.6/tests/test_input_boundaries_v06.py", line 27, in test_nonstring_plate_ids_fail_before_challenge_allocation
+    with self.assertRaises(E.ProtocolError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: ProtocolError not raised
+
+======================================================================
+FAIL: test_nonstring_plate_ids_fail_before_challenge_allocation (test_input_boundaries_v06.ChallengeIngress.test_nonstring_plate_ids_fail_before_challenge_allocation) (label='None')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v06_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.6/tests/test_input_boundaries_v06.py", line 27, in test_nonstring_plate_ids_fail_before_challenge_allocation
+    with self.assertRaises(E.ProtocolError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: ProtocolError not raised
+
+======================================================================
+FAIL: test_nonstring_plate_ids_fail_before_challenge_allocation (test_input_boundaries_v06.ChallengeIngress.test_nonstring_plate_ids_fail_before_challenge_allocation) (label='0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v06_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.6/tests/test_input_boundaries_v06.py", line 27, in test_nonstring_plate_ids_fail_before_challenge_allocation
+    with self.assertRaises(E.ProtocolError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: ProtocolError not raised
+
+======================================================================
+FAIL: test_nonstring_plate_ids_fail_before_challenge_allocation (test_input_boundaries_v06.ChallengeIngress.test_nonstring_plate_ids_fail_before_challenge_allocation) (label='True')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v06_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.6/tests/test_input_boundaries_v06.py", line 27, in test_nonstring_plate_ids_fail_before_challenge_allocation
+    with self.assertRaises(E.ProtocolError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: ProtocolError not raised
+
+======================================================================
+FAIL: test_retroactive_revocation_fails_without_event_append (test_input_boundaries_v06.SignedTimeSemantics.test_retroactive_revocation_fails_without_event_append)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v06_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.6/tests/test_input_boundaries_v06.py", line 53, in test_retroactive_revocation_fails_without_event_append
+    with self.assertRaises(E.ProtocolError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: ProtocolError not raised
+
+======================================================================
+FAIL: test_retroactive_signed_revoke_event_fails_full_audit (test_input_boundaries_v06.SignedTimeSemantics.test_retroactive_signed_revoke_event_fails_full_audit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v06_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.6/tests/test_input_boundaries_v06.py", line 59, in test_retroactive_signed_revoke_event_fails_full_audit
+    with self.assertRaises(E.ProtocolError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: ProtocolError not raised
+
+======================================================================
+FAIL: test_unsigned_type_confusion_bool_revision_rejected_even_when_signed (test_input_boundaries_v06.SignedTimeSemantics.test_unsigned_type_confusion_bool_revision_rejected_even_when_signed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v06_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.6/tests/test_input_boundaries_v06.py", line 68, in test_unsigned_type_confusion_bool_revision_rejected_even_when_signed
+    with self.assertRaises(E.ProtocolError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: ProtocolError not raised
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.667s
+
+FAILED (failures=13, errors=2)
