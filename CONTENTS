@@ -1,0 +1,46 @@
+Virtual DMV / Bot Traffic — Corpus and Code Index
+
+START HERE
+  README.md
+  index.html                (single-file Python-source browser lab)
+  PAPERS/README.md
+  CORPUS/MAIN-INDEX.md
+
+SOURCE RESEARCH — unchanged original uploads
+  PAPERS/01-Machine-Consumption-Governance.txt
+  PAPERS/02-Virtual-DMV-Bot-Regeneration.txt
+  PAPERS/03-Unknown-Traffic.txt
+  PAPERS/04-Affordable-Tags.txt
+  PAPERS/ORIGINAL-FILE-HASHES.json
+
+SPECIFICATIONS
+  SPECS/participation-policy.example.json
+  SPECS/.well-known-bot-participation.example.json
+  SPECS/robots.example.txt
+
+ENGINE
+  src/virtual_dmv/portable.py       (RFC 8032 educational reference)
+  src/virtual_dmv/engine.py         (signed states, local rules, game, bench)
+  src/virtual_dmv/cli.py            (Python command-line)
+  src/virtual_dmv/__main__.py
+
+BROWSER SOURCES
+  browser/template.html
+  browser/style.css
+  browser/client.js
+  tools/build_browser.py
+  index.html                        (generated from the exact code above)
+
+RESEARCH EVALUATION
+  tests/test_engine.py
+  docs/TESTING.md
+  docs/THREAT-MODEL.md
+  docs/BROWSER-AND-AGENT-API.md
+  docs/HTML-PARALLEL-DECLARATIONS.md
+  docs/ENGINE-SOURCE-PINS.json
+  evaluation/REPLICATION-PROTOCOL.md
+
+EXAMPLES
+  examples/demo.py
+
+No real identity credentials or legal permissions are issued here.

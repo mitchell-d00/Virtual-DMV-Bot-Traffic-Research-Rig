@@ -1,0 +1,103 @@
+{
+  "schema": "vdmv.demo-policy.v1",
+  "default": "deny",
+  "note": "Not a universal or standardized web permission protocol; example only.",
+  "resources": {
+    "open-archive": {
+      "description": "Public discovery with scoped machine use; attribution for summaries.",
+      "anonymous": [
+        "discover"
+      ],
+      "allows": {
+        "discover": [
+          "crawler",
+          "research",
+          "commercial",
+          "archival",
+          "agentic"
+        ],
+        "crawl": [
+          "crawler",
+          "research",
+          "archival"
+        ],
+        "index": [
+          "crawler",
+          "archival"
+        ],
+        "summarize": [
+          "research",
+          "archival",
+          "agentic"
+        ]
+      },
+      "attribution": [
+        "summarize"
+      ]
+    },
+    "research-library": {
+      "description": "Research library: registered research crawling; archival conservation.",
+      "anonymous": [],
+      "allows": {
+        "crawl": [
+          "research"
+        ],
+        "summarize": [
+          "research"
+        ],
+        "archive": [
+          "archival"
+        ]
+      },
+      "attribution": [
+        "summarize",
+        "archive"
+      ]
+    },
+    "licensed-training-data": {
+      "description": "Training is reserved to registered research plates (demo only).",
+      "anonymous": [],
+      "allows": {
+        "train": [
+          "research"
+        ],
+        "crawl": [
+          "research"
+        ]
+      },
+      "attribution": []
+    },
+    "open-index": {
+      "description": "Open and explicitly permissionless discovery and indexing.",
+      "anonymous": [
+        "discover",
+        "crawl",
+        "index"
+      ],
+      "allows": {
+        "discover": [
+          "crawler",
+          "research",
+          "commercial",
+          "archival",
+          "agentic"
+        ],
+        "crawl": [
+          "crawler",
+          "research",
+          "commercial",
+          "archival",
+          "agentic"
+        ],
+        "index": [
+          "crawler",
+          "research",
+          "commercial",
+          "archival",
+          "agentic"
+        ]
+      },
+      "attribution": []
+    }
+  }
+}

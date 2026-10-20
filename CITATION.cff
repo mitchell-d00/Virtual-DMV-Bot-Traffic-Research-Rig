@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "Cite the four underlying manuscripts separately; this repository is a research prototype."
+authors:
+  - family-names: McPhetridge
+    given-names: Mitchell D.
+title: "Virtual DMV / Bot Traffic: Machine Participation Governance Lab"
+type: software
+version: "0.1.0"
+date-released: 2026-10-20
+license: MIT

@@ -1,0 +1,169 @@
+{
+  "schema": "virtual-dmv-release-pins-v1",
+  "files": {
+    ".gitignore": {
+      "sha256": "629163744fa07bf4419b4094fda8446ecaba9a24f94fe9f577a9bd9d66e34e5f",
+      "bytes": 72
+    },
+    "CITATION.cff": {
+      "sha256": "07fdfc1a4b5e35feea5f56a69424fe7ae7ddd53c48f5f83c24e12bf50cc99da7",
+      "bytes": 332
+    },
+    "CONTENTS": {
+      "sha256": "5bff69a8d2532b0a7f57beac1fb8150e14a31da4ad15d10a6bccfd5513da6e5f",
+      "bytes": 1303
+    },
+    "CORPUS/01-Foundations/Admissibility.md": {
+      "sha256": "fb9e8f331529e6bffc7c79e16dfbfae34ec6e9500a26074fd5c3203a9ef51604",
+      "bytes": 638
+    },
+    "CORPUS/02-Identity/Virtual-DMV.md": {
+      "sha256": "29bdab1351ab4c91787305103a83534e8190f6a5d3a6c5ceb36be362079da036",
+      "bytes": 651
+    },
+    "CORPUS/03-Adoption/Unknown-Traffic.md": {
+      "sha256": "066ed02441840111be4d2ad4a6165680f0a508938022c3a73d74d9509ccf154c",
+      "bytes": 663
+    },
+    "CORPUS/04-Ownership/Affordable-Tags.md": {
+      "sha256": "77f9d5040b4ddb452ee230429288fd16d586c28d1aecd24d0f702871ce9d7ac1",
+      "bytes": 729
+    },
+    "CORPUS/MAIN-INDEX.md": {
+      "sha256": "25abb6d4f96f25bc1a9d1e2c61cc99b15495814a68f325426833dd4b926f7353",
+      "bytes": 1064
+    },
+    "LICENSE": {
+      "sha256": "89cbb216e5117c92b292f3c82fbb769041cd1e50fbdaae2dc1d785725dc4c881",
+      "bytes": 1283
+    },
+    "PAPERS/01-Machine-Consumption-Governance.txt": {
+      "sha256": "4dc745c24b2c7f715e65041f7c44d3ee40d7336730d811169d262e760e81ec3e",
+      "bytes": 17033
+    },
+    "PAPERS/02-Virtual-DMV-Bot-Regeneration.txt": {
+      "sha256": "9fcedb7e0263d9c8c0ae369857068fd743f340bd19c90ddcf749882040bb658e",
+      "bytes": 13500
+    },
+    "PAPERS/03-Unknown-Traffic.txt": {
+      "sha256": "f8d59049163c2a7f4a38ac1eb52ff9ebe03c7806741996d9e9055fd45704b9c0",
+      "bytes": 12839
+    },
+    "PAPERS/04-Affordable-Tags.txt": {
+      "sha256": "7e40ea4b4c05b5302e51b50f9267c833977e3b234a1c3c7f6dc6044e3b9b022c",
+      "bytes": 12008
+    },
+    "PAPERS/ORIGINAL-FILE-HASHES.json": {
+      "sha256": "5b6f84fe7f7b5ee89e27082bdebc3545561311de1581de4be7b2cdbf1bf28c22",
+      "bytes": 1255
+    },
+    "PAPERS/README.md": {
+      "sha256": "0621107d047124c6fb14f5baa9180fa49781a8156ad7c3a4c17d75b4c1ad1948",
+      "bytes": 933
+    },
+    "README.md": {
+      "sha256": "d5ed1a6ab027d4a4f03edcf23d8a9386154ce6a90b0f24369c4fefb0b8ecd4c7",
+      "bytes": 7499
+    },
+    "RELEASE-NOTES.md": {
+      "sha256": "415b60ed8b989b97713dec7e70c2af046592d1945f1b4b85e8b9c0207f1b0cbf",
+      "bytes": 1464
+    },
+    "SPECS/.well-known-bot-participation.example.json": {
+      "sha256": "9680b4890e770328f7e998bd6f771cf0ed74fc4905f42b63e9457e65d023bb04",
+      "bytes": 389
+    },
+    "SPECS/participation-policy.example.json": {
+      "sha256": "e90e4c4430c8d944983beeebd2f2c991f50c576e7bc6d8fdab696f600995d989",
+      "bytes": 2189
+    },
+    "SPECS/robots.example.txt": {
+      "sha256": "ce43325a17d5e9a584b10514a6ab3caeadbdb071f76a8c3f14eda4d83bbc64a2",
+      "bytes": 284
+    },
+    "browser/client.js": {
+      "sha256": "d94c79a10c946cf1f7636482beacc035c2ac3dc704c2b35661a173a15d49217c",
+      "bytes": 13600
+    },
+    "browser/style.css": {
+      "sha256": "4b8bd6ec07324faa5d53d82aecc819a8b19c02460500ee2d9d9fc1404477dff0",
+      "bytes": 5784
+    },
+    "browser/template.html": {
+      "sha256": "3b41f77792e4071b95de8b635b649ba420e048ab1c0b447a036b2097c902d730",
+      "bytes": 10167
+    },
+    "docs/BROWSER-AND-AGENT-API.md": {
+      "sha256": "b817587889b780300f47b3f72954b44ecdb8d43979e57ed73af758c8af10e634",
+      "bytes": 2089
+    },
+    "docs/ENGINE-SOURCE-PINS.json": {
+      "sha256": "0b62eb72845375258e1df4052593f2f26812b788fbec53536354ca5ef6e9bb84",
+      "bytes": 469
+    },
+    "docs/HTML-PARALLEL-DECLARATIONS.md": {
+      "sha256": "306c3927a478e0639161037cfe3ede2dbdaa48d14eab8cbf1a307b1907c4efc7",
+      "bytes": 1735
+    },
+    "docs/TESTING.md": {
+      "sha256": "81c55b24a41e5baa360f02ac3947a160137b188e44f871a05a424ac2d42d8e0e",
+      "bytes": 1975
+    },
+    "docs/THREAT-MODEL.md": {
+      "sha256": "b2700779dd4c340c3865ce04cacfddf099cebad49f956daa7fb1cbcbc1d64094",
+      "bytes": 2118
+    },
+    "evaluation/REPLICATION-PROTOCOL.md": {
+      "sha256": "626dc6e1dd9b6c9d80e1f0ec535c964d0fae87e5d99b5599d00f3471bf0b03d4",
+      "bytes": 2571
+    },
+    "examples/demo.py": {
+      "sha256": "969eba1dad150ab51c3eee67e35a8c001191428f831d490d4c4df63df1959e7c",
+      "bytes": 1083
+    },
+    "index.html": {
+      "sha256": "95c389ee2ec2581caed20ba71cd6fae4592a2baf695c99e83de9a0373f853fb8",
+      "bytes": 65571
+    },
+    "pyproject.toml": {
+      "sha256": "f1ddda3def033deeec9af4313ab5bff20dc717ba791f18cfc79b397127f8b24d",
+      "bytes": 546
+    },
+    "src/virtual_dmv/__init__.py": {
+      "sha256": "e13f0cd6ce35413b1ba29a0ef5e8daa9b6eae0c47b61bb13b0589b1e14a25fdb",
+      "bytes": 406
+    },
+    "src/virtual_dmv/__main__.py": {
+      "sha256": "28de248c91c00642578a541827361af9b0e5e049e4c61dd6ec1f9dc78580c24e",
+      "bytes": 78
+    },
+    "src/virtual_dmv/cli.py": {
+      "sha256": "50eaaa83db80d96f377da5b7c707985e774503da422b35ad7c6ddcd817806657",
+      "bytes": 3328
+    },
+    "src/virtual_dmv/engine.py": {
+      "sha256": "bfb5fbd2759251e7e76a4e83c0ba37d2fd356a6d9c698713afbe827ba18c56ce",
+      "bytes": 28530
+    },
+    "src/virtual_dmv/portable.py": {
+      "sha256": "1e674bb5ed3c4c0fe56764e087eb3c4684892bf769dbb751c8f6daca7544a90a",
+      "bytes": 4390
+    },
+    "tests/browser_ui_smoke.py": {
+      "sha256": "c7f0776da58e7156761fc4fc7b4d7de63f11ddb2ef3a32273b79bfdf36f59156",
+      "bytes": 3214
+    },
+    "tests/test_bundle.py": {
+      "sha256": "8e7921ae0d81707105264531cce173f3824856d81234635d3c407f537d916866",
+      "bytes": 3431
+    },
+    "tests/test_engine.py": {
+      "sha256": "260f9c31b17db2e3085b330c3b928333bfed9527d1764bb82854c91ea062a192",
+      "bytes": 8151
+    },
+    "tools/build_browser.py": {
+      "sha256": "6dfe30d0362ba6de5e6d160b33d01466ca27ff83bfaa95369ed40fb2a365898f",
+      "bytes": 1503
+    }
+  }
+}

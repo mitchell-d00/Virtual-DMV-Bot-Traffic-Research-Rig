@@ -1,0 +1,434 @@
+Machine Consumption Governance
+Governing Admissibility Rather Than Capability
+Mitchell D. McPhetridge
+Abstract
+Contemporary governance discussions frequently begin with an unnecessarily difficult question:
+What should machine systems be allowed to do?
+This framing requires regulators to define machine intelligence, anticipate future capabilities, construct universal behavioral rules, and continually revise those rules as technology changes.
+The resulting governance burden expands faster than the systems being governed.
+This paper proposes a narrower approach.
+Rather than governing machine capabilities, governance should focus on the relationships between resource owners and machine consumers.
+The central claim is simple:
+Governance scales best when it regulates the admissibility of machine participation rather than the capabilities of machine systems.
+Content hosts should retain authority over the conditions under which machine consumers may acquire resources.
+Machine consumers should possess verifiable identities and operate through explicit permission structures.
+Central authority should remain limited to identity integrity, enforcement, fraud prevention, and coordination failures.
+The framework treats governance primarily as a problem of admissibility, accountability, and resource relationships rather than intelligence control.
+ 
+⸻
+ 
+Governance Architecture
+The framework consists of three foundational governance layers.
+Layer	Function
+Resource Authority	Declares permissions and participation conditions
+Identity	Establishes accountable machine participation
+Enforcement	Resolves violations and preserves compliance
+These layers are connected through provenance and auditability mechanisms that distinguish acquisition from downstream use.
+The framework governs participation rather than intelligence.
+ 
+⸻
+ 
+Core Proposition
+Capability governance asks:
+What can machines do?
+Participation governance asks:
+Under what conditions may machines participate?
+The framework argues that governance scales best when it regulates admissibility of participation rather than capability of machine systems.
+ 
+⸻
+ 
+Definitions
+Machine Consumer
+A machine consumer is any automated system that acquires, indexes, retrieves, summarizes, transforms, stores, redistributes, trains upon, or otherwise operationally consumes resources on behalf of itself or another actor.
+This definition is intentionally technology-agnostic.
+Crawlers, search engines, retrieval systems, language models, autonomous agents, recommendation systems, browser automation tools, distributed machine networks, and future machine architectures may all qualify as machine consumers.
+The framework is not tied to any specific generation of technology.
+Admissible Participation
+Admissible participation refers to machine participation occurring under declared permissions, identifiable relationships, and enforceable conditions.
+The framework governs admissible participation.
+It does not claim to eliminate unauthorized participation.
+Governance systems rarely prevent all violations.
+Their purpose is to establish observable permissions, accountability structures, and enforceable boundaries for legitimate participation.
+Actors operating outside those boundaries become enforcement concerns rather than permission-governance concerns.
+Resource
+A resource is any information-bearing, computational, communicative, or operational asset capable of being acquired, consumed, transformed, indexed, summarized, retrieved, redistributed, trained upon, or otherwise utilized by a machine consumer.
+Resources may include:
+	•	webpages,
+	•	repositories,
+	•	databases,
+	•	APIs,
+	•	software archives,
+	•	publications,
+	•	media assets,
+	•	user-generated content,
+	•	data streams,
+	•	model outputs,
+	•	sensor feeds,
+	•	and future machine-consumable information structures.
+The definition is intentionally technology-neutral.
+The framework governs participation relationships surrounding resources rather than specific resource types.
+ 
+⸻
+ 
+1. The Scope Error
+Many governance proposals begin by asking:
+What should machine systems be allowed to do?
+This question immediately creates several difficulties.
+Machine systems differ.
+Uses differ.
+Jurisdictions differ.
+Capabilities evolve.
+Incentives change.
+The governance structure must therefore expand continuously to remain relevant.
+The problem grows faster than the solution.
+The result is recursive governance expansion.
+A narrower question exists:
+Under what conditions should machine consumers be permitted to access resources?
+This question concerns participation rather than capability.
+Participation is observable.
+Capabilities are open-ended.
+Governance scales more effectively when it operates at the participation boundary.
+ 
+⸻
+ 
+2. The Internet Precedent
+The internet did not scale through universal content regulation.
+It scaled through local authority combined with shared protocols.
+Individual resource owners retained authority over:
+	•	access,
+	•	participation,
+	•	service conditions,
+	•	usage policies.
+Protocols provided:
+	•	identity,
+	•	interoperability,
+	•	authentication,
+	•	routing,
+	•	enforcement support.
+Local decisions remained local.
+Shared infrastructure remained constrained.
+Machine-consumption governance can follow the same architecture.
+ 
+⸻
+ 
+3. Governing Relationships
+The core governance unit is not the machine.
+The core governance unit is the relationship between:
+	•	resource owner,
+	•	machine consumer.
+Capabilities change.
+Relationships remain comparatively stable.
+Governance therefore attaches to the relationship.
+The relevant question becomes:
+Under what conditions may this machine consumer participate in this resource relationship?
+This structure remains applicable regardless of future technological developments.
+ 
+⸻
+ 
+4. Layer One: Resource Authority
+Authority begins with the resource owner.
+Repositories, publishers, archives, institutions, creators, and websites should be capable of declaring machine-consumption permissions.
+Examples include:
+Crawl Rights
+	•	Allowed
+	•	Restricted
+	•	Prohibited
+Indexing Rights
+	•	Permitted
+	•	Restricted
+	•	Prohibited
+Summarization Rights
+	•	Permitted
+	•	Attribution Required
+	•	Restricted
+Training Rights
+	•	Permitted
+	•	Conditional
+	•	Prohibited
+Commercial Rights
+	•	Permitted
+	•	Licensed
+	•	Restricted
+Attribution Requirements
+	•	Citation Required
+	•	Source Linkage Required
+	•	Repository Acknowledgment Required
+Update Permissions
+	•	Access Frequency
+	•	Synchronization Intervals
+	•	API Requirements
+The resource owner establishes conditions.
+Machine participation becomes conditional rather than assumed.
+ 
+⸻
+ 
+5. Resource Authority and Public Interest Resources
+The framework assumes resource owners possess authority to establish participation conditions.
+This assumption is generally appropriate for privately controlled resources.
+However, some resources possess broader public-interest characteristics, including:
+	•	public records,
+	•	government publications,
+	•	public-domain archives,
+	•	publicly funded scientific outputs,
+	•	legally mandated disclosures.
+In such cases, resource authority may be constrained by public-access obligations.
+The framework therefore distinguishes between:
+Private Resource Authority
+Resource owners determine participation conditions subject to applicable law.
+Public Interest Resources
+Participation conditions may be constrained by statutory access requirements, public-interest obligations, or public-domain status.
+The framework does not assume unlimited resource authority.
+It assumes that participation governance operates within the legal status already governing the resource.
+Admissibility governance regulates participation.
+It does not determine ownership.
+ 
+⸻
+ 
+5.1 Relationship to Existing Law
+The framework does not create ownership rights.
+It does not expand copyright.
+It does not establish new property claims.
+It does not alter privacy obligations.
+It does not determine the legal status of resources.
+Instead, the framework organizes machine participation around rights, obligations, permissions, and restrictions that already exist under applicable legal systems.
+Permission governance operates downstream of existing legal authority.
+The framework governs admissibility of participation rather than ownership itself.
+ 
+⸻
+ 
+5.2 Open Ecosystems
+The framework is compatible with open and permissionless environments.
+Examples include:
+	•	public-domain archives,
+	•	open datasets,
+	•	peer-to-peer networks,
+	•	decentralized repositories,
+	•	open scientific resources.
+Open participation does not eliminate governance.
+It changes the participation conditions.
+An open resource may declare:
+	•	unrestricted access,
+	•	unrestricted indexing,
+	•	unrestricted summarization,
+	•	unrestricted training.
+Identity, provenance, attribution, accountability, and enforcement mechanisms may still remain relevant even when access restrictions are minimal.
+The framework therefore applies to both restricted and open participation environments.
+The distinction lies in the declared conditions rather than the existence of governance itself.
+ 
+⸻
+ 
+6. Access, Permission, Contract, and Use
+These concepts are related but distinct.
+Access
+The ability to acquire a resource.
+Permission
+The declared conditions governing access.
+Contract
+The obligations attached to permission.
+Use
+Actions performed after acquisition.
+Examples include:
+	•	Crawling permitted.
+	•	Training prohibited.
+	•	Indexing permitted.
+	•	Commercial redistribution prohibited.
+	•	Summarization permitted.
+	•	Dataset incorporation prohibited.
+The existence of access permissions does not imply unrestricted downstream use.
+Governance therefore requires separate treatment of acquisition rights and utilization rights.
+Failure to distinguish these categories creates ambiguity and weakens enforcement.
+ 
+⸻
+ 
+7. Governance Beyond Licensing
+Licensing is one component of participation governance.
+The framework is broader than licensing alone.
+Licensing concerns permission.
+Governance concerns the conditions under which participation remains admissible.
+These conditions may include:
+	•	identity verification,
+	•	provenance requirements,
+	•	auditability,
+	•	compliance monitoring,
+	•	fraud prevention,
+	•	dispute resolution,
+	•	enforcement mechanisms.
+A machine consumer may participate under a non-commercial or unrestricted license while still remaining subject to accountability requirements.
+The framework therefore governs participation relationships rather than licensing arrangements alone.
+ 
+⸻
+ 
+8. Layer Two: Identity
+Permission structures require identity.
+Machine consumers should present:
+	•	verifiable identity,
+	•	organizational affiliation,
+	•	declared purpose,
+	•	permission scope,
+	•	compliance status.
+Identity need not emerge from a single authority.
+A federated trust architecture is sufficient.
+Under such a model:
+	•	multiple credential providers may exist,
+	•	resource owners determine acceptable providers,
+	•	trust remains locally configurable.
+The objective is accountability rather than centralization.
+Machine consumers become identifiable participants rather than anonymous extractors.
+ 
+⸻
+ 
+9. Permission Handshake
+Access begins through explicit negotiation.
+The process is straightforward:
+	1.	Machine identifies itself.
+	2.	Resource owner declares terms.
+	3.	Machine accepts terms.
+	4.	Permissions are granted.
+	5.	Compliance remains observable.
+The purpose is not restriction.
+The purpose is admissibility.
+Participation becomes governed rather than assumed.
+ 
+⸻
+ 
+10. Provenance and Auditability
+Certain permissions require post-acquisition verification.
+Training rights are the clearest example.
+A machine consumer may obtain content under one permission structure while later employ it under another.
+Governance therefore benefits from:
+	•	provenance records,
+	•	acquisition logs,
+	•	audit trails,
+	•	disclosure requirements,
+	•	cryptographic attestations,
+	•	dataset manifests,
+	•	signed acquisition records,
+	•	third-party audits,
+	•	dataset accountability mechanisms.
+The objective is not perfect surveillance.
+The objective is verifiable compliance.
+Accountability requires observable history.
+Provenance functions as the bridge between acquisition and use.
+Without provenance, downstream compliance becomes difficult to establish.
+ 
+⸻
+ 
+11. Governance Economics
+All governance systems impose costs.
+These may include:
+	•	credential issuance,
+	•	identity verification,
+	•	provenance maintenance,
+	•	audit procedures,
+	•	dispute resolution,
+	•	enforcement activities.
+The framework does not eliminate governance costs.
+It relocates them.
+Capability-based governance requires continuous reinterpretation as technologies evolve.
+Participation governance concentrates costs around identifiable events:
+	•	acquisition,
+	•	permission negotiation,
+	•	provenance verification,
+	•	compliance disputes.
+These costs scale more predictably than capability classification and behavioral prediction.
+ 
+⸻
+ 
+12. Layer Three: Enforcement
+Once permissions and identities exist, enforcement becomes possible.
+Violations become measurable events.
+Examples include:
+	•	identity spoofing,
+	•	unauthorized crawling,
+	•	prohibited training,
+	•	attribution removal,
+	•	access violations,
+	•	contractual noncompliance.
+Without declared permissions, enforcement remains ambiguous.
+With declared permissions, violation becomes identifiable.
+The governance problem shifts from interpretation to verification.
+ 
+⸻
+ 
+13. Central Authority
+A central authority remains necessary.
+Its scope should remain narrow.
+Primary responsibilities include:
+Identity Integrity
+Preventing fraudulent representation.
+Unauthorized Access
+Addressing deliberate circumvention.
+Copyright Violations
+Resolving protected-content disputes.
+Fraud
+Preventing deceptive machine behavior.
+Market Abuse
+Addressing anti-competitive conduct.
+Systemic Failures
+Managing coordination failures beyond local authority.
+The central authority governs enforceability rather than machine behavior itself.
+ 
+⸻
+ 
+14. Why This Scales
+Capability governance requires continuous adaptation.
+Relationship governance does not.
+The framework assumes:
+	•	new machine architectures,
+	•	new retrieval systems,
+	•	new agents,
+	•	new consumption patterns.
+Rather than regulating future capabilities directly, governance regulates participation conditions.
+The question remains stable even as technology changes:
+Under what conditions may this consumer participate in this resource relationship?
+Stable questions scale better than moving targets.
+ 
+⸻
+ 
+15. Constraint Rather Than Prohibition
+The framework does not oppose machine participation.
+Machine consumers perform valuable functions:
+	•	indexing,
+	•	retrieval,
+	•	preservation,
+	•	discoverability,
+	•	citation graph construction,
+	•	summarization,
+	•	propagation.
+The objective is not prohibition.
+The objective is conditional continuation.
+Participation remains admissible while conditions remain satisfied.
+Governance therefore operates through constraint rather than exclusion.
+ 
+⸻
+ 
+16. Limitations and Failure Modes
+The framework does not eliminate unauthorized participation.
+It does not guarantee perfect attribution.
+It does not solve international jurisdiction conflicts.
+It does not prevent identity fraud.
+It does not eliminate enforcement costs.
+The framework assumes that some machine consumers will refuse participation entirely.
+Such actors remain enforcement concerns rather than permission-governance participants.
+The objective is not universal compliance.
+The objective is creating observable, enforceable, and scalable participation structures for legitimate machine consumption.
+ 
+⸻
+ 
+17. Conclusion
+Machine-consumption governance may be suffering from a scope problem.
+The dominant question remains:
+What should machine systems be allowed to do?
+A narrower and more tractable question is:
+Under what conditions should machine consumers be permitted to participate in resource relationships?
+This shift relocates governance from capability control to admissibility governance.
+Resource owners retain authority over local resources.
+Machine consumers become accountable participants.
+Identity establishes participation.
+Provenance establishes accountability.
+Enforcement preserves compliance.
+The framework does not attempt to predict future machine behavior.
+It governs the conditions under which participation occurs.
+The internet scaled through local authority and constrained protocols.
+Machine-consumption governance may scale through the same principle.
+Governance works best when it governs relationships rather than capabilities, participation rather than intelligence, and admissibility rather than prediction.

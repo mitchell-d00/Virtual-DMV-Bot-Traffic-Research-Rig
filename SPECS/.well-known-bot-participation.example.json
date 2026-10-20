@@ -1,0 +1,14 @@
+{
+  "schema": "vdmv.draft-web-declaration.v1",
+  "resource": "https://example.invalid/research-library",
+  "default": "deny",
+  "policy_ref": "participation-policy.example.json",
+  "issuer": "virtual-dmv-lab",
+  "actions": {
+    "crawl": [
+      "research"
+    ],
+    "train": []
+  },
+  "warning": "Nonstandard proposal; do not rely upon it as a browser/security enforcement mechanism."
+}

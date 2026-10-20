@@ -1,0 +1,262 @@
+Affordable Tags - Cryptographic Registration and Transferable Machine Participation Identity
+Mitchell D. McPhetridge
+Abstract
+Machine Consumption Governance: Governing Admissibility Rather Than Capability established participation as the primary governance boundary. Virtual DMV Bot Regeneration supplied a practical identity mechanism through verifiable machine-participation plates. Unknown Traffic demonstrated how participation identity may acquire economic value as resource owners increasingly distinguish between identifiable and unknown machine consumers.
+This paper addresses the next governance question:
+Who owns participation identity?
+As participation identity becomes economically useful, machine consumers require identity systems capable of supporting ownership, accountability, transfer, and reputation continuity.
+The central claim of this paper is straightforward:
+Machine-participation identities function most effectively when they operate as cryptographically registered tags that combine the transferability of property titles with the accountability of participation credentials.
+Unlike disposable identifiers, affordable tags are designed to preserve ownership records, support legitimate transfers, resist duplication, and maintain continuity of participation history.
+Machine consumers may be sold, acquired, inherited, merged, or reorganized.
+Participation identities should therefore support ownership transfer while preserving accountability, provenance, and admissibility.
+The framework treats machine identity as a transferable participation asset rather than a permanent attachment to any specific machine implementation.
+Affordable tags provide the ownership layer necessary to complete participation governance.
+⸻
+Relationship to Participation Governance
+The participation-governance framework consists of four foundational layers:
+Layer	Function
+Admissibility	Establishes participation conditions
+Identity	Establishes accountable participation
+Incentives	Creates adoption pressures
+Ownership	Preserves transferability and continuity
+Machine Consumption Governance established admissibility.
+Virtual DMV established identity.
+Unknown Traffic established incentives.
+Affordable Tags establishes ownership.
+Together these layers create a governance architecture capable of supporting long-term machine participation relationships.
+The framework governs participation rather than capability.
+Affordable tags govern ownership of participation identity.
+⸻
+	1.	The Identity Ownership Problem
+Participation governance assumes that machine consumers possess identities.
+Identity alone, however, leaves several important questions unanswered.
+Who owns the identity?
+Can participation identities be transferred?
+Can they be duplicated?
+Can they accumulate reputation?
+Can participation history survive ownership changes?
+As participation becomes economically valuable, identity itself becomes an asset.
+Assets require ownership structures.
+Ownership structures require transfer mechanisms.
+Participation governance therefore requires an identity model capable of preserving ownership continuity across time.
+⸻
+	2.	The Limitation of Simple Identifiers
+Many machine-identification systems rely upon identifiers that are inexpensive to generate and easy to reproduce.
+Examples include:
+• user-agent declarations,
+• self-asserted credentials,
+• API identifiers,
+• locally generated certificates,
+• software-generated identifiers.
+These systems may establish identity.
+They often fail to establish ownership.
+If an identity can be copied without consequence, accountability becomes difficult.
+A duplicated participant cannot reliably accumulate reputation.
+A copied credential weakens admissibility decisions.
+Identity therefore requires more than uniqueness.
+It requires controlled ownership.
+⸻
+	3.	Affordable Tags
+The framework introduces Affordable Tags.
+An affordable tag is a cryptographically registered participation identity possessing:
+• unique issuance,
+• ownership records,
+• transfer procedures,
+• cryptographic verification,
+• provenance continuity,
+• accountability mechanisms.
+The term affordable reflects a core governance objective.
+Participation identity should remain accessible to small participants while preserving accountability.
+The framework does not require expensive participation licenses.
+It requires verifiable participation identities.
+The objective is not exclusivity.
+The objective is trustworthy participation.
+⸻
+	4.	Relationship to Vehicle Registration
+Affordable tags operate similarly to vehicle registration systems.
+A vehicle possesses:
+• a title,
+• a registration record,
+• a license plate.
+Ownership may change.
+The vehicle may be sold.
+Registration records update accordingly.
+Identity remains continuous while ownership changes.
+Machine participation identities may function similarly.
+The machine consumer becomes the participation asset.
+The affordable tag becomes the participation title and registration record.
+Ownership may transfer.
+Participation history remains observable.
+Accountability remains intact.
+⸻
+	5.	Cryptographic Ownership
+The framework does not rely upon physical plates.
+Ownership is established cryptographically.
+Each affordable tag possesses:
+• a public identifier,
+• a private signing key,
+• registration records,
+• issuer attestations,
+• revocation mechanisms.
+Resource owners evaluate participation through cryptographic proofs rather than self-declared claims.
+The objective is not secrecy.
+The objective is verifiable ownership.
+A copied identifier without cryptographic control remains invalid.
+Identity becomes controllable rather than merely observable.
+⸻
+	6.	Registration and Registry Models
+Affordable tags require registration records.
+The framework intentionally separates participation identity from any particular registry architecture.
+Registration systems may be:
+• centralized,
+• federated,
+• industry-operated,
+• jurisdictional,
+• competitive,
+• decentralized.
+The governance objective remains unchanged.
+Ownership records must be discoverable.
+Transfers must be verifiable.
+Participation identities must remain accountable.
+Registry design may vary while preserving these requirements.
+Participation governance depends upon ownership continuity rather than registry centralization.
+⸻
+	7.	Scarcity and Participation History
+Affordable tags are not valuable because they are difficult to create.
+Their value emerges from accumulated participation history.
+A newly issued tag may be inexpensive.
+An established tag may possess:
+• compliance history,
+• attribution records,
+• contractual relationships,
+• trust classifications,
+• audit outcomes,
+• reputation scores.
+Participation history cannot be instantly replicated through new issuance.
+The framework therefore creates continuity rather than artificial scarcity.
+Reputation becomes difficult to duplicate because history remains attached to the registered identity.
+⸻
+	8.	Transfer and Re-Registration
+Participation identities should remain transferable.
+Machine systems may be:
+• sold,
+• acquired,
+• merged,
+• inherited,
+• reorganized.
+Transfer therefore becomes a normal governance function.
+A transfer process may include:
+	1.	Ownership relinquishment.
+	2.	Ownership verification.
+	3.	Registry update.
+	4.	Credential regeneration.
+	5.	Provenance continuation.
+The participation identity survives.
+Ownership records change.
+The framework therefore separates identity continuity from ownership continuity.
+⸻
+	9.	Reputation Continuity
+The value of participation identity does not emerge solely from registration.
+The value emerges from accumulated history.
+Participation history may include:
+• compliance records,
+• crawl behavior,
+• attribution performance,
+• contractual participation,
+• audit history,
+• dispute outcomes,
+• trust classifications.
+These records create reputation.
+Reputation creates access opportunities.
+Identity allows reputation to persist across time.
+Without continuity, reputation becomes difficult to establish.
+Affordable tags therefore function as reputation containers rather than simple identifiers.
+⸻
+	10.	Transfer Versus Theft
+Participation governance must distinguish between ownership transfer and ownership theft.
+Transfer is an authorized change in ownership.
+The participation identity remains valid.
+Ownership records update accordingly.
+The chain of provenance remains intact.
+Theft is an unauthorized acquisition of control.
+Ownership records remain unchanged.
+The chain of provenance is disrupted.
+The distinction is important because participation systems must permit legitimate transfers while preventing fraudulent ownership claims.
+Governance depends upon maintaining this boundary.
+⸻
+	11.	Why Tags Become Valuable
+The framework does not assume participation identities possess inherent value.
+Value emerges when participation opportunities depend upon identifiable relationships.
+Resource owners may increasingly provide:
+• crawl access,
+• indexing rights,
+• synchronization privileges,
+• contractual participation,
+• premium APIs,
+• trusted-participant classifications,
+• commercial partnerships.
+Participation opportunities become associated with reputation-bearing identities.
+As a result, participation identities become economically useful assets.
+The value arises from admissibility rather than speculation.
+⸻
+	12.	Distinction From Tokens
+Affordable tags are not designed primarily as financial instruments.
+Their primary purpose is participation governance.
+The framework does not require:
+• speculative markets,
+• investment returns,
+• token appreciation,
+• decentralized-finance structures.
+A tag may possess market value.
+However, that value emerges from participation utility rather than speculative design.
+The framework governs participation.
+It does not govern investment.
+⸻
+	13.	Enforcement
+Ownership records create enforceable participation relationships.
+Violations may include:
+• credential theft,
+• identity cloning,
+• fraudulent transfers,
+• unauthorized participation,
+• reputation laundering.
+Registries may respond through:
+• revocation,
+• suspension,
+• regeneration requirements,
+• dispute procedures,
+• ownership verification.
+The objective is preserving participation integrity.
+Governance remains focused on participation rather than capability.
+⸻
+	14.	Relationship to Participation Governance
+Machine Consumption Governance established admissibility.
+Virtual DMV established identity.
+Unknown Traffic established incentives.
+Affordable Tags establishes ownership.
+Together these components form a complete participation-governance architecture:
+Admissibility.
+Identity.
+Incentives.
+Ownership.
+Machine participation becomes observable.
+Identity becomes accountable.
+Reputation becomes portable.
+Ownership becomes transferable.
+Governance remains centered on participation rather than capability.
+⸻
+	15.	Conclusion
+Machine participation may increasingly depend upon identifiable relationships.
+As participation identities become economically valuable, governance requires mechanisms capable of preserving accountability while supporting legitimate ownership transfer.
+Affordable tags provide such a mechanism.
+They function as cryptographically registered participation identities combining verifiable ownership, transferability, and reputation continuity.
+A machine consumer may be sold.
+A participation identity may be transferred.
+A reputation may persist.
+Ownership may change.
+Accountability remains.
+The framework does not attempt to make machine identity scarce for its own sake.
+It seeks to make participation identity trustworthy, transferable, and resistant to duplication.
+Governance scales most effectively when participation identities behave less like disposable credentials and more like accountable registration records.
+Affordable tags provide the ownership layer necessary to support that transition.

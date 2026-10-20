@@ -1,0 +1,7 @@
+# Example robots directives only; separate from nonstandard Virtual DMV policy.
+User-agent: *
+Disallow: /private/
+Allow: /public/
+
+# Bots are not authenticated by user-agent strings or this file.
+# Hosting this file does not implement plate verification or enforce downstream rights.

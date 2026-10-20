@@ -1,0 +1,24 @@
+"""Deterministically generate a self-contained UI+Python-source HTML.
+
+The Pyodide interpreter itself remains an external version-pinned CDN asset.
+This is an intentional and documented runtime dependency, not an offline binary.
+"""
+from pathlib import Path
+import json
+import hashlib
+
+ROOT=Path(__file__).resolve().parents[1]
+files={"portable.py":ROOT/"src/virtual_dmv/portable.py",
+       "engine.py":ROOT/"src/virtual_dmv/engine.py",
+       "__init__.py":ROOT/"src/virtual_dmv/__init__.py"}
+source={name:path.read_text(encoding='utf-8') for name,path in files.items()}
+source_json=json.dumps(source,ensure_ascii=True).replace('<','\\u003c').replace('>','\\u003e').replace('&','\\u0026')
+base=(ROOT/"browser/template.html").read_text(encoding='utf8')
+html=base.replace('__STYLE__',(ROOT/"browser/style.css").read_text(encoding='utf8'))
+html=html.replace('__PYTHON_SOURCES__',source_json)
+html=html.replace('__CLIENT__',(ROOT/"browser/client.js").read_text(encoding='utf8').replace('</script','<\\/script'))
+(ROOT/"index.html").write_text(html,encoding='utf8')
+hash_map={name:hashlib.sha256(path.read_bytes()).hexdigest() for name,path in files.items()}
+(ROOT/"docs/ENGINE-SOURCE-PINS.json").write_text(json.dumps({"schema":"vdmv.source-pins.v1","sha256":hash_map,
+    "standalone_html_sha256":hashlib.sha256(html.encode()).hexdigest(),"runtime":"Pyodide v0.27.7 via external jsDelivr CDN"},indent=2)+'\n')
+print('Single-file browser UI: index.html',len(html.encode()),'bytes; Python source embedded')
