@@ -10,11 +10,12 @@ The research proposal comes from the four supplied papers preserved byte-for-byt
 
 ## Quick start — iPad / browser
 
-1. Upload this ZIP's **extracted contents** into a GitHub repository.
+1. Open the published [GitHub repository](https://github.com/mitchell-d00/Virtual-DMV-Bot-Traffic-Research-Rig) or upload a release ZIP's extracted contents to a fork.
 2. In repository Settings → Pages, deploy `main` / root (`index.html`). Open that HTTPS link in Safari/Chrome.
 3. Allow one-time loading of **Pyodide v0.27.7** from jsDelivr. The Python engine, policies, tests, and demo keys run in your browser; no account, paid LLM, backend, or API key is used by the lab.
-4. Play **Bot Traffic**, visit **Virtual DMV** to issue/transfer/revoke plates, then run **Test bench**.
-5. Export JSON if you need to move the demo workspace to another browser/iPad. Import it on the other device. There is **no automatic multi-user synchronization**.
+4. Play **Bot Traffic**, visit **Virtual DMV** to issue/transfer/revoke plates, then run **Test bench**. The game is isolated from registry edits: it always exercises a declared deterministic fixture.
+5. Open **Scenario ledger** to see all 78 cataloged cases (51 recorded CLI unit tests, 12 rerunnable browser probes, 10 playable game cases, and 5 pending Mitchell Tech cross-checks), including expected/observed outcomes and source links. Download JSON evidence if desired.
+6. Export JSON if you need to move the demo workspace to another browser/iPad. Import it on the other device. There is **no automatic multi-user synchronization**.
 
 `index.html` contains the entire interface, JavaScript transport and actual Python engine source. **Important:** its Pyodide Python/WebAssembly interpreter is downloaded at load time and is **not bundled**. Thus the first load and uncached reload require network access. This is a single-file *application source*, not a self-contained offline Python distribution. For a fully offline runtime, vendor and package Pyodide assets separately. The GitHub Pages URL runs code publicly; another person's browser storage is NOT remotely accessible just by knowing the URL.
 
@@ -24,6 +25,8 @@ Requires Python 3.10+, **no third-party modules** for the core or tests.
 
 ```sh
 PYTHONPATH=src python3 -m unittest discover -s tests -v
+python3 tools/run_scenarios.py
+python3 tools/build_browser.py
 PYTHONPATH=src python3 -m virtual_dmv new --state local/demo-state.json
 PYTHONPATH=src python3 -m virtual_dmv roster --state local/demo-state.json
 PYTHONPATH=src python3 -m virtual_dmv request --state local/demo-state.json --plate VDMV-RESEARCH-01 --owner alice --resource research-library --action summarize
@@ -45,7 +48,7 @@ browser/                 Readable HTML template, JavaScript and CSS
 index.html               Built single-file browser UI, embeds same Python source
 examples/                Scriptable initial test scenario
 tests/                   Full regression + cryptographic fixture tests
-evaluation/              Protocol and externally replicable challenge proposals
+evaluation/              78-case evidence ledger, red→green history, calculator protocol
 docs/                    Threat model, platform/API instructions, source byte pins
 CONTENTS                  Human-readable corpus and code index
 CITATION.cff             Attribution and software citation
@@ -75,9 +78,19 @@ await window.VirtualDMV.command('bench');
 
 This JavaScript object calls the **same Python engine** through Pyodide. It is page-local and is not a remote HTTP endpoint. Scripts running in the page have access to the demo workspace; only use trusted scripts.
 
-## Testing philosophy
+## Reproducible red→green work and public scenario ledger (v0.2)
 
-An experiment earns confidence by surviving constraints, not by a high mock score. This release includes **40 Python unit tests**, **12 in-browser Python synthetic probes**, and fixed RFC 8032 Ed25519 reference-vector verification. Report negative results, audit failures, confused deputy cases, replay attempts, key compromise, case selection bias, and loss of actual host authority. See `evaluation/REPLICATION-PROTOCOL.md`.
+**Red, reproduced from v0.1:** game cases were evaluated against the mutable DMV registry. Revoking a research plate made the first scripted "admit" case return denial, despite the unchanged written answer. The game also wrote host receipts to the player's DMV journal; negative indices silently wrapped around. The new regression tests were run *before* repair and failed.
+
+**Green:** each `game_try` uses its own seeded, deterministic fixture, does not mutate live receipts, rejects out-of-range indices, and checks the independent game-case oracle. The release now has **51/51 passing local Python tests**, plus **12/12 Python gate probes** and **10/10 game oracles** in local runs. Browser UI wiring passed **390px and 1280px** using a stub Python interpreter, not a live Pyodide download or iPad test.
+
+The file `evaluation/SCENARIO-RESULTS.json` stores 78 unique IDs: 51 recorded unit cases, 12 rerunnable Python probes, 10 game cases, and **5 pending** Mitchell Tech arithmetic cross-checks. IDs and exact questions are deduplicated; overlapping *behavior* across test banks is not presented as independent evidence. The browser includes a visible searchable **Scenario ledger** and a JSON evidence export. `evaluation/REGRESSION-HISTORY.md` records the original failure and repair.
+
+### Use Mitchell Tech as a second arithmetic instrument
+
+Under **Scenario ledger**, copy a unique five-expression batch script. Paste it into the JavaScript console on the [Mitchell Tech calculator's own website](https://mitchell-d00.github.io/Mitchell-Tech-V120.2-A-self-teaching-scientific-and-graphing-calculator-/), where `window.MitchellTech.calculate()` is exposed. Paste its JSON results back into Bot Traffic to compare the arithmetic. **These calculator checks remain pending in the published release until the other site actually runs them;** imported results are operator-submitted, not remotely attested. See `evaluation/CALCULATOR-CROSSCHECK.md`.
+
+An experiment earns confidence by surviving constraints, not by a high mock score. RFC 8032 Ed25519 reference fixtures are tested, but the pure-Python implementation remains educational, non-production code. See `docs/TESTING.md` and `evaluation/REPLICATION-PROTOCOL.md`.
 
 ## Important security warning
 
@@ -90,7 +103,7 @@ python3 tools/build_browser.py
 PYTHONPATH=src python3 -m unittest discover -s tests -v
 ```
 
-See `docs/TESTING.md` for limits and the browser smoke status. `docs/ENGINE-SOURCE-PINS.json` contains the exact hashes of the embedded Python source and the generated HTML.
+See `docs/TESTING.md` for limits and the browser smoke status. Regenerate evidence before rebuilding the browser: `python3 tools/run_scenarios.py`, then `python3 tools/build_browser.py`. `docs/ENGINE-SOURCE-PINS.json` contains the exact hashes of the embedded Python source and the generated HTML.
 
 ## Attribution
 

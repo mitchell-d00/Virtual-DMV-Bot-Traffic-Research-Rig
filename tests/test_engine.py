@@ -112,6 +112,46 @@ class Governance(unittest.TestCase):
     def test_proof_receipts_are_signable(self):
         r=self.tryit();packet=self.s['receipts'][0]; core={k:v for k,v in packet.items() if k not in ('hash','signature')}
         self.assertEqual(packet['hash'],r['receipt_hash']);self.assertTrue(C.verify(self.s['host']['public_key'],core,packet['signature']))
+    def test_game_case_isolation_after_revocation(self):
+        # Regression VDMV-REG-001: a scripted game must not inherit mutable registry actions.
+        E.revoke(self.s,'VDMV-RESEARCH-01',now=FIXED)
+        result=E.dispatch({'op':'game_try','state':self.s,'args':{'index':0}})
+        self.assertTrue(result['result']['decision']['allow'])
+        self.assertEqual(result['result']['decision']['reason'],'POLICY_ALLOW')
+    def test_game_does_not_write_live_receipts(self):
+        # Regression VDMV-REG-002: game evidence lives in a temporary fixture, not the registry.
+        n=len(self.s['receipts'])
+        E.dispatch({'op':'game_try','state':self.s,'args':{'index':0}})
+        self.assertEqual(len(self.s['receipts']),n)
+    def test_game_rejects_invalid_indices(self):
+        # Regression VDMV-REG-003: signed indices cannot wrap around to a valid case.
+        for index in (-1,10,999):
+            with self.subTest(index=index):
+                with self.assertRaises(E.ProtocolError):
+                    E.dispatch({'op':'game_try','state':self.s,'args':{'index':index}})
+    def test_game_expected_outcomes_independent_oracle(self):
+        cases=E.traffic_cases()
+        self.assertEqual(len(cases),10)
+        for i,c in enumerate(cases):
+            with self.subTest(id=c['id']):
+                outcome=E.dispatch({'op':'game_try','state':self.s,'args':{'index':i}})['result']
+                self.assertTrue(outcome['isolated'])
+                self.assertTrue(outcome['scenario_matches_expectation'],outcome)
+                self.assertEqual(outcome['decision']['allow'],c['expected_allow'])
+                self.assertEqual(outcome['decision']['reason'],c['expected_reason'])
+    def test_unique_game_scenario_signatures(self):
+        cases=E.traffic_cases()
+        self.assertEqual(len({c['id'] for c in cases}),len(cases))
+        self.assertEqual(len({(c['plate'],c['owner'],c['resource'],c['action']) for c in cases}),len(cases))
+    def test_game_ignores_registry_policy_edit(self):
+        self.s['policies']['research-library']['allows']['summarize']=[]
+        result=E.dispatch({'op':'game_try','state':self.s,'args':{'index':0}})
+        self.assertTrue(result['result']['scenario_matches_expectation'])
+        self.assertTrue(result['result']['decision']['allow'])
+    def test_probe_scenario_ids_are_unique(self):
+        r=E.run_bench()
+        self.assertEqual(len({c['id'] for c in r['cases']}),r['total'])
+        self.assertTrue(all(c['expected'] and c['observed'] for c in r['cases']))
     def test_bench_all(self):
         x=E.run_bench();self.assertEqual(x['passed'],x['total'])
     def test_command_json(self):

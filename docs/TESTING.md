@@ -1,27 +1,35 @@
-# Validation and replication status
+# Validation, source pins and replication status — v0.2
 
-## Verified in this generated ZIP environment
+## Verified here on 2026-10-20
 
-- `PYTHONPATH=src python3 -m unittest discover -s tests -v` — 40 unit tests passing in the build environment.
-- `virtual_dmv.engine.run_bench()` — 12 author-constructed gate probes passing.
-- Ed25519 SHA-512 implementation checked against the RFC 8032 empty-message reference vector.
-- Browser page generator embeds the same Python source bytes and creates `docs/ENGINE-SOURCE-PINS.json`.
-- JavaScript browser client syntax checked with Node.js.
+- 51/51 standard-library Python unit tests on locally rebuilt source, including the new game fixture isolation/strict-index regressions.
+- Original RED reproduction is documented in `evaluation/REGRESSION-HISTORY.md`: three new tests failed before repair, with five failing subtest assertions.
+- 12/12 independent-invocation Python gate probes from `run_bench()`. These overlap with unit-test coverage; do not sum as independent validations.
+- 10/10 game-script expected decisions match the Python gate in a fresh seeded game fixture; the game suite does not mutate live DMV receipts.
+- Public release scenario ledger 78 unique IDs: 51 unit, 12 browser probes, 10 game, five pending Mitchell Tech checks. No duplicate calculator arithmetic expression strings.
+- Source embedding and SHA-256 pin checks passed, original paper hashes unchanged, Node.js syntax check passed.
+- Chromium wiring smoke at 390px and 1280px with stubbed Pyodide; game, ledger filtering, bench, and operator-submitted calculator JSON ingestion exercised. **Not a live-Pyodide or deployed-site test.**
 
-## Not independently verified
+## Reproduce from checkout or extracted ZIP
 
-- Pyodide bootstrap on actual iPad 9 hardware, Safari or GitHub Pages deployment.
-- HTML behavior in a fully loaded real Pyodide browser runtime in the build environment. External runtime downloads are unavailable here.
-- Persistent private state across Safari private-mode or iCloud handoff.
-- True production key-management security, a federated trust network, or any real resource owner.
-- Predictions in the four papers. The economic model has assumed payoffs and host policies.
+```sh
+python3 tools/run_scenarios.py        # real Python suites + public JSON evidence
+python3 tools/build_browser.py        # regenerates index.html with source/evidence snapshot
+PYTHONPATH=src python3 -m unittest discover -s tests -v
+python3 tests/browser_ui_smoke.py    # optional Playwright / Chromium mock-UI smoke
+```
 
-## Next investigations
+`evaluation/SCENARIO-RESULTS.json` is a **recorded** unit-suite result from the exact source digest in that document; it does not prove visitors have rerun the suite. Browser probes and game cases are rerunnable from the web page. External Mitchell Tech checks are marked pending until a user executes the separate-origin calculator and submits JSON.
 
-1. Host `index.html` under HTTPS, wait for `Python engine ready` and run 12/12 probes. Record browser OS/version, runtime URL and snapshot hash.
-2. Run `python3 -m unittest discover ...` from extracted ZIP, not an unrelated checkout.
-3. Independently reproduce issuer signature vector in a vetted Ed25519 library; verify cross-language interchange and reject malformed points.
-4. Inject invalid certificate versions, challenge races, silent journal tails and rotating issuer keys. Document new kill tests.
-5. Compare same host's anonymized traffic with and without voluntary registration; report consent, registration cost, false denial and false acceptance.
-6. Add external signed ledger checkpoints and transparency logs before any real federation tests.
-7. If a researcher investigates real devices, do not use user data or live production identities until governance/privacy reviews are in place.
+## Not yet verified
+
+- Real Pyodide bootstrap from CDN in Safari on the user's iPad 9 or deployed GitHub Pages; cross-browser/mobile hardware results.
+- Actual Mitchell Tech browser-origin execution of external numeric probes. User-submitted JSON does not authenticate its origin.
+- Production key security, issuer federation, real-world permissions, or economic adoption predictions.
+- Independent replication of 51 local-unit pass results or objective correctness beyond the given cases.
+
+## Next falsifiers
+
+- Measure reproducibility across sessions and platforms, record Safari/WebAssembly errors, and compare source pins to deployed release.
+- Run known-key signature interoperability against a vetted Ed25519 implementation; simulate external checkpoint loss/replay attacks.
+- Model competing registries, identity cloning and false attribution, run real resource-owner consented trials with reported denominators.

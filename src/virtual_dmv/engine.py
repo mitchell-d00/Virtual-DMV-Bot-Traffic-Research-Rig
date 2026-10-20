@@ -356,7 +356,7 @@ def bootstrap(*, seed=None, now=1893456000):
 
 def traffic_cases():
     """Fixed constructed scenarios; scoring is not empirical validation."""
-    return [
+    cases = [
        {"label":"Known researcher requests a summary","plate":"VDMV-RESEARCH-01","owner":"alice","resource":"research-library","action":"summarize","truth":"Identity verified; allow with attribution."},
        {"label":"Unregistered crawler tries the private library","plate":"anonymous","owner":None,"resource":"research-library","action":"crawl","truth":"Unknown traffic; deny."},
        {"label":"Known crawler indexes public archive","plate":"VDMV-CRAWLER-02","owner":"bob","resource":"open-archive","action":"index","truth":"Verified crawler; allow."},
@@ -368,6 +368,18 @@ def traffic_cases():
        {"label":"Known crawler attempts prohibited redistribution","plate":"VDMV-CRAWLER-02","owner":"bob","resource":"open-archive","action":"redistribute","truth":"No redistribution grant."},
        {"label":"Known researcher archives without archival class","plate":"VDMV-RESEARCH-01","owner":"alice","resource":"research-library","action":"archive","truth":"Wrong participation class; deny."},
     ]
+
+    # Independently declared expected results, separate from the current Python gate verdict.
+    expected=[
+      (True,"POLICY_ALLOW"),(False,"ANONYMOUS_DEFAULT_DENY"),
+      (True,"POLICY_ALLOW"),(False,"POLICY_DENY"),
+      (True,"ANONYMOUS_POLICY_ALLOW"),(False,"INVALID_HOLDER_PROOF"),
+      (True,"POLICY_ALLOW"),(True,"ANONYMOUS_POLICY_ALLOW"),
+      (False,"POLICY_DENY"),(False,"POLICY_DENY")]
+    _need(len(cases)==len(expected),"scenario oracle count mismatch")
+    return [{**case,"id":f"GAME-{i+1:03d}","expected_allow":allow,
+       "expected_reason":reason,"expected":"ADMIT" if allow else "DENY"}
+       for i,(case,(allow,reason)) in enumerate(zip(cases,expected))]
 
 
 def economics_simulation(state, *, rounds=100, seed=7, adoption=0.5):
@@ -436,7 +448,12 @@ def run_bench():
     def expiry():
         s=setup();r=request(s,"VDMV-RESEARCH-01","research-library","crawl",owner="alice",now=now+86500)
         _need(r["reason"]=="EXPIRED_OR_NOT_YET_VALID","expired credential accepted")
-    for name,fn in [("Valid proof + allowed action",passes),("Wrong-holder signature",wrong_key),("Authenticated but forbidden training",forbidden_use),("Anonymous open resource",anonymous_open),("Anonymous protected resource",anonymous_closed),("Issuer revocation",revoked),("Old owner rejected after transfer",transfer_old_key),("New owner admitted after transfer",transfer_new_key),("Issuer event tamper detection",event_tamper),("Host receipt tamper detection",receipt_tamper),("One-use challenge replay",replay),("Credential expiration",expiry)]:check(name,fn)
+    for name,fn in [("Valid proof + allowed action",passes),("Wrong-holder signature",wrong_key),("Authenticated but forbidden training",forbidden_use),("Anonymous open resource",anonymous_open),("Anonymous protected resource",anonymous_closed),("Issuer revocation",revoked),("Old owner rejected after transfer",transfer_old_key),("New owner admitted after transfer",transfer_new_key),("Issuer event tamper detection",event_tamper),("Host receipt tamper detection",receipt_tamper),("One-use challenge replay",replay),("Credential expiration",expiry)]:
+        check(name,fn)
+    for i,test in enumerate(tests,1):
+        test["id"]=f"PROBE-{i:03d}"
+        test["expected"]="Python assertion(s) for this named adversarial test must hold"
+        test["observed"]="All asserted conditions held" if test["pass"] else test.get("error","Unexpected behavior")
     return {"passed":sum(x["pass"] for x in tests),"total":len(tests),"cases":tests,
       "notice":"Developer-authored synthetic correctness checks; not an independent security audit or real-world validation."}
 
@@ -460,8 +477,16 @@ def dispatch(input_data):
     elif op=="policies":outcome=copy.deepcopy(state["policies"])
     elif op=="casebook":outcome=traffic_cases()
     elif op=="game_try":
-        cases=traffic_cases(); case=cases[int(args["index"])%len(cases)]
-        outcome={"case":case,"decision":request(state,case["plate"],case["resource"],case["action"],owner=case["owner"],now=state["created_at"])}
+        cases=traffic_cases()
+        index=args.get("index")
+        _need(type(index) is int and 0<=index<len(cases),"game case index out of range")
+        case=cases[index]
+        # The game is a REPLAYABLE test instrument; never use the player's mutable DMV workspace.
+        # Do not place game receipts into the user's registry or score against a changed policy.
+        fixture=bootstrap(seed="bot-traffic-game-v0.2",now=1893456000)
+        decision=request(fixture,case["plate"],case["resource"],case["action"],owner=case["owner"],now=fixture["created_at"])
+        outcome={"case":case,"decision":decision,"isolated":True,"workspace_unchanged":True,
+          "scenario_matches_expectation":decision["allow"]==case["expected_allow"] and decision["reason"]==case["expected_reason"]}
     elif op=="economics":outcome=economics_simulation(state,rounds=int(args.get("rounds",100)),adoption=float(args.get("adoption",.5)),seed=int(args.get("seed",7)))
     elif op=="bench":outcome=run_bench()
     elif op=="help":outcome={"ops":["bootstrap","roster","audit","owner","issue","renew","transfer","revoke","request","policies","policy","casebook","game_try","economics","bench","help"],"schema":SCHEMA}

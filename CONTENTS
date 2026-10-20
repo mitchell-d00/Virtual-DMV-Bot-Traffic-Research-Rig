@@ -38,6 +38,11 @@ RESEARCH EVALUATION
   docs/BROWSER-AND-AGENT-API.md
   docs/HTML-PARALLEL-DECLARATIONS.md
   docs/ENGINE-SOURCE-PINS.json
+  tools/run_scenarios.py              (full local unit suite + evidence catalog)
+  tests/test_scenarios.py             (scenario IDs, statuses and calculator dedup)
+  evaluation/SCENARIO-RESULTS.json    (78 scenario cases: 73 local passes + five pending)
+  evaluation/REGRESSION-HISTORY.md    (observed RED → GREEN, reproducible)
+  evaluation/CALCULATOR-CROSSCHECK.md (Mitchell Tech browser API cross-check)
   evaluation/REPLICATION-PROTOCOL.md
 
 EXAMPLES
