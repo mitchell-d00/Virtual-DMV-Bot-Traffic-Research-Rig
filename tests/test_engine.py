@@ -125,13 +125,13 @@ class Governance(unittest.TestCase):
         self.assertEqual(len(self.s['receipts']),n)
     def test_game_rejects_invalid_indices(self):
         # Regression VDMV-REG-003: signed indices cannot wrap around to a valid case.
-        for index in (-1,10,999):
+        for index in (-1,len(E.traffic_cases()),999):
             with self.subTest(index=index):
                 with self.assertRaises(E.ProtocolError):
                     E.dispatch({'op':'game_try','state':self.s,'args':{'index':index}})
     def test_game_expected_outcomes_independent_oracle(self):
         cases=E.traffic_cases()
-        self.assertEqual(len(cases),10)
+        self.assertEqual(len(cases),60)
         for i,c in enumerate(cases):
             with self.subTest(id=c['id']):
                 outcome=E.dispatch({'op':'game_try','state':self.s,'args':{'index':i}})['result']
@@ -142,7 +142,7 @@ class Governance(unittest.TestCase):
     def test_unique_game_scenario_signatures(self):
         cases=E.traffic_cases()
         self.assertEqual(len({c['id'] for c in cases}),len(cases))
-        self.assertEqual(len({(c['plate'],c['owner'],c['resource'],c['action']) for c in cases}),len(cases))
+        self.assertEqual(len({(c['scenario'],c['plate'],c['owner'],c['resource'],c['action']) for c in cases}),len(cases))
     def test_game_ignores_registry_policy_edit(self):
         self.s['policies']['research-library']['allows']['summarize']=[]
         result=E.dispatch({'op':'game_try','state':self.s,'args':{'index':0}})

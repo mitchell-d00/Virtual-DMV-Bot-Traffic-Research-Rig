@@ -1,0 +1,160 @@
+test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace (test_traffic_v03.TrafficBoundaryV03.test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace) ... 
+  test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace (test_traffic_v03.TrafficBoundaryV03.test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace) (id='GAME-001') ... ERROR
+  test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace (test_traffic_v03.TrafficBoundaryV03.test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace) (id='GAME-002') ... ERROR
+  test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace (test_traffic_v03.TrafficBoundaryV03.test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace) (id='GAME-003') ... ERROR
+  test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace (test_traffic_v03.TrafficBoundaryV03.test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace) (id='GAME-004') ... ERROR
+  test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace (test_traffic_v03.TrafficBoundaryV03.test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace) (id='GAME-005') ... ERROR
+  test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace (test_traffic_v03.TrafficBoundaryV03.test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace) (id='GAME-006') ... ERROR
+  test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace (test_traffic_v03.TrafficBoundaryV03.test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace) (id='GAME-007') ... ERROR
+  test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace (test_traffic_v03.TrafficBoundaryV03.test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace) (id='GAME-008') ... ERROR
+  test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace (test_traffic_v03.TrafficBoundaryV03.test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace) (id='GAME-009') ... ERROR
+  test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace (test_traffic_v03.TrafficBoundaryV03.test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace) (id='GAME-010') ... ERROR
+test_malformed_nonce_returns_host_receipt_without_consuming_valid_challenge (test_traffic_v03.TrafficBoundaryV03.test_malformed_nonce_returns_host_receipt_without_consuming_valid_challenge) ... 
+  test_malformed_nonce_returns_host_receipt_without_consuming_valid_challenge (test_traffic_v03.TrafficBoundaryV03.test_malformed_nonce_returns_host_receipt_without_consuming_valid_challenge) (nonce='[]') ... ERROR
+  test_malformed_nonce_returns_host_receipt_without_consuming_valid_challenge (test_traffic_v03.TrafficBoundaryV03.test_malformed_nonce_returns_host_receipt_without_consuming_valid_challenge) (nonce='{}') ... ERROR
+  test_malformed_nonce_returns_host_receipt_without_consuming_valid_challenge (test_traffic_v03.TrafficBoundaryV03.test_malformed_nonce_returns_host_receipt_without_consuming_valid_challenge) (nonce="['CH-forged']") ... ERROR
+test_new_challenge_nonce_collision_does_not_overwrite_existing_request (test_traffic_v03.TrafficBoundaryV03.test_new_challenge_nonce_collision_does_not_overwrite_existing_request) ... FAIL
+test_traffic_shift_exposes_at_least_24_unique_scripted_cases (test_traffic_v03.TrafficBoundaryV03.test_traffic_shift_exposes_at_least_24_unique_scripted_cases) ... FAIL
+
+======================================================================
+ERROR: test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace (test_traffic_v03.TrafficBoundaryV03.test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace) (id='GAME-001')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v03_work/tests/test_traffic_v03.py", line 57, in test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace
+    self.assertEqual(result['decision']['attribution_required'],c['expected_attribution'])
+                                                                ~^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'expected_attribution'
+
+======================================================================
+ERROR: test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace (test_traffic_v03.TrafficBoundaryV03.test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace) (id='GAME-002')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v03_work/tests/test_traffic_v03.py", line 57, in test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace
+    self.assertEqual(result['decision']['attribution_required'],c['expected_attribution'])
+                                                                ~^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'expected_attribution'
+
+======================================================================
+ERROR: test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace (test_traffic_v03.TrafficBoundaryV03.test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace) (id='GAME-003')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v03_work/tests/test_traffic_v03.py", line 57, in test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace
+    self.assertEqual(result['decision']['attribution_required'],c['expected_attribution'])
+                                                                ~^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'expected_attribution'
+
+======================================================================
+ERROR: test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace (test_traffic_v03.TrafficBoundaryV03.test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace) (id='GAME-004')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v03_work/tests/test_traffic_v03.py", line 57, in test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace
+    self.assertEqual(result['decision']['attribution_required'],c['expected_attribution'])
+                                                                ~^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'expected_attribution'
+
+======================================================================
+ERROR: test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace (test_traffic_v03.TrafficBoundaryV03.test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace) (id='GAME-005')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v03_work/tests/test_traffic_v03.py", line 57, in test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace
+    self.assertEqual(result['decision']['attribution_required'],c['expected_attribution'])
+                                                                ~^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'expected_attribution'
+
+======================================================================
+ERROR: test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace (test_traffic_v03.TrafficBoundaryV03.test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace) (id='GAME-006')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v03_work/tests/test_traffic_v03.py", line 57, in test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace
+    self.assertEqual(result['decision']['attribution_required'],c['expected_attribution'])
+                                                                ~^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'expected_attribution'
+
+======================================================================
+ERROR: test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace (test_traffic_v03.TrafficBoundaryV03.test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace) (id='GAME-007')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v03_work/tests/test_traffic_v03.py", line 57, in test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace
+    self.assertEqual(result['decision']['attribution_required'],c['expected_attribution'])
+                                                                ~^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'expected_attribution'
+
+======================================================================
+ERROR: test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace (test_traffic_v03.TrafficBoundaryV03.test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace) (id='GAME-008')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v03_work/tests/test_traffic_v03.py", line 57, in test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace
+    self.assertEqual(result['decision']['attribution_required'],c['expected_attribution'])
+                                                                ~^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'expected_attribution'
+
+======================================================================
+ERROR: test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace (test_traffic_v03.TrafficBoundaryV03.test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace) (id='GAME-009')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v03_work/tests/test_traffic_v03.py", line 57, in test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace
+    self.assertEqual(result['decision']['attribution_required'],c['expected_attribution'])
+                                                                ~^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'expected_attribution'
+
+======================================================================
+ERROR: test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace (test_traffic_v03.TrafficBoundaryV03.test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace) (id='GAME-010')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v03_work/tests/test_traffic_v03.py", line 57, in test_all_game_cases_match_separately_declared_oracles_and_preserve_workspace
+    self.assertEqual(result['decision']['attribution_required'],c['expected_attribution'])
+                                                                ~^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'expected_attribution'
+
+======================================================================
+ERROR: test_malformed_nonce_returns_host_receipt_without_consuming_valid_challenge (test_traffic_v03.TrafficBoundaryV03.test_malformed_nonce_returns_host_receipt_without_consuming_valid_challenge) (nonce='[]')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v03_work/tests/test_traffic_v03.py", line 20, in test_malformed_nonce_returns_host_receipt_without_consuming_valid_challenge
+    result=E.decide(self.s,fake,'forged',now=NOW)
+  File "/mnt/data/vdmv_v03_work/src/virtual_dmv/engine.py", line 275, in decide
+    expected=state["challenges"].pop(nonce,None)
+TypeError: unhashable type: 'list'
+
+======================================================================
+ERROR: test_malformed_nonce_returns_host_receipt_without_consuming_valid_challenge (test_traffic_v03.TrafficBoundaryV03.test_malformed_nonce_returns_host_receipt_without_consuming_valid_challenge) (nonce='{}')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v03_work/tests/test_traffic_v03.py", line 20, in test_malformed_nonce_returns_host_receipt_without_consuming_valid_challenge
+    result=E.decide(self.s,fake,'forged',now=NOW)
+  File "/mnt/data/vdmv_v03_work/src/virtual_dmv/engine.py", line 275, in decide
+    expected=state["challenges"].pop(nonce,None)
+TypeError: unhashable type: 'dict'
+
+======================================================================
+ERROR: test_malformed_nonce_returns_host_receipt_without_consuming_valid_challenge (test_traffic_v03.TrafficBoundaryV03.test_malformed_nonce_returns_host_receipt_without_consuming_valid_challenge) (nonce="['CH-forged']")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v03_work/tests/test_traffic_v03.py", line 20, in test_malformed_nonce_returns_host_receipt_without_consuming_valid_challenge
+    result=E.decide(self.s,fake,'forged',now=NOW)
+  File "/mnt/data/vdmv_v03_work/src/virtual_dmv/engine.py", line 275, in decide
+    expected=state["challenges"].pop(nonce,None)
+TypeError: unhashable type: 'list'
+
+======================================================================
+FAIL: test_new_challenge_nonce_collision_does_not_overwrite_existing_request (test_traffic_v03.TrafficBoundaryV03.test_new_challenge_nonce_collision_does_not_overwrite_existing_request)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v03_work/tests/test_traffic_v03.py", line 33, in test_new_challenge_nonce_collision_does_not_overwrite_existing_request
+    self.assertNotEqual(first['nonce'],second['nonce'])
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'CH-same' == 'CH-same'
+
+======================================================================
+FAIL: test_traffic_shift_exposes_at_least_24_unique_scripted_cases (test_traffic_v03.TrafficBoundaryV03.test_traffic_shift_exposes_at_least_24_unique_scripted_cases)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v03_work/tests/test_traffic_v03.py", line 40, in test_traffic_shift_exposes_at_least_24_unique_scripted_cases
+    self.assertGreaterEqual(len(cases),24)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: 10 not greater than or equal to 24
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.885s
+
+FAILED (failures=2, errors=13)

@@ -1,0 +1,27 @@
+Before restricting identifiers to explicit ASCII, confusable Unicode owner/plate labels were accepted.
+
+test_confusable_owner_label_is_rejected (test_identifier_v05.IdentifierV05.test_confusable_owner_label_is_rejected) ... FAIL
+test_confusable_plate_id_is_rejected_before_event (test_identifier_v05.IdentifierV05.test_confusable_plate_id_is_rejected_before_event) ... FAIL
+
+======================================================================
+FAIL: test_confusable_owner_label_is_rejected (test_identifier_v05.IdentifierV05.test_confusable_owner_label_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v05_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.5/tests/test_identifier_v05.py", line 8, in test_confusable_owner_label_is_rejected
+    with self.assertRaises(E.ProtocolError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: ProtocolError not raised
+
+======================================================================
+FAIL: test_confusable_plate_id_is_rejected_before_event (test_identifier_v05.IdentifierV05.test_confusable_plate_id_is_rejected_before_event)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v05_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.5/tests/test_identifier_v05.py", line 13, in test_confusable_plate_id_is_rejected_before_event
+    with self.assertRaises(E.ProtocolError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: ProtocolError not raised
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.107s
+
+FAILED (failures=2)

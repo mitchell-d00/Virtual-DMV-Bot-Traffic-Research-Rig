@@ -40,7 +40,7 @@ RESEARCH EVALUATION
   docs/ENGINE-SOURCE-PINS.json
   tools/run_scenarios.py              (full local unit suite + evidence catalog)
   tests/test_scenarios.py             (scenario IDs, statuses and calculator dedup)
-  evaluation/SCENARIO-RESULTS.json    (78 scenario cases: 73 local passes + five pending)
+  evaluation/SCENARIO-RESULTS.json    (149 scenario cases: 144 local passes + five pending)
   evaluation/REGRESSION-HISTORY.md    (observed RED → GREEN, reproducible)
   evaluation/CALCULATOR-CROSSCHECK.md (Mitchell Tech browser API cross-check)
   evaluation/REPLICATION-PROTOCOL.md
@@ -49,3 +49,10 @@ EXAMPLES
   examples/demo.py
 
 No real identity credentials or legal permissions are issued here.
+
+  evaluation/TRAFFIC-TEST-MATRIX.md   (v0.4 attack coverage and reproducibility)
+  evaluation/TRAFFIC-RED-V03.txt     (red tests from v0.2 baseline)
+  tests/test_traffic_v03.py         (new no-repeat, malformed nonce, collision, replay cases)
+
+  evaluation/TRAFFIC-RED-V04.txt     (actual v0.4 pre-fix regression failures)
+  tests/test_traffic_v04.py         (six saturation and envelope regression tests)

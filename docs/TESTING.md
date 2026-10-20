@@ -1,3 +1,77 @@
+# Validation, release evidence and limits — v0.5
+
+**v0.5 final gate:** 84/84 local unit tests passed; 22/22 native Python probes, 60/60 synthetic game oracles, 168/168 signed policy-matrix cases. Five Mitchell Tech checks remain pending. Chromium desktop/mobile viewport smoke passed with mocked Pyodide startup, not the live runtime. Full source and environment should be independently retested before field use.
+
+The new `tests/test_crypto_v05.py` contains 17 crypto/traffic safety cases (14 in the archived pre-fix run and three additional compatibility/boundary/fuzz checks) with an archived **pre-fix red** result in `evaluation/CRYPTO-RED-V05.txt`. The optional external differential uses `cryptography` only in the developer's test environment, and never changes the shipping standard-library engine.
+
+`tests/test_pending_integrity_v05.py` adds two tests for maliciously corrupted local pending request entries, including a red `KeyError` reproduction before a fail-closed denial fix.
+
+`tests/test_identifier_v05.py` records two red→green regressions rejecting Cyrillic look-alike owner and plate identifiers, with the original failures archived under `evaluation/IDENTIFIER-RED-V05.txt`.
+
+`tools/run_security_matrix.py` enumerates **168 distinct signed synthetic requests**, every combination of four resources, five registered classes plus anonymous, and seven actions. Every row checks expected allow/deny, reason, attribution and receipt hash; receipts form a verified signed chain. The 168 combinations are **not independent field findings**.
+
+Repeat the release gates in this order:
+
+```sh
+PYTHONPATH=src python3 -m unittest discover -s tests -v
+python3 tools/run_security_matrix.py
+PYTHONPATH=src python3 tools/run_scenarios.py
+python3 tools/build_browser.py
+python3 tests/browser_ui_smoke.py
+```
+
+Run the same commands after extracting the release ZIP. The UI smoke uses mocked Python startup; do not report it as live Pyodide/CDN/Safari execution. A real iPad test needs the hosted release and explicit storage/refresh, transfer, and real Python checks. Review `docs/THREAT-MODEL.md` before using the result.
+
+# Validation, release evidence and limits — v0.4
+
+## New traffic saturation test (2026-10-20)
+
+Reproduce the red→green sequence in `evaluation/REGRESSION-HISTORY.md` with archived red output `evaluation/TRAFFIC-RED-V04.txt` and the new `tests/test_traffic_v04.py` tests. The v0.3 baselines were tested locally; the prior GitHub published main was v0.2 when this work began.
+
+- **RED:** non-object traffic envelopes raised exceptions instead of returning signed denial receipts; pending challenges were unbounded and stale expired entries never pruned.
+- **GREEN:** non-object packets produce `MALFORMED_CHALLENGE` and an intact host-signed receipt. At most 128 nonexpired pending challenges are held per local demo state; overflows are rejected at issuance and expired slots reclaimed. This is *not* a substitute for network/IP rate limits, distributed admission controls, or secure server-side storage.
+- **Python checks:** 62/62 unit checks, 22/22 browser-rerunnable native Python probes, 60/60 game oracles with `(allow, reason, attribution)` expectations, unique scenario IDs and no repeated 5-field traffic tuples within the game bank.
+- **Archive:** 149 recorded IDs (62 unit + 22 probe + 60 game + five pending external Mitchell Tech questions). Archive outcomes are local developer-authored tests, not independently reproduced evidence. A UI running mock-Pyodide does not count as a Python runtime validation.
+- **Browser:** local Chromium smoke at 390px and 1280px with fake `loadPyodide()` injected; all 60 game buttons, bench controls, scenario filtering and calculator import wiring exercised. The first v0.4 smoke failed because its **mock fixture** still claimed `passed:18` while declaring 22 cases; the fake response was corrected to 22/22 and the smoke reran green at both widths. This was an integration test-fixture mismatch, not an observed Python gate failure. Real Safari/iPad or hosted Pyodide use remains untested unless a separate documented real-runtime run is attached.
+
+Rebuild in order:
+
+```sh
+python3 tools/build_browser.py
+PYTHONPATH=src python3 -m unittest discover -s tests -q
+python3 tools/run_scenarios.py
+python3 tools/build_browser.py
+PYTHONPATH=src python3 -m unittest discover -s tests -q
+python3 tests/browser_ui_smoke.py
+```
+
+# Validation, release evidence and limits — v0.3
+
+## v0.3 traffic smoke and regression (2026-10-20)
+
+- RED from v0.2 is captured in `evaluation/TRAFFIC-RED-V03.txt`, after adding new adversarial tests and before modifying the production gate.
+- GREEN local Python unit suite: 56/56 tests, including adversarial malformed-nonce rejection with signed receipts, forced nonce-collision preservation, 36 unique traffic signatures and stable replay semantics.
+- In-process native Python bench: 18/18 probes. Game oracle bench: 36/36 cases; each case checks allow/deny, reason and attribution. These overlap with unit cases and are synthetic, not independent trials.
+- Scenario ledger contains 115 records: 56 unit + 18 gate probes + 36 game + 5 pending external Mitchell Tech arithmetic cases. Each has ID, source, input, expected, observed and execution provenance.
+- Freshly extracted release ZIP and SHA-256 manifest verified; single-file HTML embeds the exact source code. UI smoke tests performed at 390px/1280px with a **stubbed Python loader**, including a full 60-round game traversal and ledger filtration. Stub checks are browser wiring only, **not real Pyodide**.
+
+## Reproduction
+
+```sh
+PYTHONPATH=src python3 -m unittest discover -s tests -v
+python3 tools/run_scenarios.py
+python3 tools/build_browser.py
+python3 tests/browser_ui_smoke.py
+```
+
+Run `tools/run_scenarios.py` and `tools/build_browser.py` to refresh the trace after changing source; validate the release ZIP from a fresh extraction before publishing. The external calculator cross-checks are not counted as passes unless executed in Mitchell Tech's distinct browser origin. Operator-submitted JSON is not an authenticated cross-origin statement.
+
+## Limitations
+
+No deployed-site/Safari iPad 9 Pyodide execution is claimed. The app downloads Pyodide v0.27.7 at runtime and uses demo local keys and state; these are not production identity assets. Browser mock tests do not execute the Python engine. No multi-jurisdiction policy or independent adversarial security/field validation has been conducted. A forced nonce collision is an engineered regression test, not a measured real-world frequency.
+
+---
+
 # Validation, source pins and replication status — v0.2
 
 ## Verified here on 2026-10-20

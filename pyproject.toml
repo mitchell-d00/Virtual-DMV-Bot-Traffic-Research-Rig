@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "virtual-dmv-participation-lab"
-version = "0.1.0"
+version = "0.5.0"
 description = "Source-bounded prototype for machine plate governance, cryptographic proof and consented transfer"
 readme = "README.md"
 requires-python = ">=3.10"

@@ -14,7 +14,7 @@ The research proposal comes from the four supplied papers preserved byte-for-byt
 2. In repository Settings → Pages, deploy `main` / root (`index.html`). Open that HTTPS link in Safari/Chrome.
 3. Allow one-time loading of **Pyodide v0.27.7** from jsDelivr. The Python engine, policies, tests, and demo keys run in your browser; no account, paid LLM, backend, or API key is used by the lab.
 4. Play **Bot Traffic**, visit **Virtual DMV** to issue/transfer/revoke plates, then run **Test bench**. The game is isolated from registry edits: it always exercises a declared deterministic fixture.
-5. Open **Scenario ledger** to see all 78 cataloged cases (51 recorded CLI unit tests, 12 rerunnable browser probes, 10 playable game cases, and 5 pending Mitchell Tech cross-checks), including expected/observed outcomes and source links. Download JSON evidence if desired.
+5. Open **Scenario ledger** to see the updated case ledger (Python unit tests, 22 rerunnable browser probes, 60 playable game cases, 168 unique signed policy-matrix tuples, and 5 pending Mitchell Tech cross-checks), including expected/observed outcomes and source links. Download JSON evidence if desired.
 6. Export JSON if you need to move the demo workspace to another browser/iPad. Import it on the other device. There is **no automatic multi-user synchronization**.
 
 `index.html` contains the entire interface, JavaScript transport and actual Python engine source. **Important:** its Pyodide Python/WebAssembly interpreter is downloaded at load time and is **not bundled**. Thus the first load and uncached reload require network access. This is a single-file *application source*, not a self-contained offline Python distribution. For a fully offline runtime, vendor and package Pyodide assets separately. The GitHub Pages URL runs code publicly; another person's browser storage is NOT remotely accessible just by knowing the URL.
@@ -48,7 +48,7 @@ browser/                 Readable HTML template, JavaScript and CSS
 index.html               Built single-file browser UI, embeds same Python source
 examples/                Scriptable initial test scenario
 tests/                   Full regression + cryptographic fixture tests
-evaluation/              78-case evidence ledger, red→green history, calculator protocol
+evaluation/              Evidence ledger, crypto/safety and traffic regression history
 docs/                    Threat model, platform/API instructions, source byte pins
 CONTENTS                  Human-readable corpus and code index
 CITATION.cff             Attribution and software citation
@@ -78,13 +78,43 @@ await window.VirtualDMV.command('bench');
 
 This JavaScript object calls the **same Python engine** through Pyodide. It is page-local and is not a remote HTTP endpoint. Scripts running in the page have access to the demo workspace; only use trusted scripts.
 
+## v0.5 verified snapshot (2026-10-20)
+
+**334 recorded local passes / 339 visible scenario entries:** 84 Python unit tests, 22 Python gate probes, 60 isolated Bot Traffic game outcomes, 168 unique signed policy/role/action requests, and five explicitly pending external Mitchell Tech calculator checks. These are overlapping synthetic checks, not 334 independent security experiments. The 390px/1280px Chromium UI smoke exercised controls with a stub interpreter; the live hosted Pyodide runtime and iPad Safari have **not** been verified here.
+
+## Crypto and safety v0.5 — signed consent and fail-closed traffic
+
+The v0.5 security pass adds 17 focused crypto/safety tests (14 in the initial red run, three further checks) plus an exhaustive 168-tuple synthetic resource × role × action matrix. It also protects the admission gate from poisoned imported pending-challenge entries and rejects Unicode look-alike owner/plate IDs. It fixes noncanonical signature/public-key encodings, strengthens signed ownership consent to bind every field of its exact successor credential, prevents invalid retroactive transfers from appending broken journal entries, and ensures malformed, cyclic, non-JSON, deep or oversized requests receive small signed denials instead of crashing receipt creation. A separate optional development test checks eight known-seed Ed25519 signatures against the mature `cryptography` package. Runtime and core tests still have no third-party dependency.
+
+**Compatibility:** historical v1 owner-intent signatures remain readable; new transitions emit v2 successor hashes with both outgoing and incoming owner authorization. Earlier consent records are not retroactively upgraded. An issuer that can rewrite and re-sign all private local data and uncheckpointed history remains a privileged trust boundary, not a problem solved by this release. See `evaluation/CRYPTO-RED-V05.txt`, `evaluation/CRYPTO-SAFETY-V05.md`, and `docs/THREAT-MODEL.md`. **Never use browser-exported demo private keys as real credentials.**
+
+## Bot Traffic v0.4 — traffic saturation and malformed-envelope red→green
+
+**New distinct shift:** `GAME-037..060` exercises 24 new combinations of unknown/registered machine identity, resource scope, crawl versus indexing versus redistribution, and two hostile-packet cases. `GAME-001..036` are preserved. Expected allow, reason and attribution are independently declared; **60/60** scripted decisions passed when recorded locally. These are synthetic test vectors, not outside-world events.
+
+**Reproduced baseline bugs:** the unmodified v0.3 gate raised `ProtocolError` without a denial receipt for a non-object challenge envelope. Creating requests without redeeming them accumulated unlimited pending challenges, and even stale expired challenges were never pruned from the map. The six new `tests/test_traffic_v04.py` methods failed before repairs (including six malformed-envelope subtest errors); see `evaluation/TRAFFIC-RED-V04.txt`.
+
+**Fixed:** malformed envelopes now receive a host-signed `MALFORMED_CHALLENGE` denial, without invalidating valid outstanding requests. The *local demonstration* registry enforces **128 live pending challenges** and prunes expired challenges before new allocation. A saturated queue rejects further issuance until capacity is released; real admission of an existing request frees a slot. This is a per-registry reference limit, **not** network-layer rate limiting or protection from deliberate multi-identity abuse.
+
+Current replay evidence: **62 local Python unit checks, 22 Python/browser-rerunnable gate probes, 60 independent-oracle game scripts, five pending Mitchell Tech checks** = **149 distinct scenario records**, with **144 local passes and five explicitly pending**. Behaviors overlap across banks; this is not 144 independent scientific findings. See `evaluation/TRAFFIC-TEST-MATRIX.md`, `evaluation/REGRESSION-HISTORY.md` and `docs/TESTING.md`.
+
+## Traffic-focused adversarial shift and version history (v0.3)
+
+**New, reproducible RED findings against published v0.2:** a JSON list/dictionary as the challenge `nonce` caused a Python `TypeError` before a denial receipt could be issued. A forced duplicate nonce overwrote a still-live pending challenge. The new `tests/test_traffic_v03.py` suite also initially failed because the game only contained 10 cases and the game oracles did not explicitly declare attribution. Its pre-fix run is retained in `evaluation/TRAFFIC-RED-V03.txt` and described in `evaluation/REGRESSION-HISTORY.md`.
+
+**GREEN v0.3:** malformed nonce types receive a signed `MALFORMED_CHALLENGE` denial receipt without consuming a valid challenge; challenge issuance refuses nonce collisions (bounded retry, errors on exhaustion). The playable Bot Traffic shift now contains **36 unique scripted scenario tuples**, preserving `GAME-001` through `GAME-010` and introducing `GAME-011` through `GAME-036` for revocation, transfer, renewal, early/late access, credential freshness, replay, tampering, attribution, new role classes and unknown traffic. Gate answers are checked against separately declared admit/deny, reason **and attribution** expectations. The game remains isolated from the mutable DMV workspace.
+
+The release evidence documents **56 local Python unit tests, 18 native Python probes, 36 individually playable game cases and 5 pending external Mitchell Tech calculator checks** (115 distinct IDs; 110 locally passed and 5 unrun). Duplicated behavior across banks is labeled as overlap, not independent scientific confirmation. A fresh-extraction ZIP test and mobile/desktop mock-interpreter smoke are required release gates. The full game can be replayed from the browser bench; `Run game oracles` compares every scripted expectation, not merely the player's score.
+
+See `evaluation/TRAFFIC-TEST-MATRIX.md`, `evaluation/SCENARIO-RESULTS.json`, `evaluation/REGRESSION-HISTORY.md`, and `docs/TESTING.md`.
+
 ## Reproducible red→green work and public scenario ledger (v0.2)
 
 **Red, reproduced from v0.1:** game cases were evaluated against the mutable DMV registry. Revoking a research plate made the first scripted "admit" case return denial, despite the unchanged written answer. The game also wrote host receipts to the player's DMV journal; negative indices silently wrapped around. The new regression tests were run *before* repair and failed.
 
 **Green:** each `game_try` uses its own seeded, deterministic fixture, does not mutate live receipts, rejects out-of-range indices, and checks the independent game-case oracle. The release now has **51/51 passing local Python tests**, plus **12/12 Python gate probes** and **10/10 game oracles** in local runs. Browser UI wiring passed **390px and 1280px** using a stub Python interpreter, not a live Pyodide download or iPad test.
 
-The file `evaluation/SCENARIO-RESULTS.json` stores 78 unique IDs: 51 recorded unit cases, 12 rerunnable Python probes, 10 game cases, and **5 pending** Mitchell Tech arithmetic cross-checks. IDs and exact questions are deduplicated; overlapping *behavior* across test banks is not presented as independent evidence. The browser includes a visible searchable **Scenario ledger** and a JSON evidence export. `evaluation/REGRESSION-HISTORY.md` records the original failure and repair.
+The v0.2 archived reference stored 78 unique IDs: 51 recorded unit cases, 12 rerunnable Python probes, 10 game cases, and **5 pending** Mitchell Tech arithmetic cross-checks. IDs and exact questions are deduplicated; overlapping *behavior* across test banks is not presented as independent evidence. The browser includes a visible searchable **Scenario ledger** and a JSON evidence export. `evaluation/REGRESSION-HISTORY.md` records the original failure and repair.
 
 ### Use Mitchell Tech as a second arithmetic instrument
 

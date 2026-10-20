@@ -33,7 +33,15 @@ def unb64(text):
         raise ValueError("invalid base64url")
     if not text or any(c not in "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_" for c in text):
         raise ValueError("invalid base64url")
-    return base64.urlsafe_b64decode(text + "=" * (-len(text) % 4))
+    try:
+        raw = base64.urlsafe_b64decode(text + "=" * (-len(text) % 4))
+    except (ValueError, base64.binascii.Error) as exc:
+        raise ValueError("invalid base64url encoding") from exc
+    # Standard base64 decoders may ignore non-zero unused trailing bits.
+    # Require the unique unpadded RFC4648 spelling for byte-exact identifiers.
+    if b64(raw) != text:
+        raise ValueError("noncanonical base64url encoding")
+    return raw
 
 
 def _add(a, b):

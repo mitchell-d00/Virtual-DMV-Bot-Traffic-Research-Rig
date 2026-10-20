@@ -1,18 +1,20 @@
 {
-  "schema": "virtual-dmv-release-pins-v2",
-  "version": "0.2.0",
+  "schema": "virtual-dmv-release-pins-v5",
+  "version": "0.5.0",
+  "release_date": "2026-10-20",
+  "file_count_excluding_manifest": 60,
   "files": {
     ".gitignore": {
       "sha256": "629163744fa07bf4419b4094fda8446ecaba9a24f94fe9f577a9bd9d66e34e5f",
       "bytes": 72
     },
     "CITATION.cff": {
-      "sha256": "07fdfc1a4b5e35feea5f56a69424fe7ae7ddd53c48f5f83c24e12bf50cc99da7",
+      "sha256": "b2d37fa3619b6a57121ee95327988b2ab8174941ababe267ccc335194ef5e242",
       "bytes": 332
     },
     "CONTENTS": {
-      "sha256": "9b6a1f5b3783785e3f00757d694f566e48a14b6c893c7acc313d9088998c87db",
-      "bytes": 1713
+      "sha256": "21bee1d31a657bb86cc548bccddd2dcd2ed17122a6351341a47b25005b06fa63",
+      "bytes": 2122
     },
     "CORPUS/01-Foundations/Admissibility.md": {
       "sha256": "fb9e8f331529e6bffc7c79e16dfbfae34ec6e9500a26074fd5c3203a9ef51604",
@@ -63,12 +65,12 @@
       "bytes": 933
     },
     "README.md": {
-      "sha256": "b81e38b329b81884cc1d26d6a3fade7c8b4ca783f4c7574ea7c687fe365f4fff",
-      "bytes": 10006
+      "sha256": "0af5ad250256eb3489c287001971a70af7cc141f26f02f10343dff37351c0942",
+      "bytes": 15951
     },
     "RELEASE-NOTES.md": {
-      "sha256": "05a8541bcc221a877eff14dc07ce4ba49f4eedddbb99bf7ee2c46d916d726787",
-      "bytes": 2016
+      "sha256": "c0e89fcd645bdc2a6073b674b9c6c282a3f6f92b9c6bc04f2b5f4568624f03a1",
+      "bytes": 7090
     },
     "SPECS/.well-known-bot-participation.example.json": {
       "sha256": "9680b4890e770328f7e998bd6f771cf0ed74fc4905f42b63e9457e65d023bb04",
@@ -83,23 +85,23 @@
       "bytes": 284
     },
     "browser/client.js": {
-      "sha256": "6079e3f4220b7166c899138de9caa728969b9f78599fe6c08a9d1b1c01956f8d",
-      "bytes": 21664
+      "sha256": "71d701a87380b78c94c0a488a43212189629cc66f99f606f54969d2bcaa59945",
+      "bytes": 21885
     },
     "browser/style.css": {
       "sha256": "023f149a8feb77b84098ddca9e5eba39e067c682bae8d2847dbddd72e56c4e71",
       "bytes": 6661
     },
     "browser/template.html": {
-      "sha256": "ff3b22f9ccf6c0ad4d85b0e17c73cb5855abed82ac0b09301b32d41057202c50",
-      "bytes": 13238
+      "sha256": "b6816ee41ce34f3cf0d8117f54a6e9c50f4e277dec5fdfbd13c7101acc24e888",
+      "bytes": 13315
     },
     "docs/BROWSER-AND-AGENT-API.md": {
       "sha256": "b817587889b780300f47b3f72954b44ecdb8d43979e57ed73af758c8af10e634",
       "bytes": 2089
     },
     "docs/ENGINE-SOURCE-PINS.json": {
-      "sha256": "22c235636bca295e4e802126bb31841e97b40168de7a04f46513b2b2e90a9fd9",
+      "sha256": "c9fa5c38c49a309019e6f43d872b078db15e48c7a606edd2abeb6678afa23ee5",
       "bytes": 469
     },
     "docs/HTML-PARALLEL-DECLARATIONS.md": {
@@ -107,39 +109,67 @@
       "bytes": 1735
     },
     "docs/TESTING.md": {
-      "sha256": "113353ec4bb3e6dd2e83871ec004a32e3215a64a2cb6992b53e04843e6786a77",
-      "bytes": 2810
+      "sha256": "6777d28cef8e3bfe828f5dac9218f2e1ed7fe0aa62ea537ffc91c3726e0c2e7d",
+      "bytes": 9386
     },
     "docs/THREAT-MODEL.md": {
-      "sha256": "b2700779dd4c340c3865ce04cacfddf099cebad49f956daa7fb1cbcbc1d64094",
-      "bytes": 2118
+      "sha256": "fd3edcc556ba9a054b15f1b5db6127d2896ee983352666751e03b70dfc394b31",
+      "bytes": 4050
     },
     "evaluation/CALCULATOR-CROSSCHECK.md": {
       "sha256": "7552d6e13219ed1647f7e97d9d2db7f102c661b03d4025dad41a62fcee321743",
       "bytes": 1859
     },
+    "evaluation/CRYPTO-RED-V05.txt": {
+      "sha256": "5519010ad9bedd358aa15c3578d79d33eeb24a66af40e4fdf307c149bcb7b343",
+      "bytes": 24502
+    },
+    "evaluation/CRYPTO-SAFETY-V05.md": {
+      "sha256": "82cb056f8f824f308e4cfc48563726f8db8dace2bd1f790a1a76ba264bea5e2f",
+      "bytes": 4200
+    },
+    "evaluation/IDENTIFIER-RED-V05.txt": {
+      "sha256": "6b0870e534d91af67f0ea05fa4c42614e04dc2185e2ee5b4f134e7aa15d62ac2",
+      "bytes": 1692
+    },
+    "evaluation/PENDING-RED-V05.txt": {
+      "sha256": "3fafb3e3542e7285f69ff690de52cf44f515834393c5fc48d58ef7108ce0bb87",
+      "bytes": 1476
+    },
     "evaluation/REGRESSION-HISTORY.md": {
-      "sha256": "089dbda328cd8fdb55907179a5caaca729b8c939802ca64746f5d2e724f57172",
-      "bytes": 3163
+      "sha256": "d0c9ef2f3d2fdf8a05756f8f93f15dece6e47592e57a2ed90019ece59086e7b2",
+      "bytes": 8551
     },
     "evaluation/REPLICATION-PROTOCOL.md": {
       "sha256": "626dc6e1dd9b6c9d80e1f0ec535c964d0fae87e5d99b5599d00f3471bf0b03d4",
       "bytes": 2571
     },
     "evaluation/SCENARIO-RESULTS.json": {
-      "sha256": "22e694dcecc67a94d89aaa94be80471402a58f7d6303424735a397fe92b91200",
-      "bytes": 43115
+      "sha256": "000a1b92248fcd2d481a5c6d449edab1222bcf4394ddd74378d1d1674d49ecaf",
+      "bytes": 256546
+    },
+    "evaluation/TRAFFIC-RED-V03.txt": {
+      "sha256": "c4b8f74851bcc9b14a8bc0c0bc8b03c52c3b3579c97da442c1da8b3566dae786",
+      "bytes": 14825
+    },
+    "evaluation/TRAFFIC-RED-V04.txt": {
+      "sha256": "fac510562c7de112e14357cfd5c167fec3be558656b5ce1edb1235b0c0f3af3c",
+      "bytes": 11870
+    },
+    "evaluation/TRAFFIC-TEST-MATRIX.md": {
+      "sha256": "6886d1669e044e8a5f37382a3fb2f1bd024b5ffef5c8ecf423c774427b32e96c",
+      "bytes": 5520
     },
     "examples/demo.py": {
       "sha256": "969eba1dad150ab51c3eee67e35a8c001191428f831d490d4c4df63df1959e7c",
       "bytes": 1083
     },
     "index.html": {
-      "sha256": "90af0c52cbf763503277532b353aede9cf3eb111bc9edf77d4fadcdd3fd52391",
-      "bytes": 116525
+      "sha256": "58b6a777bd2319c4ccc0229ef15f810e2ba8a4d49c63cd408f145e4b7fbe80af",
+      "bytes": 317034
     },
     "pyproject.toml": {
-      "sha256": "f1ddda3def033deeec9af4313ab5bff20dc717ba791f18cfc79b397127f8b24d",
+      "sha256": "ed9b905a175e395306b19a98884fadb62c694cd9ed96edc0e6e248d5c1e27b46",
       "bytes": 546
     },
     "src/virtual_dmv/__init__.py": {
@@ -155,39 +185,65 @@
       "bytes": 3328
     },
     "src/virtual_dmv/engine.py": {
-      "sha256": "bd2b6751fc5275e312930a19b7ecf978ee54cef33beb16354c3a87d782a70e98",
-      "bytes": 30080
+      "sha256": "7b5e74509984363e48f0153c80650e6b51354785f846635c26da88379a6590fc",
+      "bytes": 51884
     },
     "src/virtual_dmv/portable.py": {
-      "sha256": "1e674bb5ed3c4c0fe56764e087eb3c4684892bf769dbb751c8f6daca7544a90a",
-      "bytes": 4390
+      "sha256": "4e1f2b3156375ee81fa045815db9b951a6560fd3b1ae06bf4ab7c3474b670ccf",
+      "bytes": 4773
     },
     "tests/browser_ui_smoke.py": {
-      "sha256": "b4c7c75415400752ba31ae36bf5ee29fae07eb9d278268d59dde1ac353d44a6f",
-      "bytes": 4952
+      "sha256": "adfb4bb3e6d0a1d1e9b972764610444a1925db283201313bf26094c5477c15ba",
+      "bytes": 6230
     },
     "tests/test_bundle.py": {
-      "sha256": "8e7921ae0d81707105264531cce173f3824856d81234635d3c407f537d916866",
+      "sha256": "ce7e8f72d84189380b2e2f3156f6313ae1ce312a9fd559a903e7b5405f18fc1b",
       "bytes": 3431
     },
+    "tests/test_crypto_v05.py": {
+      "sha256": "e091c5c5d396c092afe48a27343a2ca2e2d6574ce49fd3af947914d48d08ddd8",
+      "bytes": 10030
+    },
     "tests/test_engine.py": {
-      "sha256": "c2c19573bf8cadd4d7d1ed23c2edbc5d323168310a39e43009fa105aa84399f1",
-      "bytes": 10690
+      "sha256": "0948590abdb61c0e0107368cb28a7d35443762e90858a391e2c1e9c942c01077",
+      "bytes": 10724
+    },
+    "tests/test_identifier_v05.py": {
+      "sha256": "fb9bb8a1a305e454872d944c9cb79b33fe33f61edfb463aa2f1b110d6b7ba252",
+      "bytes": 850
+    },
+    "tests/test_pending_integrity_v05.py": {
+      "sha256": "36339d2782fea07802ab864c721a17e2d9b437c05acfb12a178f0dcb811bd434",
+      "bytes": 1270
     },
     "tests/test_scenarios.py": {
-      "sha256": "2db0bd39a1eaf76324fcb8d6ad993b25d234df8d9a4476eb535c4f83f780b4db",
-      "bytes": 1847
+      "sha256": "4b6c21f1742aacd02431d678e85d98e20b8b1ec381a7fda48e86e47dbcb26949",
+      "bytes": 1887
+    },
+    "tests/test_security_matrix_v05.py": {
+      "sha256": "e18f1fb56010c6316d249d14b492c1db420a9c13d23d6750fe59265c54dfdb69",
+      "bytes": 869
+    },
+    "tests/test_traffic_v03.py": {
+      "sha256": "738e942de9b9605a6e1578611f0ace3812efe4d8ac11213635efa311f639f092",
+      "bytes": 4009
+    },
+    "tests/test_traffic_v04.py": {
+      "sha256": "9cdac71572b936df7c39e468ef16eef39ee1130ce1d99a6c900dc23a929b1bd8",
+      "bytes": 4083
     },
     "tools/build_browser.py": {
       "sha256": "0d3ef2bced6659a188ce19d3691a95cdf1d007e6ad487fc97e17cc3473b8f832",
       "bytes": 1766
     },
     "tools/run_scenarios.py": {
-      "sha256": "f8ff7cee5b103023188ed69e2882f88eda1cc8d38e72aad6767ff74269d353f3",
-      "bytes": 6760
+      "sha256": "940b264a73afc1ee7ca199a6b599acb38ffe637ac8e9d259aa9aa947375ed778",
+      "bytes": 7441
+    },
+    "tools/run_security_matrix.py": {
+      "sha256": "aa38087feada01c788d718ca42cd78c19c7296c8aff3d6ca7f3a2342e544ca3f",
+      "bytes": 3119
     }
   },
-  "exclusions": [
-    "RELEASE-MANIFEST.json is excluded to avoid a self-hash"
-  ]
+  "notice": "Verified local reference release. Hashes show packaged-byte consistency, not production security, legal authority or browser deployment."
 }

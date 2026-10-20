@@ -19,7 +19,7 @@ class ScenarioPublication(unittest.TestCase):
             with self.subTest(case=row['id']):
                 self.assertTrue(row['source'] and row['expected'] and row['observed'])
                 self.assertIn(row['status'],('passed','failed','error','skipped','pending'))
-                self.assertIn(row['execution'],('recorded-local-python','run-locally-and-rerunnable-in-browser','requires-console-in-Mitchell-Tech'))
+                self.assertIn(row['execution'],('recorded-local-python','run-locally-and-rerunnable-in-browser','requires-console-in-Mitchell-Tech','recorded-local-python-security-matrix'))
     def test_calculator_questions_are_distinct_and_pending(self):
         questions=[r for r in self.rows if r['kind']=='mitchell_tech_manual']
         self.assertEqual(len(questions),5)

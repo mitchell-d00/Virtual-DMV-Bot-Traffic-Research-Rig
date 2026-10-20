@@ -1,10 +1,10 @@
 {
   "schema": "vdmv.source-pins.v1",
   "sha256": {
-    "portable.py": "1e674bb5ed3c4c0fe56764e087eb3c4684892bf769dbb751c8f6daca7544a90a",
-    "engine.py": "bd2b6751fc5275e312930a19b7ecf978ee54cef33beb16354c3a87d782a70e98",
+    "portable.py": "4e1f2b3156375ee81fa045815db9b951a6560fd3b1ae06bf4ab7c3474b670ccf",
+    "engine.py": "7b5e74509984363e48f0153c80650e6b51354785f846635c26da88379a6590fc",
     "__init__.py": "e13f0cd6ce35413b1ba29a0ef5e8daa9b6eae0c47b61bb13b0589b1e14a25fdb"
   },
-  "standalone_html_sha256": "90af0c52cbf763503277532b353aede9cf3eb111bc9edf77d4fadcdd3fd52391",
+  "standalone_html_sha256": "58b6a777bd2319c4ccc0229ef15f810e2ba8a4d49c63cd408f145e4b7fbe80af",
   "runtime": "Pyodide v0.27.7 via external jsDelivr CDN"
 }

@@ -1,4 +1,4 @@
-# Scope and threat model (v0.1)
+# Scope and threat model (v0.5)
 
 ## In-scope tests
 
@@ -25,3 +25,14 @@
 ## Model architecture
 
 Issuer signs plate + transition events. Owner signs challenge and ownership intent. A local host signs every allow/deny receipt. Host policies are data in the browser/CLI. No remote identity infrastructure exists. Treat its tests as structural, not deployment-ready.
+
+## v0.5 changes and remaining boundaries
+
+- Base64url decoding requires a unique canonical unpadded encoding, so alternate trailing padding-bit spellings of an otherwise identical signature/public key are refused.
+- New owner intent (`vdmv.owner-intent.v2`) and new owner acceptance (`vdmv.acceptance.v2`) sign a digest of the exact successor plate payload (including expiry and owner key). Historical v1 intent records remain accepted but do not acquire new protections retroactively.
+- Retroactive signed transitions are rejected *before* append; oversized, deep, cyclic, non-finite, non-JSON or non-object challenge envelopes fail closed with small host-signed receipts without consuming valid pending challenges.
+- New gate tests include all 168 combinations of four demonstration resources, six roles (five plate classes plus anonymous) and seven actions; synthetic coverage does not establish field enforcement.
+- Local browser `localStorage` contains issuer/host and owner demo signing seeds. Anyone running JavaScript in that page context or importing a copied state file effectively controls those keys; no actual multi-party isolation exists. This is a **development research rig**, not a secure credential wallet.
+- Canonical JSON here is the Python implementation's internal `json.dumps(sort_keys=True,ensure_ascii=True)` format, **not** an interoperability-standard canonical JSON protocol. Implementations in other languages must agree on exact bytes; further cross-platform tests are mandatory.
+- Pyodide loads from an external jsDelivr URL without a cryptographic SRI pin; packaging the source in HTML does **not** guarantee runtime supply-chain integrity. Real CDN/iPad startup and reload tests are required.
+- Signed receipts do not prove an action was actually prevented or that downstream use respected conditions. Missing tail, key theft, issuer collusion, and selective denial of service remain out of scope.

@@ -1,0 +1,20 @@
+Before checking challenge record type/expiry fields, the following tests failed on a malformed stored challenge.
+
+test_non_dict_pending_entry_denied_and_removed (test_pending_integrity_v05.PendingSafety.test_non_dict_pending_entry_denied_and_removed) ... ok
+test_poisoned_pending_entry_denied_with_receipt_not_exception (test_pending_integrity_v05.PendingSafety.test_poisoned_pending_entry_denied_with_receipt_not_exception) ... ERROR
+
+======================================================================
+ERROR: test_poisoned_pending_entry_denied_with_receipt_not_exception (test_pending_integrity_v05.PendingSafety.test_poisoned_pending_entry_denied_with_receipt_not_exception)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v05_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.5/tests/test_pending_integrity_v05.py", line 13, in test_poisoned_pending_entry_denied_with_receipt_not_exception
+    result=E.decide(self.s,{'nonce':ch['nonce']},'forged',now=NOW)
+  File "/mnt/data/vdmv_v05_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.5/src/virtual_dmv/engine.py", line 351, in decide
+    if not expected or received!=expected or stamp<expected["issued_at"] or stamp>expected["expires_at"]:
+                                                   ~~~~~~~~^^^^^^^^^^^^^
+KeyError: 'issued_at'
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.095s
+
+FAILED (errors=1)

@@ -18,7 +18,7 @@ function formatEvidence(){
 }
 function renderScenarioLedger(){
   const all=formatEvidence().records,bank=$('scenarioFilter').value,needle=$('scenarioSearch').value.trim().toLowerCase();
-  const shown=all.filter(item=>(bank==='all'||item.kind===bank)&&(!needle||[item.id,item.title,item.status,item.input,item.observed,item.expected].some(v=>String(v).toLowerCase().includes(needle))));
+  const shown=all.filter(item=>(bank==='all'||item.kind===bank)&&(!needle||[item.id,item.title,item.status,item.input,item.observed,item.expected].some(v=>(typeof v==='object'?JSON.stringify(v):String(v)).toLowerCase().includes(needle))));
   const root=$('scenarioRows');root.replaceChildren();
   for(const item of shown){
     const card=document.createElement('article');card.className='scenario-card';
@@ -30,14 +30,14 @@ function renderScenarioLedger(){
     for(const [name,value] of [['Intent',item.intent],['Input / case',item.input],['Expected',item.expected],['Observed',item.observed]]){
       if(!value)continue;
       const detail=document.createElement('p');const label=document.createElement('b');label.textContent=name+': ';
-      const text=document.createTextNode(String(value));detail.append(label,text);card.appendChild(detail);
+      const text=document.createTextNode(typeof value==='object'?JSON.stringify(value):String(value));detail.append(label,text);card.appendChild(detail);
     }
     const footer=document.createElement('div');footer.className='scenario-meta';footer.textContent=item.execution+' · '+item.source;card.appendChild(footer);
     root.appendChild(card);
   }
   $('scenarioCount').textContent=shown.length+'/'+all.length+' cases';
   const passed=all.filter(x=>x.status==='passed').length,pending=all.filter(x=>x.status==='pending').length;
-  $('scenarioSummary').textContent=passed+' recorded PASS, '+pending+' external PENDING; '+shown.length+' shown. '+releaseEvidence.summary.unit+' CLI units, '+releaseEvidence.summary.probe+' browser probes, '+releaseEvidence.summary.game+' game cases. Names/IDs are unique; logical coverage can overlap.';
+  $('scenarioSummary').textContent=passed+' recorded PASS, '+pending+' external PENDING; '+shown.length+' shown. '+releaseEvidence.summary.unit+' CLI units, '+releaseEvidence.summary.probe+' browser probes, '+releaseEvidence.summary.game+' game cases, '+(releaseEvidence.summary.security_matrix||0)+' signed policy-matrix cases. Names/IDs are unique; logical coverage can overlap.';
 }
 
 const pretty=x=>JSON.stringify(x,null,2);
@@ -174,7 +174,7 @@ async function choose(allow){
     $('nextCase').disabled=false;
   }catch(e){report($('gameLast'),e)}
 }
-function resetGame(){caseIndex=0;gameScore=0;correct=0;played=0;updateSummary();showCase()}
+function resetGame(){caseIndex=0;gameScore=0;correct=0;played=0;gameEvidence.length=0;updateSummary();showCase()}
 function activateTab(name){
   document.querySelectorAll('[data-tab]').forEach(el=>el.setAttribute('aria-selected',el.dataset.tab===name?'true':'false'));
   document.querySelectorAll('.view').forEach(el=>el.classList.toggle('active',el.id===name));
@@ -217,7 +217,7 @@ async function runBench(){
   }catch(e){report(target,e)}
 }
 async function replayAllGameScenarios(){
-  const label=$('gameSuiteSummary');label.textContent='Python replaying 10 isolated scenarios ...';
+  const label=$('gameSuiteSummary');label.textContent='Python replaying '+gameCases.length+' isolated scenarios ...';
   try{
     let passed=0;const seen=new Set();
     for(let index=0;index<gameCases.length;index++){
@@ -230,7 +230,7 @@ async function replayAllGameScenarios(){
       liveEvidence.set(id,{status:ok?'passed':'failed',observed:(item.decision.allow?'ADMIT':'DENY')+' / '+item.decision.reason});
     }
     label.className=passed===gameCases.length?'pass':'fail';
-    label.textContent=passed+'/'+gameCases.length+' Python game oracles passed. All 10 isolated; unique IDs '+seen.size+'. Existing DMV records unchanged.';
+    label.textContent=passed+'/'+gameCases.length+' Python game oracles passed. All '+gameCases.length+' isolated; unique IDs '+seen.size+'. Existing DMV records unchanged.';
     renderScenarioLedger();
   }catch(e){report(label,e)}
 }
@@ -327,6 +327,6 @@ const ready=new Promise((resolve,reject)=>{
     try{await initializePython();resolve(true)}catch(e){status('Python failed to load');info('STARTUP FAILURE: '+e.message+' — Internet and a browser supporting WebAssembly are required for this CDN-loaded Python runtime. Refresh when available.');reject(e)}
   },{once:true});
 });
-window.VirtualDMV=Object.freeze({version:'0.2.0',ready:()=>ready,command:async(op,args)=>{await ready;return command(op,args)},snapshot:()=>structuredClone(state),help:()=>['roster','audit','owner','issue','renew','transfer','revoke','request','policy','policies','casebook','game_try','economics','bench'],
+window.VirtualDMV=Object.freeze({version:'0.5.0',ready:()=>ready,command:async(op,args)=>{await ready;return command(op,args)},snapshot:()=>structuredClone(state),help:()=>['roster','audit','owner','issue','renew','transfer','revoke','request','policy','policies','casebook','game_try','economics','bench'],
   warning:'This is a page-local test engine. Calling it does not authenticate to remote resource hosts.'});
 })();

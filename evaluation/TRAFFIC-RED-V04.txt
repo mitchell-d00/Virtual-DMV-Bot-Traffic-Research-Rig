@@ -1,0 +1,141 @@
+test_cap_preserves_existing_requests_for_normal_admission (test_traffic_v04.TrafficBoundaryV04.test_cap_preserves_existing_requests_for_normal_admission) ... FAIL
+test_every_game_case_matches_oracle_and_does_not_modify_workspace (test_traffic_v04.TrafficBoundaryV04.test_every_game_case_matches_oracle_and_does_not_modify_workspace) ... ok
+test_expired_pending_challenges_are_pruned_and_slots_reclaimed (test_traffic_v04.TrafficBoundaryV04.test_expired_pending_challenges_are_pruned_and_slots_reclaimed) ... FAIL
+test_malformed_challenge_envelope_fails_closed_with_signed_receipts (test_traffic_v04.TrafficBoundaryV04.test_malformed_challenge_envelope_fails_closed_with_signed_receipts) ... 
+  test_malformed_challenge_envelope_fails_closed_with_signed_receipts (test_traffic_v04.TrafficBoundaryV04.test_malformed_challenge_envelope_fails_closed_with_signed_receipts) (payload='None') ... ERROR
+  test_malformed_challenge_envelope_fails_closed_with_signed_receipts (test_traffic_v04.TrafficBoundaryV04.test_malformed_challenge_envelope_fails_closed_with_signed_receipts) (payload='[]') ... ERROR
+  test_malformed_challenge_envelope_fails_closed_with_signed_receipts (test_traffic_v04.TrafficBoundaryV04.test_malformed_challenge_envelope_fails_closed_with_signed_receipts) (payload="['untrusted']") ... ERROR
+  test_malformed_challenge_envelope_fails_closed_with_signed_receipts (test_traffic_v04.TrafficBoundaryV04.test_malformed_challenge_envelope_fails_closed_with_signed_receipts) (payload="'not-an-object'") ... ERROR
+  test_malformed_challenge_envelope_fails_closed_with_signed_receipts (test_traffic_v04.TrafficBoundaryV04.test_malformed_challenge_envelope_fails_closed_with_signed_receipts) (payload='42') ... ERROR
+  test_malformed_challenge_envelope_fails_closed_with_signed_receipts (test_traffic_v04.TrafficBoundaryV04.test_malformed_challenge_envelope_fails_closed_with_signed_receipts) (payload='True') ... ERROR
+test_new_shift_has_unique_ids_and_no_repeated_traffic_tuples (test_traffic_v04.TrafficBoundaryV04.test_new_shift_has_unique_ids_and_no_repeated_traffic_tuples) ... FAIL
+test_outstanding_challenges_are_bounded_fail_closed (test_traffic_v04.TrafficBoundaryV04.test_outstanding_challenges_are_bounded_fail_closed) ... FAIL
+
+======================================================================
+ERROR: test_malformed_challenge_envelope_fails_closed_with_signed_receipts (test_traffic_v04.TrafficBoundaryV04.test_malformed_challenge_envelope_fails_closed_with_signed_receipts) (payload='None')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v04_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.3/tests/test_traffic_v04.py", line 16, in test_malformed_challenge_envelope_fails_closed_with_signed_receipts
+    result=E.decide(self.s,bad,'invalid',now=NOW)
+  File "/mnt/data/vdmv_v04_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.3/src/virtual_dmv/engine.py", line 280, in decide
+    _need(isinstance(received,dict),"invalid challenge shape")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/vdmv_v04_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.3/src/virtual_dmv/engine.py", line 36, in _need
+    raise ProtocolError(message)
+virtual_dmv.engine.ProtocolError: invalid challenge shape
+
+======================================================================
+ERROR: test_malformed_challenge_envelope_fails_closed_with_signed_receipts (test_traffic_v04.TrafficBoundaryV04.test_malformed_challenge_envelope_fails_closed_with_signed_receipts) (payload='[]')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v04_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.3/tests/test_traffic_v04.py", line 16, in test_malformed_challenge_envelope_fails_closed_with_signed_receipts
+    result=E.decide(self.s,bad,'invalid',now=NOW)
+  File "/mnt/data/vdmv_v04_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.3/src/virtual_dmv/engine.py", line 280, in decide
+    _need(isinstance(received,dict),"invalid challenge shape")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/vdmv_v04_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.3/src/virtual_dmv/engine.py", line 36, in _need
+    raise ProtocolError(message)
+virtual_dmv.engine.ProtocolError: invalid challenge shape
+
+======================================================================
+ERROR: test_malformed_challenge_envelope_fails_closed_with_signed_receipts (test_traffic_v04.TrafficBoundaryV04.test_malformed_challenge_envelope_fails_closed_with_signed_receipts) (payload="['untrusted']")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v04_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.3/tests/test_traffic_v04.py", line 16, in test_malformed_challenge_envelope_fails_closed_with_signed_receipts
+    result=E.decide(self.s,bad,'invalid',now=NOW)
+  File "/mnt/data/vdmv_v04_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.3/src/virtual_dmv/engine.py", line 280, in decide
+    _need(isinstance(received,dict),"invalid challenge shape")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/vdmv_v04_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.3/src/virtual_dmv/engine.py", line 36, in _need
+    raise ProtocolError(message)
+virtual_dmv.engine.ProtocolError: invalid challenge shape
+
+======================================================================
+ERROR: test_malformed_challenge_envelope_fails_closed_with_signed_receipts (test_traffic_v04.TrafficBoundaryV04.test_malformed_challenge_envelope_fails_closed_with_signed_receipts) (payload="'not-an-object'")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v04_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.3/tests/test_traffic_v04.py", line 16, in test_malformed_challenge_envelope_fails_closed_with_signed_receipts
+    result=E.decide(self.s,bad,'invalid',now=NOW)
+  File "/mnt/data/vdmv_v04_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.3/src/virtual_dmv/engine.py", line 280, in decide
+    _need(isinstance(received,dict),"invalid challenge shape")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/vdmv_v04_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.3/src/virtual_dmv/engine.py", line 36, in _need
+    raise ProtocolError(message)
+virtual_dmv.engine.ProtocolError: invalid challenge shape
+
+======================================================================
+ERROR: test_malformed_challenge_envelope_fails_closed_with_signed_receipts (test_traffic_v04.TrafficBoundaryV04.test_malformed_challenge_envelope_fails_closed_with_signed_receipts) (payload='42')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v04_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.3/tests/test_traffic_v04.py", line 16, in test_malformed_challenge_envelope_fails_closed_with_signed_receipts
+    result=E.decide(self.s,bad,'invalid',now=NOW)
+  File "/mnt/data/vdmv_v04_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.3/src/virtual_dmv/engine.py", line 280, in decide
+    _need(isinstance(received,dict),"invalid challenge shape")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/vdmv_v04_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.3/src/virtual_dmv/engine.py", line 36, in _need
+    raise ProtocolError(message)
+virtual_dmv.engine.ProtocolError: invalid challenge shape
+
+======================================================================
+ERROR: test_malformed_challenge_envelope_fails_closed_with_signed_receipts (test_traffic_v04.TrafficBoundaryV04.test_malformed_challenge_envelope_fails_closed_with_signed_receipts) (payload='True')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v04_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.3/tests/test_traffic_v04.py", line 16, in test_malformed_challenge_envelope_fails_closed_with_signed_receipts
+    result=E.decide(self.s,bad,'invalid',now=NOW)
+  File "/mnt/data/vdmv_v04_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.3/src/virtual_dmv/engine.py", line 280, in decide
+    _need(isinstance(received,dict),"invalid challenge shape")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/vdmv_v04_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.3/src/virtual_dmv/engine.py", line 36, in _need
+    raise ProtocolError(message)
+virtual_dmv.engine.ProtocolError: invalid challenge shape
+
+======================================================================
+FAIL: test_cap_preserves_existing_requests_for_normal_admission (test_traffic_v04.TrafficBoundaryV04.test_cap_preserves_existing_requests_for_normal_admission)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v04_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.3/tests/test_traffic_v04.py", line 45, in test_cap_preserves_existing_requests_for_normal_admission
+    with self.assertRaises(E.ProtocolError):E.challenge(self.s,'anonymous','open-index','crawl',now=NOW)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: ProtocolError not raised
+
+======================================================================
+FAIL: test_expired_pending_challenges_are_pruned_and_slots_reclaimed (test_traffic_v04.TrafficBoundaryV04.test_expired_pending_challenges_are_pruned_and_slots_reclaimed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v04_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.3/tests/test_traffic_v04.py", line 38, in test_expired_pending_challenges_are_pruned_and_slots_reclaimed
+    self.assertEqual(list(self.s['challenges']),[fresh['nonce']])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['CH-79e1624c0edc18b686286f93', 'CH-44296c0d260[3947 chars]88a'] != ['CH-74e4c4b1f6fded5da613888a']
+
+First differing element 0:
+'CH-79e1624c0edc18b686286f93'
+'CH-74e4c4b1f6fded5da613888a'
+
+First list contains 128 additional elements.
+First extra element 1:
+'CH-44296c0d260271ae1f54be81'
+
+Diff is 4430 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_new_shift_has_unique_ids_and_no_repeated_traffic_tuples (test_traffic_v04.TrafficBoundaryV04.test_new_shift_has_unique_ids_and_no_repeated_traffic_tuples)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v04_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.3/tests/test_traffic_v04.py", line 54, in test_new_shift_has_unique_ids_and_no_repeated_traffic_tuples
+    self.assertGreaterEqual(len(cases),60)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: 36 not greater than or equal to 60
+
+======================================================================
+FAIL: test_outstanding_challenges_are_bounded_fail_closed (test_traffic_v04.TrafficBoundaryV04.test_outstanding_challenges_are_bounded_fail_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v04_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.3/tests/test_traffic_v04.py", line 30, in test_outstanding_challenges_are_bounded_fail_closed
+    with self.assertRaisesRegex(E.ProtocolError,'pending challenge limit'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ProtocolError not raised
+
+----------------------------------------------------------------------
+Ran 6 tests in 4.241s
+
+FAILED (failures=4, errors=6)

@@ -56,9 +56,9 @@ class Packaging(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             folder=pathlib.Path(td)/'virtual_dmv';folder.mkdir()
             for name,code in embedded.items():(folder/name).write_text(code,encoding='utf8')
-            command=[sys.executable,'-c',"from virtual_dmv.engine import run_bench; x=run_bench(); assert x['passed']==12, x; print(x['passed'])"]
+            command=[sys.executable,'-c',"from virtual_dmv.engine import run_bench; x=run_bench(); assert x['passed']==22, x; print(x['passed'])"]
             p=subprocess.run(command,cwd=td,capture_output=True,text=True,env={'PYTHONPATH':td})
             self.assertEqual(p.returncode,0,p.stdout+'\n'+p.stderr)
-            self.assertIn('12',p.stdout)
+            self.assertIn('22',p.stdout)
 
 if __name__=='__main__':unittest.main()

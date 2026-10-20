@@ -1,0 +1,330 @@
+Pre-fix v0.4 source with new v0.5 tests; failing assertion details retained below.
+
+test_canonical_decoder_rejects_all_aliases (test_crypto_v05.CryptoBoundaryV05.test_canonical_decoder_rejects_all_aliases) ... 
+  test_canonical_decoder_rejects_all_aliases (test_crypto_v05.CryptoBoundaryV05.test_canonical_decoder_rejects_all_aliases) (diff=1) ... FAIL
+  test_canonical_decoder_rejects_all_aliases (test_crypto_v05.CryptoBoundaryV05.test_canonical_decoder_rejects_all_aliases) (diff=2) ... FAIL
+  test_canonical_decoder_rejects_all_aliases (test_crypto_v05.CryptoBoundaryV05.test_canonical_decoder_rejects_all_aliases) (diff=3) ... FAIL
+  test_canonical_decoder_rejects_all_aliases (test_crypto_v05.CryptoBoundaryV05.test_canonical_decoder_rejects_all_aliases) (diff=4) ... FAIL
+  test_canonical_decoder_rejects_all_aliases (test_crypto_v05.CryptoBoundaryV05.test_canonical_decoder_rejects_all_aliases) (diff=5) ... FAIL
+  test_canonical_decoder_rejects_all_aliases (test_crypto_v05.CryptoBoundaryV05.test_canonical_decoder_rejects_all_aliases) (diff=6) ... FAIL
+  test_canonical_decoder_rejects_all_aliases (test_crypto_v05.CryptoBoundaryV05.test_canonical_decoder_rejects_all_aliases) (diff=7) ... FAIL
+  test_canonical_decoder_rejects_all_aliases (test_crypto_v05.CryptoBoundaryV05.test_canonical_decoder_rejects_all_aliases) (diff=8) ... FAIL
+  test_canonical_decoder_rejects_all_aliases (test_crypto_v05.CryptoBoundaryV05.test_canonical_decoder_rejects_all_aliases) (diff=9) ... FAIL
+  test_canonical_decoder_rejects_all_aliases (test_crypto_v05.CryptoBoundaryV05.test_canonical_decoder_rejects_all_aliases) (diff=10) ... FAIL
+  test_canonical_decoder_rejects_all_aliases (test_crypto_v05.CryptoBoundaryV05.test_canonical_decoder_rejects_all_aliases) (diff=11) ... FAIL
+  test_canonical_decoder_rejects_all_aliases (test_crypto_v05.CryptoBoundaryV05.test_canonical_decoder_rejects_all_aliases) (diff=12) ... FAIL
+  test_canonical_decoder_rejects_all_aliases (test_crypto_v05.CryptoBoundaryV05.test_canonical_decoder_rejects_all_aliases) (diff=13) ... FAIL
+  test_canonical_decoder_rejects_all_aliases (test_crypto_v05.CryptoBoundaryV05.test_canonical_decoder_rejects_all_aliases) (diff=14) ... FAIL
+  test_canonical_decoder_rejects_all_aliases (test_crypto_v05.CryptoBoundaryV05.test_canonical_decoder_rejects_all_aliases) (diff=15) ... FAIL
+test_ed25519_differential_against_mature_library_when_available (test_crypto_v05.CryptoBoundaryV05.test_ed25519_differential_against_mature_library_when_available) ... ok
+test_malformed_json_numbers_fail_closed_with_receipt (test_crypto_v05.CryptoBoundaryV05.test_malformed_json_numbers_fail_closed_with_receipt) ... ERROR
+test_nested_packet_depth_limit_and_receipt_chain (test_crypto_v05.CryptoBoundaryV05.test_nested_packet_depth_limit_and_receipt_chain) ... FAIL
+test_noncanonical_public_key_is_rejected (test_crypto_v05.CryptoBoundaryV05.test_noncanonical_public_key_is_rejected) ... FAIL
+test_noncanonical_signature_base64_is_rejected (test_crypto_v05.CryptoBoundaryV05.test_noncanonical_signature_base64_is_rejected) ... FAIL
+test_oversize_packet_is_rejected_without_echoing_untrusted_body (test_crypto_v05.CryptoBoundaryV05.test_oversize_packet_is_rejected_without_echoing_untrusted_body) ... FAIL
+test_owner_renewal_intent_rejects_issuer_only_expiry_change (test_crypto_v05.CryptoBoundaryV05.test_owner_renewal_intent_rejects_issuer_only_expiry_change) ... FAIL
+test_owner_transfer_intent_rejects_issuer_only_expiry_change (test_crypto_v05.CryptoBoundaryV05.test_owner_transfer_intent_rejects_issuer_only_expiry_change) ... FAIL
+test_recursive_and_unserializable_challenges_fail_closed (test_crypto_v05.CryptoBoundaryV05.test_recursive_and_unserializable_challenges_fail_closed) ... ERROR
+test_retroactive_renewal_fails_before_append (test_crypto_v05.CryptoBoundaryV05.test_retroactive_renewal_fails_before_append) ... FAIL
+test_retroactive_transfer_fails_before_append (test_crypto_v05.CryptoBoundaryV05.test_retroactive_transfer_fails_before_append) ... FAIL
+test_successor_renewal_intent_binds_successor_hash (test_crypto_v05.CryptoBoundaryV05.test_successor_renewal_intent_binds_successor_hash) ... FAIL
+test_transfer_old_and_new_owners_sign_exact_successor (test_crypto_v05.CryptoBoundaryV05.test_transfer_old_and_new_owners_sign_exact_successor) ... ERROR
+
+======================================================================
+ERROR: test_malformed_json_numbers_fail_closed_with_receipt (test_crypto_v05.CryptoBoundaryV05.test_malformed_json_numbers_fail_closed_with_receipt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v05_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.5/tests/test_crypto_v05.py", line 105, in test_malformed_json_numbers_fail_closed_with_receipt
+    result=E.decide(self.s,bad,'invalid',now=NOW)
+  File "/mnt/data/vdmv_v05_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.5/src/virtual_dmv/engine.py", line 298, in decide
+    return _receipt(state,result,request,stamp)
+  File "/mnt/data/vdmv_v05_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.5/src/virtual_dmv/engine.py", line 273, in _receipt
+    packet={**body,"signature":sign(state["host"]["seed"],body)}
+                               ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/vdmv_v05_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.5/src/virtual_dmv/portable.py", line 124, in sign
+    message = canonical(payload)
+  File "/mnt/data/vdmv_v05_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.5/src/virtual_dmv/portable.py", line 20, in canonical
+    return json.dumps(obj, sort_keys=True, separators=(",", ":"), ensure_ascii=True, allow_nan=False).encode("ascii")
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ~~~~~~^^^^^
+  File "/usr/lib/python3.13/json/encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/usr/lib/python3.13/json/encoder.py", line 261, in iterencode
+    return _iterencode(o, 0)
+ValueError: Out of range float values are not JSON compliant: nan
+
+======================================================================
+ERROR: test_recursive_and_unserializable_challenges_fail_closed (test_crypto_v05.CryptoBoundaryV05.test_recursive_and_unserializable_challenges_fail_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v05_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.5/tests/test_crypto_v05.py", line 116, in test_recursive_and_unserializable_challenges_fail_closed
+    result=E.decide(self.s,bad,'invalid',now=NOW)
+  File "/mnt/data/vdmv_v05_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.5/src/virtual_dmv/engine.py", line 294, in decide
+    return _receipt(state,{"allow":False,"reason":"MALFORMED_CHALLENGE","attribution_required":False},request,stamp)
+  File "/mnt/data/vdmv_v05_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.5/src/virtual_dmv/engine.py", line 273, in _receipt
+    packet={**body,"signature":sign(state["host"]["seed"],body)}
+                               ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/vdmv_v05_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.5/src/virtual_dmv/portable.py", line 124, in sign
+    message = canonical(payload)
+  File "/mnt/data/vdmv_v05_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.5/src/virtual_dmv/portable.py", line 20, in canonical
+    return json.dumps(obj, sort_keys=True, separators=(",", ":"), ensure_ascii=True, allow_nan=False).encode("ascii")
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ~~~~~~^^^^^
+  File "/usr/lib/python3.13/json/encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/usr/lib/python3.13/json/encoder.py", line 261, in iterencode
+    return _iterencode(o, 0)
+ValueError: Circular reference detected
+
+======================================================================
+ERROR: test_transfer_old_and_new_owners_sign_exact_successor (test_crypto_v05.CryptoBoundaryV05.test_transfer_old_and_new_owners_sign_exact_successor)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v05_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.5/tests/test_crypto_v05.py", line 66, in test_transfer_old_and_new_owners_sign_exact_successor
+    self.assertEqual(event['owner_intent']['payload']['successor_sha256'],digest)
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+KeyError: 'successor_sha256'
+
+======================================================================
+FAIL: test_canonical_decoder_rejects_all_aliases (test_crypto_v05.CryptoBoundaryV05.test_canonical_decoder_rejects_all_aliases) (diff=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v05_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.5/tests/test_crypto_v05.py", line 37, in test_canonical_decoder_rejects_all_aliases
+    with self.assertRaises(ValueError):C.unb64(duplicate)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_canonical_decoder_rejects_all_aliases (test_crypto_v05.CryptoBoundaryV05.test_canonical_decoder_rejects_all_aliases) (diff=2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v05_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.5/tests/test_crypto_v05.py", line 37, in test_canonical_decoder_rejects_all_aliases
+    with self.assertRaises(ValueError):C.unb64(duplicate)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_canonical_decoder_rejects_all_aliases (test_crypto_v05.CryptoBoundaryV05.test_canonical_decoder_rejects_all_aliases) (diff=3)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v05_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.5/tests/test_crypto_v05.py", line 37, in test_canonical_decoder_rejects_all_aliases
+    with self.assertRaises(ValueError):C.unb64(duplicate)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_canonical_decoder_rejects_all_aliases (test_crypto_v05.CryptoBoundaryV05.test_canonical_decoder_rejects_all_aliases) (diff=4)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v05_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.5/tests/test_crypto_v05.py", line 37, in test_canonical_decoder_rejects_all_aliases
+    with self.assertRaises(ValueError):C.unb64(duplicate)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_canonical_decoder_rejects_all_aliases (test_crypto_v05.CryptoBoundaryV05.test_canonical_decoder_rejects_all_aliases) (diff=5)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v05_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.5/tests/test_crypto_v05.py", line 37, in test_canonical_decoder_rejects_all_aliases
+    with self.assertRaises(ValueError):C.unb64(duplicate)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_canonical_decoder_rejects_all_aliases (test_crypto_v05.CryptoBoundaryV05.test_canonical_decoder_rejects_all_aliases) (diff=6)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v05_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.5/tests/test_crypto_v05.py", line 37, in test_canonical_decoder_rejects_all_aliases
+    with self.assertRaises(ValueError):C.unb64(duplicate)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_canonical_decoder_rejects_all_aliases (test_crypto_v05.CryptoBoundaryV05.test_canonical_decoder_rejects_all_aliases) (diff=7)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v05_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.5/tests/test_crypto_v05.py", line 37, in test_canonical_decoder_rejects_all_aliases
+    with self.assertRaises(ValueError):C.unb64(duplicate)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_canonical_decoder_rejects_all_aliases (test_crypto_v05.CryptoBoundaryV05.test_canonical_decoder_rejects_all_aliases) (diff=8)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v05_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.5/tests/test_crypto_v05.py", line 37, in test_canonical_decoder_rejects_all_aliases
+    with self.assertRaises(ValueError):C.unb64(duplicate)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_canonical_decoder_rejects_all_aliases (test_crypto_v05.CryptoBoundaryV05.test_canonical_decoder_rejects_all_aliases) (diff=9)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v05_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.5/tests/test_crypto_v05.py", line 37, in test_canonical_decoder_rejects_all_aliases
+    with self.assertRaises(ValueError):C.unb64(duplicate)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_canonical_decoder_rejects_all_aliases (test_crypto_v05.CryptoBoundaryV05.test_canonical_decoder_rejects_all_aliases) (diff=10)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v05_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.5/tests/test_crypto_v05.py", line 37, in test_canonical_decoder_rejects_all_aliases
+    with self.assertRaises(ValueError):C.unb64(duplicate)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_canonical_decoder_rejects_all_aliases (test_crypto_v05.CryptoBoundaryV05.test_canonical_decoder_rejects_all_aliases) (diff=11)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v05_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.5/tests/test_crypto_v05.py", line 37, in test_canonical_decoder_rejects_all_aliases
+    with self.assertRaises(ValueError):C.unb64(duplicate)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_canonical_decoder_rejects_all_aliases (test_crypto_v05.CryptoBoundaryV05.test_canonical_decoder_rejects_all_aliases) (diff=12)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v05_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.5/tests/test_crypto_v05.py", line 37, in test_canonical_decoder_rejects_all_aliases
+    with self.assertRaises(ValueError):C.unb64(duplicate)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_canonical_decoder_rejects_all_aliases (test_crypto_v05.CryptoBoundaryV05.test_canonical_decoder_rejects_all_aliases) (diff=13)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v05_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.5/tests/test_crypto_v05.py", line 37, in test_canonical_decoder_rejects_all_aliases
+    with self.assertRaises(ValueError):C.unb64(duplicate)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_canonical_decoder_rejects_all_aliases (test_crypto_v05.CryptoBoundaryV05.test_canonical_decoder_rejects_all_aliases) (diff=14)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v05_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.5/tests/test_crypto_v05.py", line 37, in test_canonical_decoder_rejects_all_aliases
+    with self.assertRaises(ValueError):C.unb64(duplicate)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_canonical_decoder_rejects_all_aliases (test_crypto_v05.CryptoBoundaryV05.test_canonical_decoder_rejects_all_aliases) (diff=15)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v05_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.5/tests/test_crypto_v05.py", line 37, in test_canonical_decoder_rejects_all_aliases
+    with self.assertRaises(ValueError):C.unb64(duplicate)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_nested_packet_depth_limit_and_receipt_chain (test_crypto_v05.CryptoBoundaryV05.test_nested_packet_depth_limit_and_receipt_chain)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v05_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.5/tests/test_crypto_v05.py", line 136, in test_nested_packet_depth_limit_and_receipt_chain
+    self.assertEqual(result['reason'],'MALFORMED_CHALLENGE')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'INVALID_OR_REPLAYED_CHALLENGE' != 'MALFORMED_CHALLENGE'
+- INVALID_OR_REPLAYED_CHALLENGE
++ MALFORMED_CHALLENGE
+
+
+======================================================================
+FAIL: test_noncanonical_public_key_is_rejected (test_crypto_v05.CryptoBoundaryV05.test_noncanonical_public_key_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v05_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.5/tests/test_crypto_v05.py", line 29, in test_noncanonical_public_key_is_rejected
+    self.assertFalse(C.verify(alt,msg,signature))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_noncanonical_signature_base64_is_rejected (test_crypto_v05.CryptoBoundaryV05.test_noncanonical_signature_base64_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v05_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.5/tests/test_crypto_v05.py", line 21, in test_noncanonical_signature_base64_is_rejected
+    self.assertFalse(C.verify(C.public_key(seed),msg,alt))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_oversize_packet_is_rejected_without_echoing_untrusted_body (test_crypto_v05.CryptoBoundaryV05.test_oversize_packet_is_rejected_without_echoing_untrusted_body)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v05_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.5/tests/test_crypto_v05.py", line 125, in test_oversize_packet_is_rejected_without_echoing_untrusted_body
+    self.assertEqual(result['reason'],'MALFORMED_CHALLENGE')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'INVALID_OR_REPLAYED_CHALLENGE' != 'MALFORMED_CHALLENGE'
+- INVALID_OR_REPLAYED_CHALLENGE
++ MALFORMED_CHALLENGE
+
+
+======================================================================
+FAIL: test_owner_renewal_intent_rejects_issuer_only_expiry_change (test_crypto_v05.CryptoBoundaryV05.test_owner_renewal_intent_rejects_issuer_only_expiry_change)
+----------------------------------------------------------------------
+virtual_dmv.engine.ProtocolError: event hash mismatch
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v05_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.5/tests/test_crypto_v05.py", line 87, in test_owner_renewal_intent_rejects_issuer_only_expiry_change
+    with self.assertRaisesRegex(E.ProtocolError,'successor'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "successor" does not match "event hash mismatch"
+
+======================================================================
+FAIL: test_owner_transfer_intent_rejects_issuer_only_expiry_change (test_crypto_v05.CryptoBoundaryV05.test_owner_transfer_intent_rejects_issuer_only_expiry_change)
+----------------------------------------------------------------------
+virtual_dmv.engine.ProtocolError: event hash mismatch
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v05_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.5/tests/test_crypto_v05.py", line 82, in test_owner_transfer_intent_rejects_issuer_only_expiry_change
+    with self.assertRaisesRegex(E.ProtocolError,'successor'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "successor" does not match "event hash mismatch"
+
+======================================================================
+FAIL: test_retroactive_renewal_fails_before_append (test_crypto_v05.CryptoBoundaryV05.test_retroactive_renewal_fails_before_append)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v05_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.5/tests/test_crypto_v05.py", line 92, in test_retroactive_renewal_fails_before_append
+    with self.assertRaises(E.ProtocolError):E.renew(self.s,'VDMV-RESEARCH-01','alice',now=NOW-10)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: ProtocolError not raised
+
+======================================================================
+FAIL: test_retroactive_transfer_fails_before_append (test_crypto_v05.CryptoBoundaryV05.test_retroactive_transfer_fails_before_append)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v05_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.5/tests/test_crypto_v05.py", line 98, in test_retroactive_transfer_fails_before_append
+    with self.assertRaises(E.ProtocolError):E.transfer(self.s,'VDMV-RESEARCH-01','alice','bob',now=NOW-10)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: ProtocolError not raised
+
+======================================================================
+FAIL: test_successor_renewal_intent_binds_successor_hash (test_crypto_v05.CryptoBoundaryV05.test_successor_renewal_intent_binds_successor_hash)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/vdmv_v05_work/Virtual-DMV-Bot-Traffic-Research-Rig-v0.5/tests/test_crypto_v05.py", line 59, in test_successor_renewal_intent_binds_successor_hash
+    self.assertEqual(detail['owner_intent']['payload']['schema'],'vdmv.owner-intent.v2')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'vdmv.owner-intent.v1' != 'vdmv.owner-intent.v2'
+- vdmv.owner-intent.v1
+?                    ^
++ vdmv.owner-intent.v2
+?                    ^
+
+
+----------------------------------------------------------------------
+Ran 14 tests in 1.192s
+
+FAILED (failures=24, errors=3)

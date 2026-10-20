@@ -17,6 +17,7 @@ from datetime import datetime, timezone
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'src'))
 from virtual_dmv import engine as E
+from run_security_matrix import check_matrix
 
 class EvidenceResult(unittest.TestResult):
     def __init__(self):
@@ -72,13 +73,14 @@ def checked():
         d=a['decision']
         good=a['scenario_matches_expectation']
         game.append({'id':c['id'],'kind':'playable_game','title':c['label'],
-          'intent':c['truth'],'input':f"{c['plate']} / {c['resource']} / {c['action']}",
-          'expected':c['expected']+' / '+c['expected_reason'],
-          'observed':('ADMIT' if d['allow'] else 'DENY')+' / '+d['reason'],
+          'intent':c['truth'],'input':f"{c['scenario']} / {c['plate']} / {c['owner']} / {c['resource']} / {c['action']}",
+          'expected':c['expected']+' / '+c['expected_reason']+' / attribution='+str(c['expected_attribution']),
+          'observed':('ADMIT' if d['allow'] else 'DENY')+' / '+d['reason']+' / attribution='+str(d['attribution_required']),
           'status':'passed' if good else 'failed',
           'source':'src/virtual_dmv/engine.py#traffic_cases',
           'execution':'run-locally-and-rerunnable-in-browser'})
-    all_cases=units+probes+game
+    security=check_matrix()
+    all_cases=units+probes+game+security
     ids=[p['id'] for p in all_cases]
     if len(ids)!=len(set(ids)):raise RuntimeError('Duplicated public scenario ID')
     names=[(p['kind'],p['title'].casefold().strip()) for p in all_cases]
@@ -96,8 +98,8 @@ def checked():
     if len({x['input'] for x in formulas})!=len(formulas):raise RuntimeError('Calculator expressions are repeated')
     timestamp=datetime.now(timezone.utc).isoformat(timespec='seconds')
     artifact={'schema':'vdmv.scenarios.v1','generated_at_utc':timestamp,
-        'source_sha256':hash_files([Path('src/virtual_dmv/engine.py'),Path('src/virtual_dmv/portable.py'),Path('tests/test_engine.py'),Path('tests/test_bundle.py'),Path('tools/run_scenarios.py')]),
-        'summary':{'unit':len(units),'probe':len(probes),'game':len(game),'calculator_pending':len(formulas),
+        'source_sha256':hash_files([Path('src/virtual_dmv/engine.py'),Path('src/virtual_dmv/portable.py'),Path('tests/test_engine.py'),Path('tests/test_bundle.py'),Path('tests/test_traffic_v03.py'),Path('tests/test_traffic_v04.py'),Path('tests/test_crypto_v05.py'),Path('tests/test_pending_integrity_v05.py'),Path('tests/test_identifier_v05.py'),Path('tests/test_security_matrix_v05.py'),Path('tools/run_security_matrix.py'),Path('tools/run_scenarios.py')]),
+        'summary':{'unit':len(units),'probe':len(probes),'game':len(game),'security_matrix':len(security),'calculator_pending':len(formulas),
                    'recorded_passed':sum(c['status']=='passed' for c in all_cases),
                    'recorded_failed':sum(c['status'] in ('failed','error') for c in all_cases),
                    'unique_executed_scenario_ids':len(all_cases),
@@ -106,10 +108,11 @@ def checked():
         'limits':{'unit':'Recorded on local Python at source_sha256; not executed in each visitor browser.',
                   'probe':'Browser reruns real Python using the embedded engine; results may differ if code changes.',
                   'game':'Synthetic isolated deterministic state; gameplay is not a field trial.',
+                  'security_matrix':'168 explicit policy tuples with signed local receipts; not a cryptographic audit or field observation.',
                   'calculator':'Requires external Mitchell Tech app and a separate user-triggered manual console check. Pending does not count as a pass.'}}
     out=ROOT/'evaluation'/'SCENARIO-RESULTS.json'
     out.write_text(json.dumps(artifact,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
-    print(f"Evidence: {len(units)} local unit, {len(probes)} Python browser, {len(game)} game, {len(formulas)} pending external calculator")
+    print(f"Evidence: {len(units)} local unit, {len(probes)} Python browser, {len(game)} game, {len(security)} security matrix, {len(formulas)} pending external calculator")
     print(f"Recorded passed: {artifact['summary']['recorded_passed']}, failures: {artifact['summary']['recorded_failed']}")
     return not(result.wasSuccessful() and not artifact['summary']['recorded_failed'])
 
