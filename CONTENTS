@@ -64,3 +64,8 @@ V0.6 testing and authenticity notes:
   tests/test_input_boundaries_v06.py
   tests/test_ingress_matrix_v06.py
   tools/run_ingress_matrix.py
+
+V0.7 bug-hunt notes:
+  evaluation/BUGHUNT-RED-V07.txt      (pre-fix red run of the 20 new tests)
+  evaluation/BUGHUNT-V07.md           (12 findings, fixes and remaining limits)
+  tests/test_bughunt_v07.py

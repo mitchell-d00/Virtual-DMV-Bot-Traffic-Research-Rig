@@ -42,6 +42,38 @@ def _named(value):
     return type(value) is str and 1 <= len(value) <= 72 and all(("A"<=c<="Z") or ("a"<=c<="z") or ("0"<=c<="9") or c in "-_." for c in value)
 
 
+ANONYMOUS = "anonymous"  # reserved request label for plate-less traffic; never an issuable plate ID
+
+
+def _issuable_plate_id(value):
+    return _named(value) and value.casefold() != ANONYMOUS
+
+
+def _validate_policies(policies):
+    """Host policies are unsigned local data; refuse shapes the gate cannot evaluate safely."""
+    _need(isinstance(policies,dict) and 1<=len(policies)<=64,"policies must be a non-empty object")
+    for name,p in policies.items():
+        _need(_named(name),"invalid policy resource name")
+        _need(isinstance(p,dict) and set(p)=={"description","anonymous","allows","attribution"},"policy "+name+" has wrong fields")
+        _need(type(p["description"]) is str and len(p["description"])<=500,"policy "+name+" description invalid")
+        for field in ("anonymous","attribution"):
+            _need(type(p[field]) is list and all(type(a) is str and a in ACTIONS for a in p[field]),"policy "+name+" "+field+" must list known actions")
+        _need(isinstance(p["allows"],dict),"policy "+name+" allows must be an object")
+        for action,roles in p["allows"].items():
+            _need(action in ACTIONS and type(roles) is list and all(type(r) is str and r in CLASSES for r in roles),"policy "+name+" allows entry invalid")
+    return policies
+
+
+def _validate_owners(owners):
+    _need(isinstance(owners,dict),"owners must be an object")
+    seen=set()
+    for label,item in owners.items():
+        _need(_named(label) and isinstance(item,dict),"invalid owner record")
+        _need(public_key(item.get("seed"))==item.get("public_key"),"owner seed/public mismatch")
+        _need(item["public_key"] not in seen,"two owners share one signing key")
+        seen.add(item["public_key"])
+
+
 def _clock(now=None):
     v = int(time.time()) if now is None else now
     _need(type(v) is int and 0 <= v <= 4102444800, "invalid demo timestamp")
@@ -68,7 +100,9 @@ def add_owner(state, label, *, seed=None):
     _need(_named(label), "owner label must be 1-72 safe characters")
     _need(label not in state["owners"], "owner label already registered")
     key = seed or make_seed()
-    state["owners"][label] = {"seed":key,"public_key":public_key(key)}
+    pub = public_key(key)
+    _need(all(o.get("public_key")!=pub for o in state["owners"].values()), "signing key already registered to another owner")
+    state["owners"][label] = {"seed":key,"public_key":pub}
     return {"owner":label,"public_key":state["owners"][label]["public_key"]}
 
 
@@ -90,7 +124,7 @@ def _validate_credential(credential, issuer_public, issuer_id):
     _need(isinstance(credential,dict) and isinstance(credential.get("payload"),dict), "malformed plate")
     p=credential["payload"]
     _need(p.get("schema")=="vdmv.plate.v1" and p.get("issuer")==issuer_id, "invalid plate schema/issuer")
-    _need(_named(p.get("plate_id")) and p.get("participation_class") in CLASSES, "invalid plate ID/class")
+    _need(_issuable_plate_id(p.get("plate_id")) and p.get("participation_class") in CLASSES, "invalid plate ID/class")
     _need(type(p.get("revision")) is int and p["revision"]>=1,"invalid plate revision")
     _need(type(p.get("issued_at")) is int and type(p.get("expires_at")) is int and p["expires_at"]>p["issued_at"],"invalid plate validity")
     _need(isinstance(p.get("owner_public_key"),str),"owner key missing")
@@ -131,6 +165,8 @@ def audit(state):
             previous=old["credential"]["payload"]
             _need(p["revision"]==previous["revision"]+1 and p["participation_class"]==previous["participation_class"],"invalid successor revision/class")
             _need(p["issued_at"]>=previous["issued_at"],"nonmonotonic transition time")
+            # Same rule _transition enforces before append: no transition of an expired plate.
+            _need(p["issued_at"]<=previous["expires_at"],"transition outside predecessor validity")
             if kind=="renew":
                 _need(p["owner_public_key"]==previous["owner_public_key"],"renew altered owner")
             else:
@@ -144,6 +180,7 @@ def audit(state):
             # V1 remains readable only for historical fixtures released before v0.5.
             if intent_schema=="vdmv.owner-intent.v2":
                 _need(intent_payload.get("successor_sha256")==sha256(p),"owner intent successor mismatch")
+                _need(type(intent_payload.get("requested_at")) is int and intent_payload["requested_at"]==p["issued_at"],"owner intent time mismatch")
             if kind=="transfer":
                 _need(intent_payload.get("new_owner_public_key")==p["owner_public_key"],"transfer target mismatch")
                 acceptance=data.get("new_owner_acceptance",{})
@@ -155,6 +192,7 @@ def audit(state):
                   and accept_payload.get("new_owner_public_key")==p["owner_public_key"],"incoming owner acceptance mismatch")
                 if required_accept=="vdmv.acceptance.v2":
                     _need(accept_payload.get("successor_sha256")==sha256(p),"new owner acceptance successor mismatch")
+                    _need(type(accept_payload.get("accepted_at")) is int and accept_payload["accepted_at"]==p["issued_at"],"new owner acceptance time mismatch")
                 _need(verify(p["owner_public_key"],accept_payload,acceptance.get("signature")),"new owner did not accept transfer")
             _need(verify(previous["owner_public_key"],intent_payload,intent.get("signature")),"owner authorization failed")
             known[p["plate_id"]]={"status":"active","credential":plate,"events":n}
@@ -177,7 +215,7 @@ def issue(state, owner, role, *, now=None, ttl=86400, plate_id=None):
     _need(type(ttl) is int and 0<ttl<=31536000,"invalid credential lifetime")
     stamp=_clock(now)
     plate_id=plate_id or ("VDMV-"+secrets.token_hex(7).upper())
-    _need(_named(plate_id) and plate_id not in known,"duplicate or invalid plate identifier")
+    _need(_issuable_plate_id(plate_id) and plate_id not in known,"duplicate, reserved or invalid plate identifier")
     payload={"schema":"vdmv.plate.v1","plate_id":plate_id,"issuer":state["issuer"]["id"],
       "participation_class":role,"owner_public_key":state["owners"][owner]["public_key"],
       "revision":1,"issued_at":stamp,"expires_at":stamp+ttl}
@@ -245,6 +283,7 @@ def _policy(state, resource):
 
 def policy_decision(state, resource, action, role=None, anonymous=False):
     _need(action in ACTIONS,"unknown action")
+    _validate_policies(state["policies"])
     p=_policy(state,resource)
     allowed=action in p["anonymous"] if anonymous else role in p["allows"].get(action,[])
     return {"allow":allowed,"attribution_required":allowed and action in p["attribution"],
@@ -260,8 +299,10 @@ def challenge(state, plate_id, resource, action, *, now=None):
     stamp=_clock(now)
     # Prune expired, already-unusable traffic before enforcing a hard memory bound.
     # Pending requests must not be overwritten under queue saturation.
+    _need(isinstance(state.get("challenges"),dict),"pending challenge store invalid")
     for key, item in list(state["challenges"].items()):
-        if isinstance(item, dict) and type(item.get("expires_at")) is int and item["expires_at"] < stamp:
+        # Malformed (e.g. imported/poisoned) entries can never be redeemed, so they are pruned too.
+        if not isinstance(item, dict) or type(item.get("expires_at")) is not int or item["expires_at"] < stamp:
             del state["challenges"][key]
     _need(len(state["challenges"]) < MAX_PENDING_CHALLENGES, "pending challenge limit reached")
     state["sequence_nonce"]+=1
@@ -354,19 +395,19 @@ def decide(state, challenge_body, signed_proof, *, now=None, credential_override
         return _receipt(state,{"allow":False,"reason":"MALFORMED_CHALLENGE","attribution_required":False},request,stamp)
     expected=state["challenges"].pop(nonce,None)
     result={"allow":False,"reason":"INVALID_OR_REPLAYED_CHALLENGE","attribution_required":False}
-    if (not isinstance(expected,dict) or received!=expected
+    if (not isinstance(expected,dict) or canonical(received)!=canonical(expected)
         or type(expected.get("issued_at")) is not int or type(expected.get("expires_at")) is not int
         or stamp<expected["issued_at"] or stamp>expected["expires_at"]):
         return _receipt(state,result,request,stamp)
     plate_id=expected["plate_id"]
     resource=expected["resource"]
     action=expected["action"]
-    if plate_id=="anonymous":
-        d=policy_decision(state,resource,action,anonymous=True)
-        result={"allow":d["allow"],"reason":"ANONYMOUS_POLICY_ALLOW" if d["allow"] else "ANONYMOUS_DEFAULT_DENY",
-          "attribution_required":d["attribution_required"],"policy_hash":d["policy_hash"]}
-    else:
-        try:
+    try:
+        if plate_id==ANONYMOUS:
+            d=policy_decision(state,resource,action,anonymous=True)
+            result={"allow":d["allow"],"reason":"ANONYMOUS_POLICY_ALLOW" if d["allow"] else "ANONYMOUS_DEFAULT_DENY",
+              "attribution_required":d["attribution_required"],"policy_hash":d["policy_hash"]}
+        else:
             existing=audit(state).get(plate_id)
             if not existing or existing["status"]!="active":
                 result["reason"]="UNKNOWN_OR_REVOKED"
@@ -385,13 +426,17 @@ def decide(state, challenge_body, signed_proof, *, now=None, credential_override
                         result={"allow":d["allow"],"reason":"POLICY_ALLOW" if d["allow"] else "POLICY_DENY",
                           "attribution_required":d["attribution_required"],"plate_id":plate_id,
                           "participation_class":p["participation_class"],"policy_hash":d["policy_hash"]}
-        except (ValueError,KeyError,TypeError) as error:
-            result["reason"]="MALFORMED_CREDENTIAL_OR_REGISTRY"
+    except (ValueError,KeyError,TypeError,AttributeError):
+        # Includes malformed host policy data: still a signed denial, never a lost nonce.
+        result={"allow":False,"reason":"MALFORMED_CREDENTIAL_OR_REGISTRY","attribution_required":False}
     return _receipt(state,result,request,stamp)
 
 
 def request(state, plate_id, resource, action, *, owner=None, now=None, proof_override=None, credential_override=None):
     """Convenience test driver; the gate itself never trusts the owner label."""
+    # Validate the signing owner before allocating a pending challenge, so a bad
+    # label cannot leak queue slots without a receipt.
+    _need(owner is None or (type(owner) is str and owner in state["owners"]),"unknown owner")
     c=challenge(state,plate_id,resource,action,now=now)
     proof=proof_override if proof_override is not None else ("" if owner is None else holder_proof(state,owner,c))
     return decide(state,c,proof,now=now,credential_override=credential_override)
@@ -412,7 +457,12 @@ def verify_receipts(state):
 def audit_all(state):
     plates=audit(state)
     receipts=verify_receipts(state)
-    return {"ok":True,"plates":len(plates),"active":sum(x["status"]=="active" for x in plates.values()),
+    _validate_owners(state.get("owners"))
+    policies=_validate_policies(state.get("policies"))
+    # Policies are unsigned local data: report any divergence from the release
+    # defaults instead of implying the audit authenticated them.
+    changed=sorted(set(policies)^set(POLICIES)|{k for k in set(policies)&set(POLICIES) if policies[k]!=POLICIES[k]})
+    return {"ok":True,"policies_match_release":not changed,"policy_changes":changed,"plates":len(plates),"active":sum(x["status"]=="active" for x in plates.values()),
       "events":len(state["events"]),"event_tip":state["events"][-1]["hash"] if state["events"] else Z,
       "receipts":receipts["count"],"receipt_tip":receipts["tip"],
       "note":"Integrity under demo local issuer/host trust; missing-tail and compromised-key attacks not excluded."}
@@ -660,6 +710,8 @@ def dispatch(input_data):
     """Shared JSON interface used by both Python CLI and embedded Pyodide lab."""
     _need(isinstance(input_data,dict),"command must be an object")
     op=input_data.get("op")
+    _need(input_data.get("state") is None or isinstance(input_data["state"],dict),"state must be an object")
+    _need(input_data.get("args") is None or isinstance(input_data["args"],dict),"args must be an object")
     state=input_data.get("state") or bootstrap(now=_clock(input_data.get("now",1893456000)))
     args=input_data.get("args") or {}
     if op=="bootstrap": state=bootstrap(now=_clock(args.get("now",1893456000))); outcome={"ready":True}
@@ -667,8 +719,8 @@ def dispatch(input_data):
     elif op=="audit":outcome=audit_all(state)
     elif op=="owner":outcome=add_owner(state,args["name"])
     elif op=="issue":outcome=issue(state,args["owner"],args["role"],now=args.get("now",state["created_at"]),ttl=args.get("ttl",86400),plate_id=args.get("plate_id"))
-    elif op=="renew":outcome=renew(state,args["plate_id"],args["owner"],now=args.get("now",state["created_at"]))
-    elif op=="transfer":outcome=transfer(state,args["plate_id"],args["old_owner"],args["new_owner"],now=args.get("now",state["created_at"]))
+    elif op=="renew":outcome=renew(state,args["plate_id"],args["owner"],now=args.get("now",state["created_at"]),ttl=args.get("ttl",86400))
+    elif op=="transfer":outcome=transfer(state,args["plate_id"],args["old_owner"],args["new_owner"],now=args.get("now",state["created_at"]),ttl=args.get("ttl",86400))
     elif op=="revoke":outcome=revoke(state,args["plate_id"],now=args.get("now",state["created_at"]))
     elif op=="request":outcome=request(state,args["plate_id"],args["resource"],args["action"],owner=args.get("owner"),now=args.get("now",state["created_at"]))
     elif op=="policy":outcome=policy_decision(state,args["resource"],args["action"],args.get("role"),args.get("anonymous",False))
@@ -746,5 +798,6 @@ def bridge(json_input):
     try:
         output=dispatch(json.loads(json_input))
         return json.dumps({"ok":True,**output},sort_keys=True,ensure_ascii=True)
-    except (KeyError,TypeError,ValueError) as e:
-        return json.dumps({"ok":False,"error":str(e)})
+    except (KeyError,TypeError,ValueError,AttributeError,RecursionError,OverflowError) as e:
+        # The browser contract is "always JSON back"; never let a raw exception escape.
+        return json.dumps({"ok":False,"error":type(e).__name__+": "+str(e)[:300] if not isinstance(e,ProtocolError) else str(e)})

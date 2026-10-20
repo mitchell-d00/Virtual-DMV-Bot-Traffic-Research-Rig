@@ -28,3 +28,10 @@ hash_map={name:hashlib.sha256(path.read_bytes()).hexdigest() for name,path in fi
 (ROOT/"docs/ENGINE-SOURCE-PINS.json").write_text(json.dumps({"schema":"vdmv.source-pins.v1","sha256":hash_map,
     "standalone_html_sha256":hashlib.sha256(html.encode()).hexdigest(),"runtime":"Pyodide v0.27.7 via external jsDelivr CDN"},indent=2)+'\n')
 print('Single-file browser UI: index.html',len(html.encode()),'bytes; Python source embedded')
+
+summary = report['summary']
+(ROOT/'docs/CURRENT-TEST-RESULTS.md').write_text(
+    '# Current recorded test results\n\n'
+    + 'Generated from `evaluation/SCENARIO-RESULTS.json`; historical counts elsewhere describe earlier releases.\n\n'
+    + '\n'.join(f'- {key}: {summary[key]}' for key in ('unit','probe','game','security_matrix','ingress_matrix','recorded_passed','recorded_failed','calculator_pending'))
+    + '\n\nThese are local synthetic checks. Browser and CI results are recorded separately in the pull request. Pending external checks are not passes.\n')

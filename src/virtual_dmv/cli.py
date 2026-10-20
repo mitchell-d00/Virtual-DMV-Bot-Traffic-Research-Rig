@@ -6,7 +6,7 @@ import sys
 from .engine import bootstrap, dispatch, audit_all
 
 
-def main(argv=None):
+def _run(argv=None):
     parser=argparse.ArgumentParser(prog="virtual-dmv",description="Local virtual DMV research simulator")
     parser.add_argument("operation",choices=["new","roster","audit","issue","owner","request","transfer","renew","revoke","bench","economics","casebook","help"])
     parser.add_argument("--state",default="local/demo-state.json",help="Local JSON state path (contains DEMO private signing seeds)")
@@ -24,7 +24,7 @@ def main(argv=None):
     path=pathlib.Path(args.state)
     if args.operation=="new":
         if path.exists(): parser.error("state already exists; refuse overwrite")
-        state=bootstrap(now=args.at or 1893456000)
+        state=bootstrap(now=args.at if args.at is not None else 1893456000)
         result={"created":str(path)}
     else:
         if not path.exists():parser.error("state missing; first run: python -m virtual_dmv new")
@@ -53,8 +53,17 @@ def main(argv=None):
     return 0
 
 
-if __name__=="__main__":
-    try:raise SystemExit(main())
+def main(argv=None):
+    """Entry point for `virtual-dmv`, `python -m virtual_dmv` and `python cli.py`.
+
+    Protocol and input errors print one line and exit 2 instead of a traceback.
+    """
+    try:
+        return _run(argv)
     except (KeyError,ValueError) as error:
         print("Error:",error,file=sys.stderr)
-        raise SystemExit(2)
+        return 2
+
+
+if __name__=="__main__":
+    raise SystemExit(main())

@@ -125,7 +125,9 @@ async function refresh(){
     const panel=document.createElement('div');panel.className='paper';
     const title=document.createElement('strong');title.textContent=name;
     const text=document.createElement('p');text.className='small';text.textContent=policy.description;
-    const permissions=document.createElement('div');permissions.className='small';permissions.textContent='Anonymous: '+(policy.anonymous.join(', ')||'none')+' | Registered: '+Object.entries(policy.allows).map(([k,v])=>k+' → '+v.join('/')).join(' · ');
+    const permissions=document.createElement('div');permissions.className='small';const list=v=>Array.isArray(v)?v.join(', '):'(invalid)';
+    const allows=policy&&typeof policy.allows==='object'&&policy.allows?Object.entries(policy.allows).map(([k,v])=>k+' → '+(Array.isArray(v)?v.join('/'):'(invalid)')).join(' · '):'(invalid)';
+    permissions.textContent='Anonymous: '+(list(policy&&policy.anonymous)||'none')+' | Registered: '+allows;
     panel.append(title,text,permissions);cards.appendChild(panel);
   }
 }
@@ -151,8 +153,9 @@ async function inspect(){
   if(inspected||gameResolved)return;
   try{
     const replay=await command('game_try',{index:caseIndex});
+    // Accept the verdict only after the oracle check, so a retry cannot skip it.
+    if(replay.scenario_matches_expectation!==true)throw Error('SCENARIO ORACLE MISMATCH: game fixture disagrees with its expected result');
     verdict=replay.decision;
-    if(replay.scenario_matches_expectation===false)throw Error('SCENARIO ORACLE MISMATCH: game fixture disagrees with its expected result');
     inspected=true;gameScore-=2;updateSummary();
     $('gameLast').textContent=pretty(verdict);
     $('gameFeedback').textContent='Gate: '+verdict.reason+' — '+(verdict.allow?'eligible':'ineligible')+'. This audit inspection cost 2 points.';
@@ -164,8 +167,8 @@ async function choose(allow){
   try{
     if(!verdict){
       const replay=await command('game_try',{index:caseIndex});
+      if(replay.scenario_matches_expectation!==true)throw Error('SCENARIO ORACLE MISMATCH: refuse scoring until regression is fixed');
       verdict=replay.decision;
-      if(replay.scenario_matches_expectation===false)throw Error('SCENARIO ORACLE MISMATCH: refuse scoring until regression is fixed');
     }
     gameResolved=true;played++;
     const right=allow===gameCases[caseIndex].expected_allow;
@@ -197,7 +200,9 @@ async function actionOperation(op,args={}){
     await refresh();
   }catch(e){report($('operationOutput'),e)}finally{busy=false}
 }
-const uiArgs=()=>({owner:$('owner').value,old_owner:$('owner').value,new_owner:$('newOwner').value,role:$('role').value,plate_id:$('plateId').value.trim(),resource:$('resource').value,action:$('action').value,now:state.created_at});
+const whole=(id,fallback)=>{const n=Number($(id).value);return Number.isSafeInteger(n)?n:fallback};
+const uiArgs=()=>({owner:$('owner').value,old_owner:$('owner').value,new_owner:$('newOwner').value,role:$('role').value,plate_id:$('plateId').value.trim(),resource:$('resource').value,action:$('action').value,
+  now:state.created_at+whole('simOffset',0),ttl:whole('ttl',86400)});
 function download(filename,data){
   const url=URL.createObjectURL(new Blob([data],{type:'application/json'}));
   const a=document.createElement('a');a.href=url;a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
@@ -209,7 +214,9 @@ async function importState(file){
     const parsed=JSON.parse(await file.text());
     const result=direct({op:'audit',state:parsed});
     if(!result.ok)throw Error('Incoming state failed audit: '+result.error);
-    state=parsed;save();await refresh();$('operationOutput').textContent='Imported local test state. '+pretty(result.result);
+    state=parsed;save();await refresh();
+    const warning=result.result.policies_match_release===false?'WARNING: host policies differ from this release for '+result.result.policy_changes.join(', ')+'. Policies are unsigned local data; the audit verified their shape only.\n':'';
+    $('operationOutput').textContent=warning+'Imported local test state. '+pretty(result.result);
   }catch(e){report($('operationOutput'),e)}finally{$('importFile').value=''}
 }
 async function runBench(){
@@ -333,9 +340,15 @@ function wire(){
 const ready=new Promise((resolve,reject)=>{
   window.addEventListener('DOMContentLoaded',async()=>{
     enableControls(false);
-    try{await loadReleaseEvidence();wire();await initializePython();resolve(true)}catch(e){status('Python failed to load');info('STARTUP FAILURE: '+e.message+' — Internet and a browser supporting WebAssembly are required for this CDN-loaded Python runtime. Refresh when available.');reject(e)}
+    try{await loadReleaseEvidence();wire();await initializePython();resolve(true)}catch(e){
+      if(py){
+        // Python loaded; the saved workspace is what failed. Do not blame the network, and keep Reset usable.
+        status('Saved workspace unreadable');info('STARTUP FAILURE: '+e.message+' — the Python runtime loaded, but the saved demo workspace could not be displayed. Export it if needed, then use "Reset local lab".');
+        for(const id of ['resetLab','exportState','importButton'])$(id).disabled=false;
+      }else{status('Python failed to load');info('STARTUP FAILURE: '+e.message+' — Internet and a browser supporting WebAssembly are required for this CDN-loaded Python runtime. Refresh when available.');}
+      reject(e)}
   },{once:true});
 });
-window.VirtualDMV=Object.freeze({version:'0.6.0',ready:()=>ready,command:async(op,args)=>{await ready;return command(op,args)},snapshot:()=>structuredClone(state),help:()=>['roster','audit','owner','issue','renew','transfer','revoke','request','policy','policies','casebook','game_try','economics','bench'],
+window.VirtualDMV=Object.freeze({version:'0.7.0',ready:()=>ready,command:async(op,args)=>{await ready;return command(op,args)},snapshot:()=>structuredClone(state),help:()=>['roster','audit','owner','issue','renew','transfer','revoke','request','policy','policies','casebook','game_try','economics','bench'],
   warning:'This is a page-local test engine. Calling it does not authenticate to remote resource hosts.'});
 })();
